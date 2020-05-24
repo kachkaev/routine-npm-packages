@@ -1,8 +1,8 @@
 ## extensions
 *.*
-!*.md
-!*.mdx
-
+!*.js
+!*.json
+!*.ts
 
 ## same as in .gitignore
 # js

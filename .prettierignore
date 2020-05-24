@@ -18,7 +18,8 @@ node_modules
 
 # misc
 .DS_Store
-.env*
+.env.*.local
+.env.local
 
 # debug
 lerna-debug.log*

@@ -11,11 +11,13 @@
     ]
   },
   "scripts": {
-    "fix": "yarn fix:markdownlint; yarn fix:prettier; yarn fix:yarn-deduplicate",
+    "fix": "yarn fix:eslint; yarn fix:markdownlint; yarn fix:prettier; yarn fix:yarn-deduplicate",
+    "fix:eslint": "eslint --fix \"**/*\"",
     "fix:markdownlint": "markdownlint --fix \"**/*\"",
     "fix:prettier": "prettier --write \"**/*\"",
     "fix:yarn-deduplicate": "yarn install && yarn-deduplicate --strategy=fewer && yarn install",
-    "lint": "yarn lint:markdownlint && yarn lint:prettier && yarn lint:yarn-deduplicate",
+    "lint": "yarn lint:eslint && yarn lint:markdownlint && yarn lint:prettier && yarn lint:yarn-deduplicate",
+    "lint:eslint": "eslint \"**/*\" --report-unused-disable-directives",
     "lint:markdownlint": "markdownlint \"**/*\"",
     "lint:prettier": "prettier --check \"**/*\"",
     "lint:yarn-deduplicate": "yarn-deduplicate --fail --list --strategy=fewer"
@@ -31,17 +33,20 @@
   },
   "lint-staged": {
     "**/*": [
+      "eslint --fix",
       "markdownlint --fix",
       "prettier --write"
     ]
   },
   "devDependencies": {
     "@hkdobrev/run-if-changed": "^0.3.1",
+    "eslint": "^6.8.0",
     "husky": "^4.2.5",
     "lerna": "^3.21.0",
     "lint-staged": "^10.2.6",
     "markdownlint-cli": "^0.23.1",
     "prettier": "^2.0.5",
+    "typescript": "^3.9.3",
     "yarn-deduplicate": "^2.0.0"
   },
   "engines": {

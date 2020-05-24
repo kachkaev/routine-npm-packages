@@ -1,10 +1,10 @@
 {
-  "name": "@kachkaev/markdownlint-config",
+  "name": "@kachkaev/eslint-config-react",
   "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:kachkaev/routine-npm-packages.git",
-    "directory": "packages/markdownlint-config"
+    "directory": "packages/eslint-config-react"
   },
   "license": "MIT",
   "author": {
@@ -12,7 +12,11 @@
     "email": "alexander@kachkaev.ru",
     "url": "https://en.kachkaev.ru"
   },
-  "main": "index.js",
+  "dependencies": {
+    "@kachkaev/eslint-config-base": "^0.0.0",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.2"
+  },
   "peerDependencies": {
     "markdownlint-cli": "^0.23.1"
   }

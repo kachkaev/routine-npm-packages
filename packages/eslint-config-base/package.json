@@ -1,0 +1,28 @@
+{
+  "name": "@kachkaev/eslint-config-base",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kachkaev/routine-npm-packages.git",
+    "directory": "packages/eslint-config-base"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Alexander Kachkaev",
+    "email": "alexander@kachkaev.ru",
+    "url": "https://en.kachkaev.ru"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-json": "^2.1.1",
+    "eslint-plugin-simple-import-sort": "^5.0.3"
+  },
+  "peerDependencies": {
+    "eslint": "^6.8.0",
+    "typescript": "^3.9.3"
+  }
+}
