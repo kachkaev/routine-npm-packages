@@ -12,12 +12,15 @@
     "email": "alexander@kachkaev.ru",
     "url": "https://en.kachkaev.ru"
   },
+  "main": "index.js",
   "dependencies": {
     "@kachkaev/eslint-config-base": "^0.0.0",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.2"
   },
   "peerDependencies": {
-    "markdownlint-cli": "^0.23.1"
+    "eslint": "^6.8.0",
+    "react": "^16.8.0",
+    "typescript": "^3.9.3"
   }
 }
