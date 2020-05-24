@@ -1,8 +1,10 @@
 ## extensions
 *.*
+LICENSE
 !*.js
 !*.json
 !*.ts
+
 
 ## same as in .gitignore
 # js

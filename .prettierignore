@@ -1,15 +1,14 @@
 ## extensions
 *.*
-Dockerfile
 LICENSE
-!*.css
-!*.graphql
 !*.js
 !*.json
 !*.md
 !*.ts
 !*.tsx
 !*.yml
+
+!/.github/
 
 ## same as in .gitignore
 # js
