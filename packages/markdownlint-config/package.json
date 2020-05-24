@@ -1,0 +1,18 @@
+{
+  "name": "@kachkaev/markdownlint-config",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kachkaev/routine-npm-packages.git",
+    "directory": "packages/markdownlint-config"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Alexander Kachkaev",
+    "email": "alexander@kachkaev.ru",
+    "url": "https://en.kachkaev.ru"
+  },
+  "peerDependencies": {
+    "markdownlint-cli": "^0.23.1"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "private": true,
+  "author": {
+    "name": "Alexander Kachkaev",
+    "email": "alexander@kachkaev.ru",
+    "url": "https://en.kachkaev.ru"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "fix": "yarn fix:markdownlint; yarn fix:prettier; yarn fix:yarn-deduplicate",
+    "fix:markdownlint": "markdownlint --fix \"**/*\"",
+    "fix:prettier": "prettier --write \"**/*\"",
+    "fix:yarn-deduplicate": "yarn install && yarn-deduplicate --strategy=fewer && yarn install",
+    "lint": "yarn lint:markdownlint && yarn lint:prettier && yarn lint:yarn-deduplicate",
+    "lint:markdownlint": "markdownlint \"**/*\"",
+    "lint:prettier": "prettier --check \"**/*\"",
+    "lint:yarn-deduplicate": "yarn-deduplicate --fail --list --strategy=fewer"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "post-commit": "run-if-changed",
+      "post-checkout": "run-if-changed",
+      "post-merge": "run-if-changed",
+      "post-rewrite": "run-if-changed"
+    }
+  },
+  "lint-staged": {
+    "**/*": [
+      "markdownlint --fix",
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@hkdobrev/run-if-changed": "^0.3.1",
+    "husky": "^4.2.5",
+    "lerna": "^3.21.0",
+    "lint-staged": "^10.2.6",
+    "markdownlint-cli": "^0.23.1",
+    "prettier": "^2.0.5",
+    "yarn-deduplicate": "^2.0.0"
+  },
+  "engines": {
+    "node": "^12.16.0 || ^14.0.0",
+    "yarn": "^1.22.0"
+  },
+  "run-if-changed": {
+    "yarn.lock": "yarn install --prefer-offline --pure-lockfile"
+  }
+}

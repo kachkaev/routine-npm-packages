@@ -1,0 +1,26 @@
+## extensions
+*.*
+Dockerfile
+LICENSE
+!*.css
+!*.graphql
+!*.js
+!*.json
+!*.md
+!*.ts
+!*.tsx
+!*.yml
+
+## same as in .gitignore
+# js
+dist
+node_modules
+
+# misc
+.DS_Store
+.env*
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

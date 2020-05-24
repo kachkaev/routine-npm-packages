@@ -1,0 +1,11 @@
+{
+  "command": {
+    "publish": {
+      "ignoreChanges": ["*.md", "jest.config.js", "*.test.ts"]
+    }
+  },
+  "npmClient": "yarn",
+  "packages": ["packages/*"],
+  "useWorkspaces": true,
+  "version": "independent"
+}
