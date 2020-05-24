@@ -11,16 +11,19 @@
     ]
   },
   "scripts": {
+    "build": "lerna run build",
     "fix": "yarn fix:eslint; yarn fix:markdownlint; yarn fix:prettier; yarn fix:yarn-deduplicate",
     "fix:eslint": "eslint --fix \"**/*\"",
     "fix:markdownlint": "markdownlint --fix \"**/*\"",
     "fix:prettier": "prettier --write \"**/*\"",
     "fix:yarn-deduplicate": "yarn install && yarn-deduplicate --strategy=fewer && yarn install",
-    "lint": "yarn lint:eslint && yarn lint:markdownlint && yarn lint:prettier && yarn lint:yarn-deduplicate",
+    "lint": "yarn lint:eslint && yarn lint:markdownlint && yarn lint:packages && yarn lint:prettier && yarn lint:yarn-deduplicate",
     "lint:eslint": "eslint \"**/*\" --report-unused-disable-directives",
     "lint:markdownlint": "markdownlint \"**/*\"",
+    "lint:packages": "lerna run lint",
     "lint:prettier": "prettier --check \"**/*\"",
-    "lint:yarn-deduplicate": "yarn-deduplicate --fail --list --strategy=fewer"
+    "lint:yarn-deduplicate": "yarn-deduplicate --fail --list --strategy=fewer",
+    "test": "lerna run test"
   },
   "husky": {
     "hooks": {
@@ -40,12 +43,14 @@
   },
   "devDependencies": {
     "@hkdobrev/run-if-changed": "^0.3.1",
+    "@types/lodash": "^4.14.152",
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
     "lerna": "^3.21.0",
     "lint-staged": "^10.2.6",
     "markdownlint-cli": "^0.23.1",
     "prettier": "^2.0.5",
+    "react": "^16.13.1",
     "typescript": "^3.9.3",
     "yarn-deduplicate": "^2.0.0"
   },

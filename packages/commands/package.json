@@ -1,0 +1,36 @@
+{
+  "name": "@kachkaev/commands",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kachkaev/routine-npm-packages.git",
+    "directory": "packages/commands"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Alexander Kachkaev",
+    "email": "alexander@kachkaev.ru",
+    "url": "https://en.kachkaev.ru"
+  },
+  "main": "dist/index.js",
+  "module": "dist/commands.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsdx build",
+    "lint": "tsdx lint",
+    "prepare": "yarn build",
+    "watch": "tsdx watch"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "tsdx": "^0.13.2",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.3"
+  }
+}
