@@ -18,7 +18,7 @@ yarn add -D @kachkaev/markdownlint-config
 
 ```js
 {
-  "extends": "./node_modules/@kachkaev/markdownlint-config/index.json"
+  "extends": "@kachkaev/markdownlint-config"
 }
 
 ```
