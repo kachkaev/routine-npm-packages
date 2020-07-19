@@ -43,16 +43,16 @@
   },
   "devDependencies": {
     "@hkdobrev/run-if-changed": "^0.3.1",
-    "@types/lodash": "^4.14.152",
+    "@types/lodash": "^4.14.157",
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
-    "lerna": "^3.21.0",
-    "lint-staged": "^10.2.6",
-    "markdownlint-cli": "^0.23.1",
+    "lerna": "^3.22.1",
+    "lint-staged": "^10.2.11",
+    "markdownlint-cli": "^0.23.2",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
-    "typescript": "^3.9.3",
-    "yarn-deduplicate": "^2.0.0"
+    "typescript": "^3.9.7",
+    "yarn-deduplicate": "^2.1.1"
   },
   "engines": {
     "node": "^12.16.0 || ^14.0.0",
