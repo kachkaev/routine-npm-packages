@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@hkdobrev/run-if-changed": "^0.3.1",
-    "@types/lodash": "^4.14.157",
+    "@types/lodash": "^4.14.159",
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
     "lerna": "^3.22.1",
