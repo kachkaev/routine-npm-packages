@@ -12,7 +12,8 @@
     "email": "alexander@kachkaev.ru",
     "url": "https://en.kachkaev.ru"
   },
+  "main": "index.json",
   "peerDependencies": {
-    "markdownlint-cli": "^0.23.2"
+    "markdownlint-cli": "^0.24.0"
   }
 }
