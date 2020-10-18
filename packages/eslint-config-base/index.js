@@ -11,8 +11,14 @@ module.exports = {
     "prettier",
     "prettier/@typescript-eslint",
   ],
-  parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "import", "json", "simple-import-sort"],
+  parser: require.resolve("@typescript-eslint/parser"),
+  plugins: [
+    "@typescript-eslint/eslint-plugin",
+    "eslint-plugin-import",
+    "eslint-plugin-jest",
+    "eslint-plugin-json",
+    "eslint-plugin-simple-import-sort",
+  ],
   reportUnusedDisableDirectives: true,
   rules: {
     "@typescript-eslint/array-type": ["error", { default: "array-simple" }],
