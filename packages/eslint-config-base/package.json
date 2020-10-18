@@ -13,9 +13,6 @@
     "url": "https://en.kachkaev.ru"
   },
   "main": "index.js",
-  "peerDependencies": {
-    "eslint": ">=7.0.0"
-  },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "@typescript-eslint/parser": "^4.4.1",
@@ -24,5 +21,8 @@
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-json": "^2.1.2",
     "eslint-plugin-simple-import-sort": "^5.0.3"
+  },
+  "peerDependencies": {
+    "eslint": ">=7.0.0"
   }
 }

@@ -13,13 +13,13 @@
     "url": "https://en.kachkaev.ru"
   },
   "main": "index.js",
-  "peerDependencies": {
-    "eslint": ">=7.0.0"
-  },
   "dependencies": {
     "@kachkaev/eslint-config-base": "^0.1.0",
     "eslint-plugin-react": "^7.21.4",
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-testing-library": "^3.9.2"
+  },
+  "peerDependencies": {
+    "eslint": ">=7.0.0"
   }
 }
