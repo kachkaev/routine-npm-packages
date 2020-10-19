@@ -1,6 +1,6 @@
 # [@kachkaev](https://github.com/kachkaev) → prettier config
 
-Compatible with [Prettier](https://www.npmjs.com/package/prettier) v2.
+Works with [Prettier](https://www.npmjs.com/package/prettier) v2, Compatible with Yarn PnP ans well as Classic Yarn / NPM.
 Uses default options, except for setting [`{ trailingComma: "all" }`](https://prettier.io/docs/en/options.html#trailing-commas).
 Includes:
 
