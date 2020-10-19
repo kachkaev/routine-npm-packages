@@ -14,8 +14,8 @@
   },
   "main": "index.js",
   "dependencies": {
-    "prettier-plugin-packagejson": "^2.2.3",
-    "prettier-plugin-sh": "^0.4.0"
+    "prettier-plugin-packagejson": "^2.2.6",
+    "prettier-plugin-sh": "^0.6.0"
   },
   "peerDependencies": {
     "prettier": "^2.0.5"
