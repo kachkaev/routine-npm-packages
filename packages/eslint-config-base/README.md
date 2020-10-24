@@ -1,13 +1,6 @@
 # [@kachkaev](https://github.com/kachkaev) → eslint config (base)
 
-TODO
-
-```txt
-_html
-no-underscore-dangle
-```
-
-Compatible with [ESLint](https://www.npmjs.com/package/eslint) v6.
+Compatible with [ESLint](https://www.npmjs.com/package/eslint) v7.
 Requires [TypeScript](https://www.npmjs.com/package/typescript) to be present as a dependency.
 
 See also [@kachkaev/eslint-config-react](https://www.npmjs.com/package/@kachkaev/eslint-config-react).

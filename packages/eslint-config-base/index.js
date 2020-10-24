@@ -59,7 +59,7 @@ module.exports = {
         selector: ["memberLike"],
         leadingUnderscore: "allow",
         filter: {
-          regex: "^(__ANT_.*|_)$",
+          regex: "^(__ANT_.*|_|__html)$",
           match: false,
         },
         format: ["strictCamelCase", "StrictPascalCase"],
@@ -122,7 +122,6 @@ module.exports = {
           'Use TypeScript unions instead of enums (e.g type Foo = "a" | "b" | "c")', // https://github.com/typescript-eslint/typescript-eslint/issues/561
       },
     ],
-    "no-underscore-dangle": "error",
     "object-shorthand": "error",
     "prefer-arrow-callback": "error",
     "prefer-template": "error",

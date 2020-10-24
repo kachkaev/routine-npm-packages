@@ -1,6 +1,6 @@
 # [@kachkaev](https://github.com/kachkaev) → eslint config (react)
 
-Compatible with [ESLint](https://www.npmjs.com/package/eslint) v6.
+Compatible with [ESLint](https://www.npmjs.com/package/eslint) v7.
 Requires [TypeScript](https://www.npmjs.com/package/typescript) and [React](https://www.npmjs.com/package/react) to be present as a dependency.
 
 See also [@kachkaev/eslint-config-base](https://www.npmjs.com/package/@kachkaev/eslint-config-react).
