@@ -51,7 +51,7 @@ module.exports = {
         selector: ["variableLike"],
         format: ["strictCamelCase", "StrictPascalCase"],
         filter: {
-          regex: "^_$",
+          regex: "^(_|.*[XYZ][A-Z].*)$",
           match: false,
         },
       },
@@ -59,10 +59,10 @@ module.exports = {
         selector: ["memberLike"],
         leadingUnderscore: "allow",
         filter: {
-          regex: "^(__ANT_.*|_|__html)$",
+          regex: "^(__ANT_.*|_|__html|.*(--|__).*)$",
           match: false,
         },
-        format: ["strictCamelCase", "StrictPascalCase"],
+        format: ["strictCamelCase", "StrictPascalCase", "UPPER_CASE"],
       },
     ],
     "@typescript-eslint/no-empty-function": "off",
