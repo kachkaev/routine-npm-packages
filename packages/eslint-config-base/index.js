@@ -93,6 +93,7 @@ module.exports = {
     "import/no-useless-path-segments": ["error", { noUselessIndex: true }],
     "import/order": "off", // See simple-import-sort/sort
     // "import/order": ["error", { "newlines-between": "never" }], // Also see https://github.com/benmosher/eslint-plugin-import/pull/1105
+    "jest/no-deprecated-functions": "off", // Unable to detect Jest version - please ensure jest package is installed, or otherwise set version explicitly
     "jest/no-test-callback": "off", // not compatible with testing Task.fork() etc.
     "lines-between-class-members": [
       "error",
