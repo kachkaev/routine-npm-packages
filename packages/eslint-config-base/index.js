@@ -76,6 +76,7 @@ module.exports = {
       "error",
       { ignoreRestSiblings: true },
     ],
+    "@typescript-eslint/no-use-before-define": "error",
     // "@typescript-eslint/restrict-plus-operands": "error", // https://github.com/typescript-eslint/typescript-eslint/issues/386
     curly: "error",
     eqeqeq: "error",
