@@ -23,8 +23,8 @@
     "lint:packages": "lerna run lint",
     "lint:prettier": "prettier --check \"**/*\"",
     "lint:yarn-deduplicate": "yarn-deduplicate --fail --list --strategy=fewer",
-    "test": "lerna run test",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "lerna run test"
   },
   "lint-staged": {
     "**/*": [
@@ -44,7 +44,7 @@
     "@types/react": "^16.14.5",
     "eslint": "^7.23.0",
     "husky": "^6.0.0",
-    "lerna": "^3.22.1",
+    "lerna": "^4.0.0",
     "lint-staged": "^10.5.4",
     "markdownlint-cli": "^0.27.1",
     "npm-run-all": "^4.1.5",
