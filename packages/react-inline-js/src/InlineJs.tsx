@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import mem from "mem";
 
 import Terser from "terser";
