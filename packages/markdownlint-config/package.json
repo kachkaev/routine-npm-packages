@@ -1,6 +1,6 @@
 {
   "name": "@kachkaev/markdownlint-config",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:kachkaev/routine-npm-packages.git",
