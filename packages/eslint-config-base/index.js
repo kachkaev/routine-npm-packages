@@ -6,6 +6,14 @@ const baseRestrictedSyntax = [
   },
 ];
 
+const restrictedParentImportPaths = Array.from({ length: 10 }).map(
+  (value, depth) => ({
+    name: "../".repeat(depth + 1).slice(0, -1) || ".",
+    message:
+      "Please don not import from parent index files as this may cause crashes due to cyclic dependencies. Use something like ../../path/to/stuff instead.",
+  }),
+);
+
 module.exports = {
   extends: [
     "eslint:recommended",
@@ -125,12 +133,14 @@ module.exports = {
     "no-restricted-imports": [
       "error",
       {
-        // Generate list of not allowed imports: ".", "..", "../..", "../../..", "../../../..", and so on
-        paths: Array.from({ length: 10 }).map((_, depth) => ({
-          name: "../".repeat(depth).slice(0, -1) || ".",
-          message:
-            "Please don not import from parent index files as this may cause crashes due to cyclic dependencies. Use something like ../../path/to/stuff instead.",
-        })),
+        paths: [
+          ...restrictedParentImportPaths,
+          {
+            name: ".",
+            message:
+              "Please don not import parent index files as this may cause crashes due to cyclic dependencies. Use something like ./sibling instead.",
+          },
+        ],
       },
     ],
     "newline-before-return": "error",
@@ -190,6 +200,16 @@ module.exports = {
             message:
               "A script cannot have exports. Reusable logic should be stored outside /scripts/.",
           },
+        ],
+      },
+    },
+    {
+      // Allow imports from index in `*.test.ts` files
+      files: ["**/*.test.{cjs,js,mts,ts,tsx}"],
+      rules: {
+        "no-restricted-imports": [
+          "error",
+          { paths: restrictedParentImportPaths },
         ],
       },
     },
