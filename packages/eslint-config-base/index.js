@@ -18,6 +18,7 @@ module.exports = {
     "eslint-plugin-jest",
     "eslint-plugin-json",
     "eslint-plugin-simple-import-sort",
+    "unicorn",
   ],
   reportUnusedDisableDirectives: true,
   rules: {
@@ -51,7 +52,9 @@ module.exports = {
         selector: ["variableLike"],
         format: ["strictCamelCase", "StrictPascalCase"],
         filter: {
-          regex: "^(_|.*[XYZ][A-Z].*)$",
+          // _ is for lodash
+          // [^_]*[XYZ][A-Z][a-z][^_]* is for variables referring to Cartesian coordinates (e.g. myXRange / someYAxis). The regex contains [^_]* and [A-Z][a-z] to not match MYVAR / MYVar_OOPS.
+          regex: "^(_|[^_]*[XYZ][A-Z][a-z][^_]*)$",
           match: false,
         },
       },
@@ -59,15 +62,19 @@ module.exports = {
         selector: ["memberLike"],
         leadingUnderscore: "allow",
         filter: {
-          regex: "^(__ANT_.*|_|__html|.*(--|__).*)$",
+          // __ANT_.* is for components shadowing things like https://github.com/ant-design/ant-design/blob/ea02c93c448879c7bf8c3e7acb35095882f2e10d/components/tooltip/index.tsx#L86-L89
+          // __html is for https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+          // StrictPascalCase, -- and __ are for http://getbem.com/naming/ + https://www.npmjs.com/package/classnames
+          // UPPER_CASE is for https://www.npmjs.com/package/envalid
+          regex: "^(__ANT_.*|__html|.*[^_-](__|--)[^_-].*)$",
           match: false,
         },
         format: ["strictCamelCase", "StrictPascalCase", "UPPER_CASE"],
       },
     ],
     "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-parameter-properties": "error",
     "@typescript-eslint/no-shadow": ["error"],
@@ -87,6 +94,7 @@ module.exports = {
     "import/named": "off", // https://github.com/benmosher/eslint-plugin-import/issues/1341
     "import/namespace": "off", // Covered by TSC + drops performance significantly
     "import/newline-after-import": "error",
+    "import/no-anonymous-default-export": "error",
     "import/no-duplicates": "error", // warning by default
     "import/no-named-as-default-member": "off", // Too opinionated
     "import/no-named-as-default": "off", // Too opinionated
@@ -104,6 +112,7 @@ module.exports = {
     "no-alert": "error",
     "no-console": "error",
     "no-eval": "error",
+    "no-param-reassign": "error",
     "no-restricted-imports": [
       "error",
       {
@@ -130,6 +139,14 @@ module.exports = {
     "simple-import-sort/sort": "error",
     "sort-imports": "off", // See simple-import-sort/sort
     "spaced-comment": ["error", "always", { block: { balanced: true } }],
+    "unicorn/import-style": [
+      "error",
+      {
+        styles: {
+          lodash: { default: true },
+        },
+      },
+    ],
   },
   overrides: [
     {
