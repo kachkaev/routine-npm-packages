@@ -1,14 +1,12 @@
 import * as React from "react";
 import mem from "mem";
+import { minify, MinifyOutput } from "terser";
+import deasync from "deasync";
 
-import Terser from "terser";
+const minifySync = deasync(minify) as (code: string) => MinifyOutput;
 
-const minify = mem((rawCode: string): string => {
-  const minifyOutput = Terser.minify(rawCode);
-
-  if (minifyOutput.error) {
-    throw minifyOutput.error;
-  }
+const wrappedMinify = mem((rawCode: string): string => {
+  const minifyOutput = minifySync(rawCode);
 
   if (!minifyOutput.code?.length) {
     throw new Error("Minified code is empty");
@@ -33,5 +31,5 @@ export const InlineJs: React.FunctionComponent<{
     );
   }
 
-  return <script dangerouslySetInnerHTML={{ __html: minify(code) }} />;
+  return <script dangerouslySetInnerHTML={{ __html: wrappedMinify(code) }} />;
 };
