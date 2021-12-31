@@ -42,7 +42,6 @@ module.exports = {
       "error",
       {
         "ts-expect-error": "allow-with-description",
-        "ts-ignore": "allow-with-description",
         minimumDescriptionLength: 10,
       },
     ],
@@ -121,6 +120,14 @@ module.exports = {
     "jest/no-deprecated-functions": "off", // Unable to detect Jest version - please ensure jest package is installed, or otherwise set version explicitly
     "jest/no-test-callback": "off", // not compatible with testing Task.fork() etc.
     "jest/prefer-to-be": "error",
+    "id-length": [
+      "error",
+      {
+        min: 2,
+        exceptions: ["_", "x", "y", "z", "a", "b"],
+        properties: "never",
+      },
+    ],
     "lines-between-class-members": [
       "error",
       "always",
@@ -129,7 +136,14 @@ module.exports = {
     "no-alert": "error",
     "no-console": "error",
     "no-eval": "error",
-    "no-param-reassign": "error",
+    "no-param-reassign": [
+      "error",
+      {
+        props: true,
+        ignorePropertyModificationsForRegex: ["^draft"],
+        ignorePropertyModificationsFor: ["req", "request", "res", "response"],
+      },
+    ],
     "no-restricted-imports": [
       "error",
       {
