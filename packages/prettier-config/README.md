@@ -27,23 +27,31 @@ module.exports = require("@kachkaev/prettier-config");
     For example,
 
     ```ini
-    # Ignore all files (but still allow sub-folder scanning)
+    #######################
+    ## Specific to Prettier
+    #######################
+    
+    ## Ignore all files (but still allow sub-folder scanning)
     *
     !*/
     
-    # Allow certain file types
+    ## Allow certain file types
     !*.cjs
     !*.css
     !*.graphql
     !*.js
     !*.json
+    !*.jsx
     !*.md
     !*.mjs
     !*.ts
     !*.tsx
     !*.yml
     
-    ## same as in .gitignore
+    ########################
+    ## Same as in .gitignore
+    ########################
+    
     # (paste lines from .gitignore here)
     ```
 

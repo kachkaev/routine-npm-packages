@@ -29,12 +29,22 @@ yarn add -D @kachkaev/markdownlint-config
     For example,
 
     ```ini
-    ## extensions
-    *.*
+    ###########################
+    ## Specific to Markdownlint
+    ###########################
+    
+    ## Ignore all files (but still allow sub-folder scanning)
+    *
+    !*/
+    
+    ## Allow certain file types
     !*.md
     !*.mdx
     
-    ## same as in .gitignore
+    ########################
+    ## Same as in .gitignore
+    ########################
+    
     # (paste lines from .gitignore here)
     ```
 
