@@ -18,12 +18,10 @@ yarn add -D @kachkaev/markdownlint-config
 
 ```js
 {
-  "extends": "./node_modules/@kachkaev/markdownlint-config/index.json"
+  "extends": "@kachkaev/markdownlint-config"
 }
 
 ```
-
-<!-- https://github.com/igorshubovych/markdownlint-cli/issues/97 -->
 
 1.  Create `.markdownlintignore`.
     For example,
