@@ -14,6 +14,6 @@
   },
   "main": "index.json",
   "peerDependencies": {
-    "markdownlint-cli": "^0.27.1"
+    "markdownlint-cli": ">=0.30.0"
   }
 }
