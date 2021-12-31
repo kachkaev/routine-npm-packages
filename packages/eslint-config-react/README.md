@@ -1,6 +1,6 @@
 # [@kachkaev](https://github.com/kachkaev) → eslint config (react)
 
-Compatible with [ESLint](https://www.npmjs.com/package/eslint) v7.
+Compatible with [ESLint](https://www.npmjs.com/package/eslint) v8.
 Requires [TypeScript](https://www.npmjs.com/package/typescript) and [React](https://www.npmjs.com/package/react) to be present as a dependency.
 
 See also [@kachkaev/eslint-config-base](https://www.npmjs.com/package/@kachkaev/eslint-config-react).
@@ -27,14 +27,29 @@ module.exports = {
     For example,
 
     ```ini
-    ## extensions
-    *.*
+    #####################
+    ## Specific to ESLint
+    #####################
+    
+    ## Ignore all files (but still allow sub-folder scanning)
+    *
+    !*/
+    
+    ## Allow certain file types
+    !*.cjs
+    !*.cts
     !*.js
     !*.json
+    !*.jsx
+    !*.mjs
+    !*.mts
     !*.ts
     !*.tsx
     
-    ## same as in .gitignore
+    ########################
+    ## Same as in .gitignore
+    ########################
+    
     # (paste lines from .gitignore here)
     ```
 

@@ -27,13 +27,27 @@ module.exports = {
     For example,
 
     ```ini
-    ## extensions
-    *.*
+    #####################
+    ## Specific to ESLint
+    #####################
+    
+    ## Ignore all files (but still allow sub-folder scanning)
+    *
+    !*/
+    
+    ## Allow certain file types
+    !*.cjs
+    !*.cts
     !*.js
     !*.json
+    !*.mjs
+    !*.mts
     !*.ts
     
-    ## same as in .gitignore
+    ########################
+    ## Same as in .gitignore
+    ########################
+    
     # (paste lines from .gitignore here)
     ```
 

@@ -9,7 +9,6 @@ module.exports = {
     "plugin:import/warnings",
     "plugin:import/typescript",
     "prettier",
-    "prettier/@typescript-eslint",
   ],
   parser: require.resolve("@typescript-eslint/parser"),
   plugins: [
@@ -136,7 +135,8 @@ module.exports = {
     "object-shorthand": "error",
     "prefer-arrow-callback": "error",
     "prefer-template": "error",
-    "simple-import-sort/sort": "error",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
     "sort-imports": "off", // See simple-import-sort/sort
     "spaced-comment": ["error", "always", { block: { balanced: true } }],
     "unicorn/import-style": [

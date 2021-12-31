@@ -15,11 +15,11 @@
   "main": "index.js",
   "dependencies": {
     "@kachkaev/eslint-config-base": "^0.2.3",
-    "eslint-plugin-react": "^7.23.1",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-testing-library": "^3.10.2"
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-testing-library": "^5.0.1"
   },
   "peerDependencies": {
-    "eslint": ">=7.0.0"
+    "eslint": ">=8.0.0"
   }
 }
