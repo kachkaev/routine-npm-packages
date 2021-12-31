@@ -1,3 +1,11 @@
+const baseRestrictedSyntax = [
+  {
+    selector: "TSEnumDeclaration",
+    message:
+      'Use TypeScript unions instead of enums (e.g type Foo = "a" | "b" | "c")', // https://github.com/typescript-eslint/typescript-eslint/issues/561
+  },
+];
+
 module.exports = {
   extends: [
     "eslint:recommended",
@@ -94,6 +102,7 @@ module.exports = {
     "import/namespace": "off", // Covered by TSC + drops performance significantly
     "import/newline-after-import": "error",
     "import/no-anonymous-default-export": "error",
+    "import/no-default-export": "error",
     "import/no-duplicates": "error", // warning by default
     "import/no-named-as-default-member": "off", // Too opinionated
     "import/no-named-as-default": "off", // Too opinionated
@@ -125,14 +134,7 @@ module.exports = {
       },
     ],
     "newline-before-return": "error",
-    "no-restricted-syntax": [
-      "error",
-      {
-        selector: "TSEnumDeclaration",
-        message:
-          'Use TypeScript unions instead of enums (e.g type Foo = "a" | "b" | "c")', // https://github.com/typescript-eslint/typescript-eslint/issues/561
-      },
-    ],
+    "no-restricted-syntax": ["error", ...baseRestrictedSyntax],
     "object-shorthand": "error",
     "prefer-arrow-callback": "error",
     "prefer-template": "error",
@@ -152,12 +154,19 @@ module.exports = {
   overrides: [
     {
       // Avoid "'module'|'console' is not defined" (caused by no-undef)
-      files: ["*.js"],
+      files: ["**/*.js"],
       env: { node: true },
     },
     {
+      // Allow default exports in configs and Next.js pages
+      files: ["**/*.config.{cjs,js,mjs}", "**/pages/**"],
+      rules: {
+        "import/no-default-export": "off",
+      },
+    },
+    {
       // Allow tool configurations to require("module-name")
-      files: ["*.config.js"],
+      files: ["**/*.config.{cjs,js,mjs}", "*rc.cjs"],
       rules: {
         "@typescript-eslint/no-var-requires": "off",
       },
@@ -167,6 +176,21 @@ module.exports = {
       files: ["next-env.d.ts"],
       rules: {
         "spaced-comment": "off",
+      },
+    },
+    {
+      // Disallow exports from scripts
+      files: ["**/scripts/**"],
+      rules: {
+        "no-restricted-syntax": [
+          "error",
+          ...baseRestrictedSyntax,
+          {
+            selector: "ExportNamedDeclaration,ExportDefaultDeclaration",
+            message:
+              "A script cannot have exports. Reusable logic should be stored outside /scripts/.",
+          },
+        ],
       },
     },
   ],
