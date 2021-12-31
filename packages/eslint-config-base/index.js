@@ -65,7 +65,7 @@ module.exports = {
           // __html is for https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
           // StrictPascalCase, -- and __ are for http://getbem.com/naming/ + https://www.npmjs.com/package/classnames
           // UPPER_CASE is for https://www.npmjs.com/package/envalid
-          regex: "^(__ANT_.*|__html|.*[^_-](__|--)[^_-].*)$",
+          regex: "^(__ANT_.*|_|.*[XYZ][A-Z].*|__html|.*(--|__).*)$",
           match: false,
         },
         format: ["strictCamelCase", "StrictPascalCase", "UPPER_CASE"],
@@ -76,7 +76,7 @@ module.exports = {
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-parameter-properties": "error",
-    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-shadow": "error",
     "@typescript-eslint/no-unused-expressions": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
