@@ -27,16 +27,18 @@ module.exports = require("@kachkaev/prettier-config");
     For example,
 
     ```ini
-    ## extensions
+    # Ignore all files (but still allow sub-folder scanning)
+    *
+    !*/
     
-    *.*
-    Dockerfile
-    LICENSE
+    # Allow certain file types
+    !*.cjs
     !*.css
     !*.graphql
     !*.js
     !*.json
     !*.md
+    !*.mjs
     !*.ts
     !*.tsx
     !*.yml
