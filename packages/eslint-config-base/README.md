@@ -9,19 +9,19 @@ See also [@kachkaev/eslint-config-react](https://www.npmjs.com/package/@kachkaev
 
 1.  Install the package:
 
-```sh
-npm install -D @kachkaev/eslint-config-base
-## or
-yarn add -D @kachkaev/eslint-config-base
-```
+    ```sh
+    npm install -D @kachkaev/eslint-config-base
+    ## or
+    yarn add -D @kachkaev/eslint-config-base
+    ```
 
 1.  Create `.eslintrc.js` with the following contents:
 
-```js
-module.exports = {
-  extends: ["@kachkaev/eslint-config-base"],
-};
-```
+    ```js
+    module.exports = {
+      extends: ["@kachkaev/eslint-config-base"],
+    };
+    ```
 
 1.  Create `.eslintignore`.
     For example,

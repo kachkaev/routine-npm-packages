@@ -8,20 +8,19 @@ See `index.json` for rule details.
 
 1.  Install the package:
 
-```sh
-npm install -D @kachkaev/markdownlint-config
-## or
-yarn add -D @kachkaev/markdownlint-config
-```
+    ```sh
+    npm install -D @kachkaev/markdownlint-config
+    ## or
+    yarn add -D @kachkaev/markdownlint-config
+    ```
 
 1.  Create `.markdownlint.json` with the following contents:
 
-```js
-{
-  "extends": "@kachkaev/markdownlint-config"
-}
-
-```
+    ```js
+    {
+      "extends": "@kachkaev/markdownlint-config"
+    }
+    ```
 
 1.  Create `.markdownlintignore`.
     For example,

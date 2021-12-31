@@ -9,19 +9,38 @@ See also [@kachkaev/eslint-config-base](https://www.npmjs.com/package/@kachkaev/
 
 1.  Install the package:
 
-```sh
-npm install -D @kachkaev/eslint-config-react
-## or
-yarn add -D @kachkaev/eslint-config-react
-```
+    ```sh
+    npm install -D @kachkaev/eslint-config-react
+    ## or
+    yarn add -D @kachkaev/eslint-config-react
+    ```
+
+    If you use Next.js:
+
+    ```sh
+    npm install -D @kachkaev/eslint-config-react @next/eslint-plugin-next
+    ## or
+    yarn add -D @kachkaev/eslint-config-react @next/eslint-plugin-next
+    ```
 
 1.  Create `.eslintrc.js` with the following contents:
 
-```js
-module.exports = {
-  extends: ["@kachkaev/eslint-config-react"],
-};
-```
+    ```js
+    module.exports = {
+      extends: ["@kachkaev/eslint-config-react"],
+    };
+    ```
+
+    If you use Next.js:
+
+    ```js
+    module.exports = {
+      extends: [
+        "@kachkaev/eslint-config-react",
+        "plugin:@next/next/recommended",
+      ],
+    };
+    ```
 
 1.  Create `.eslintignore`.
     For example,

@@ -11,17 +11,17 @@ Includes:
 
 1.  Install the package:
 
-```sh
-npm install -D @kachkaev/prettier-config
-## or
-yarn add -D @kachkaev/prettier-config
-```
+    ```sh
+    npm install -D @kachkaev/prettier-config
+    ## or
+    yarn add -D @kachkaev/prettier-config
+    ```
 
 1.  Create `.prettierrc.js` with the following contents:
 
-```js
-module.exports = require("@kachkaev/prettier-config");
-```
+    ```js
+    module.exports = require("@kachkaev/prettier-config");
+    ```
 
 1.  Create `.prettierignore`.
     For example,
