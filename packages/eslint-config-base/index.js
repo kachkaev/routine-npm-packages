@@ -95,7 +95,7 @@ module.exports = {
     "@typescript-eslint/no-unused-expressions": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
-      { ignoreRestSiblings: true },
+      { ignoreRestSiblings: true, caughtErrors: "all" },
     ],
     "@typescript-eslint/no-use-before-define": "error",
     // "@typescript-eslint/restrict-plus-operands": "error", // https://github.com/typescript-eslint/typescript-eslint/issues/386
@@ -124,7 +124,20 @@ module.exports = {
       "error",
       {
         min: 2,
-        exceptions: ["_", "x", "y", "z", "a", "b"],
+        exceptions: [
+          "_", // lodash
+          "x", // cartesian coordinates
+          "y",
+          "z",
+
+          "t", // time coordinate / translation function
+
+          "a", // arguments of comparison functions
+          "b",
+
+          "A", // styled components
+          "P",
+        ],
         properties: "never",
       },
     ],
@@ -178,7 +191,7 @@ module.exports = {
   overrides: [
     {
       // Avoid "'module'|'console' is not defined" (caused by no-undef)
-      files: ["**/*.js"],
+      files: ["**/*.{cjs,js}"],
       env: { node: true },
     },
     {
