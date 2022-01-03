@@ -35,5 +35,34 @@ module.exports = {
         "react/display-name": "off",
       },
     },
+    {
+      files: ["*.{jsx,tsx}"],
+      rules: {
+        "no-restricted-syntax": [
+          "error",
+          ...baseConfig.rules["no-restricted-syntax"].slice(1),
+          {
+            selector:
+              "TSQualifiedName[left.name=React][right.name=/^(FunctionComponent|FC|SFC|VFC)$/]",
+            message:
+              "Please use `React.VoidFunctionComponent` instead. Context: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/",
+          },
+          // Two rules below help us avoid this common point of confusion: https://stackoverflow.com/q/53048037
+          // The selectors are inspired by https://github.com/yannickcr/eslint-plugin-react/issues/2073#issuecomment-844344470
+          {
+            selector:
+              ":matches(JSXElement, JSXFragment) > JSXExpressionContainer > LogicalExpression[operator='&&']",
+            message:
+              "Please use `condition ? <Jsx /> : undefined`. Otherwise, there is a chance of rendering '0' instead of '' in some cases. Context: https://stackoverflow.com/q/53048037",
+          },
+          {
+            selector:
+              ":matches(JSXElement, JSXFragment) > JSXExpressionContainer > LogicalExpression[operator='||']",
+            message:
+              "Please use `value ?? fallbackValue`. Otherwise, there is a chance of rendering '0' instead of '' in some cases. Context: https://stackoverflow.com/q/53048037",
+          },
+        ],
+      },
+    },
   ],
 };
