@@ -187,6 +187,7 @@ module.exports = {
         },
       },
     ],
+    "unicorn/prevent-abbreviations": "off",
   },
   overrides: [
     {
