@@ -21,7 +21,7 @@
     "email": "alexander@kachkaev.ru",
     "url": "https://en.kachkaev.ru"
   },
-  "main": "dist/main.js",
+  "type": "module",
   "module": "dist/module.js",
   "source": "src/index.ts",
   "types": "dist/types.d.ts",
@@ -34,9 +34,8 @@
     "prepare": "yarn build"
   },
   "dependencies": {
-    "deasync": "^0.1.24",
     "mem": "^9.0.1",
-    "terser": "^5.10.0"
+    "terser": "^4.8.0"
   },
   "peerDependencies": {
     "react": ">=16.14.0"

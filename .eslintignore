@@ -7,6 +7,7 @@
 !*.json
 !*.mjs
 !*.ts
+!*.tsx
 
 
 ## same as in .gitignore

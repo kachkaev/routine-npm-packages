@@ -1,1 +1,1 @@
-export * from "./InlineJs";
+export * from "./inline-jsx";

@@ -8,6 +8,9 @@
   "workspaces": {
     "packages": [
       "packages/*"
+    ],
+    "nohoist": [
+      "**/terser"
     ]
   },
   "scripts": {

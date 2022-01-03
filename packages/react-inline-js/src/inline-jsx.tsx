@@ -1,35 +1,34 @@
-import * as React from "react";
+// eslint-disable-next-line import/no-unresolved -- https://github.com/import-js/eslint-plugin-import/issues/2132
 import mem from "mem";
-import { minify, MinifyOutput } from "terser";
-import deasync from "deasync";
-
-const minifySync = deasync(minify) as (code: string) => MinifyOutput;
+import * as React from "react";
+import { minify } from "terser";
 
 const wrappedMinify = mem((rawCode: string): string => {
-  const minifyOutput = minifySync(rawCode);
+  const { code } = minify(rawCode);
 
-  if (!minifyOutput.code?.length) {
+  if (!code?.length) {
     throw new Error("Minified code is empty");
   }
 
-  if (minifyOutput.code.includes("</script")) {
+  if (code.includes("</script")) {
     throw new Error(
       "Minified code contains </script, which may break the resulting page. Please rewrite your code to avoid this.",
     );
   }
 
-  return minifyOutput.code;
+  return code;
 });
 
-export const InlineJs: React.FunctionComponent<{
+export const InlineJs: React.VoidFunctionComponent<{
   code: string;
   children?: never;
 }> = ({ code }) => {
   if (typeof window !== "undefined") {
-    throw new Error(
+    throw new TypeError(
       "<InlineJs /> is not meant to be used on the client side. Please see documentation.",
     );
   }
 
+  // eslint-disable-next-line react/no-danger
   return <script dangerouslySetInnerHTML={{ __html: wrappedMinify(code) }} />;
 };
