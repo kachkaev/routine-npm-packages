@@ -42,6 +42,17 @@ See also [@kachkaev/eslint-config-base](https://www.npmjs.com/package/@kachkaev/
     };
     ```
 
+    If you want extra typechecking (`tsconfig.json` needs to exist in repo dir):
+
+    ```js
+    module.exports = {
+      extends: [
+        "@kachkaev/eslint-config-react",
+        "@kachkaev/eslint-config-react/extra-type-checking",
+      ],
+    };
+    ```
+
 1.  Create `.eslintignore`.
     For example,
 

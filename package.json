@@ -45,7 +45,7 @@
     "@types/deasync": "^0.1.2",
     "@types/lodash": "^4.14.178",
     "@types/react": "^17.0.38",
-    "eslint": "^8.5.0",
+    "eslint": "^8.6.0",
     "husky": "^7.0.4",
     "lerna": "^4.0.0",
     "lint-staged": "^12.1.4",

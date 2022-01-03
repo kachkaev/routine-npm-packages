@@ -202,8 +202,11 @@ module.exports = {
       },
     },
     {
-      // Allow tool configurations to require("module-name")
-      files: ["**/*.config.{cjs,js,mjs}", "*rc.cjs"],
+      // Allow CommonJS modules to use "require"
+      files: ["*.cjs"],
+      env: {
+        node: true,
+      },
       rules: {
         "@typescript-eslint/no-var-requires": "off",
       },

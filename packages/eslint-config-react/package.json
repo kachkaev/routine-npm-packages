@@ -12,7 +12,13 @@
     "email": "alexander@kachkaev.ru",
     "url": "https://en.kachkaev.ru"
   },
-  "main": "index.js",
+  "type": "commonjs",
+  "exports": {
+    ".": "./index.cjs",
+    "./package.json": "./package.json",
+    "./extra-type-checking": "./extra-type-checking.cjs"
+  },
+  "main": "index.cjs",
   "dependencies": {
     "@kachkaev/eslint-config-base": "^0.3.0",
     "eslint-plugin-react": "^7.28.0",

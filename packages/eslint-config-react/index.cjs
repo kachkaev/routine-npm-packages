@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const baseConfig = require("@kachkaev/eslint-config-base");
 
 module.exports = {
@@ -33,7 +32,7 @@ module.exports = {
         selector:
           ":matches(JSXElement, JSXFragment) > JSXExpressionContainer > LogicalExpression[operator='&&']",
         message:
-          "Please use `condition ? <Jsx /> : null`. Otherwise, there is a chance of rendering '0' instead of '' in some cases. Context: https://stackoverflow.com/q/53048037",
+          "Please use `condition ? <Jsx /> : undefined`. Otherwise, there is a chance of rendering '0' instead of '' in some cases. Context: https://stackoverflow.com/q/53048037",
       },
       {
         selector:
