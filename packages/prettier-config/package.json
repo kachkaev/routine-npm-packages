@@ -12,7 +12,7 @@
     "email": "alexander@kachkaev.ru",
     "url": "https://en.kachkaev.ru"
   },
-  "main": "index.js",
+  "main": "index.cjs",
   "dependencies": {
     "prettier-plugin-packagejson": "^2.2.15",
     "prettier-plugin-sh": "^0.8.1"
