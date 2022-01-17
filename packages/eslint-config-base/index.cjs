@@ -192,7 +192,7 @@ module.exports = {
   overrides: [
     {
       // Avoid "'module'|'console' is not defined" (caused by no-undef)
-      files: ["**/*.{cjs,js}"],
+      files: ["**/*.{cjs,js,mjs}"],
       env: { node: true },
     },
     {
