@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention -- needed due to third-party object shapes */
 const baseConfig = require("@kachkaev/eslint-config-base");
 
 module.exports = {
