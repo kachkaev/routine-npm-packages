@@ -1,20 +1,26 @@
-## extensions
+#######################
+## Specific to Prettier
+#######################
+
+## Ignore all files (but still allow sub-folder scanning)
 *
 !*/
 
+## Allow certain file types
 !*.cjs
-!*.mjs
 !*.js
 !*.json
 !*.md
+!*.mjs
 !*.ts
 !*.tsx
 !*.yml
 
-!/.github/
+########################
+## Same as in .gitignore
+########################
 
-## same as in .gitignore
-# js
+## js
 dist
 node_modules
 
@@ -29,3 +35,10 @@ lerna-debug.log*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#########################
+## Shared between linters
+#########################
+
+.git/
+.yarn/
