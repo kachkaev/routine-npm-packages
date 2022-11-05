@@ -15,6 +15,7 @@ const restrictedParentImportPaths = Array.from({ length: 10 }).map(
   }),
 );
 
+/** @type{import("eslint").Linter.Config} */
 module.exports = {
   extends: [
     "eslint:recommended",

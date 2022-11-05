@@ -14,11 +14,11 @@
   },
   "type": "commonjs",
   "exports": {
-    ".": "./index.cjs",
+    ".": "./main.cjs",
     "./package.json": "./package.json",
     "./extra-type-checking": "./extra-type-checking.cjs"
   },
-  "main": "index.cjs",
+  "main": "main.cjs",
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",

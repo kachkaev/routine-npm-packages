@@ -14,11 +14,11 @@
   },
   "type": "commonjs",
   "exports": {
-    ".": "./index.cjs",
+    ".": "./main.cjs",
     "./package.json": "./package.json",
     "./extra-type-checking": "./extra-type-checking.cjs"
   },
-  "main": "index.cjs",
+  "main": "main.cjs",
   "dependencies": {
     "@kachkaev/eslint-config-base": "^0.4.3",
     "eslint-plugin-react": "^7.31.10",

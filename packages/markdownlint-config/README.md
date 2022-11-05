@@ -2,7 +2,7 @@
 
 Compatible with [markdownlint-cli](https://www.npmjs.com/package/markdownlint-cli) v0.23+.
 To be used together with [`@kachkaev/prettier-config`](https://www.npmjs.com/package/@kachkaev/prettier-config).
-See `index.json` for rule details.
+See `main.json` for rule details.
 
 ## Adding to project
 

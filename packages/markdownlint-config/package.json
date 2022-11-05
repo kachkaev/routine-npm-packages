@@ -1,6 +1,6 @@
 {
   "name": "@kachkaev/markdownlint-config",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:kachkaev/routine-npm-packages.git",
@@ -12,7 +12,7 @@
     "email": "alexander@kachkaev.ru",
     "url": "https://en.kachkaev.ru"
   },
-  "main": "index.json",
+  "main": "main.json",
   "peerDependencies": {
     "markdownlint-cli": ">=0.30.0"
   }
