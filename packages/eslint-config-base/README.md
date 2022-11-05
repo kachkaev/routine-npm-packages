@@ -41,11 +41,11 @@ See also [@kachkaev/eslint-config-react](https://www.npmjs.com/package/@kachkaev
     #####################
     ## Specific to ESLint
     #####################
-    
+
     ## Ignore all files (but still allow sub-folder scanning)
     *
     !*/
-    
+
     ## Allow certain file types
     !*.cjs
     !*.cts
@@ -54,11 +54,11 @@ See also [@kachkaev/eslint-config-react](https://www.npmjs.com/package/@kachkaev
     !*.mjs
     !*.mts
     !*.ts
-    
+
     ########################
     ## Same as in .gitignore
     ########################
-    
+
     # (paste lines from .gitignore here)
     ```
 

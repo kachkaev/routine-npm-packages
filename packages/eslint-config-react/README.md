@@ -60,11 +60,11 @@ See also [@kachkaev/eslint-config-base](https://www.npmjs.com/package/@kachkaev/
     #####################
     ## Specific to ESLint
     #####################
-    
+
     ## Ignore all files (but still allow sub-folder scanning)
     *
     !*/
-    
+
     ## Allow certain file types
     !*.cjs
     !*.cts
@@ -75,11 +75,11 @@ See also [@kachkaev/eslint-config-base](https://www.npmjs.com/package/@kachkaev/
     !*.mts
     !*.ts
     !*.tsx
-    
+
     ########################
     ## Same as in .gitignore
     ########################
-    
+
     # (paste lines from .gitignore here)
     ```
 

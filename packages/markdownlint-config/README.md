@@ -29,19 +29,19 @@ See `index.json` for rule details.
     ###########################
     ## Specific to Markdownlint
     ###########################
-    
+
     ## Ignore all files (but still allow sub-folder scanning)
     *
     !*/
-    
+
     ## Allow certain file types
     !*.md
     !*.mdx
-    
+
     ########################
     ## Same as in .gitignore
     ########################
-    
+
     # (paste lines from .gitignore here)
     ```
 

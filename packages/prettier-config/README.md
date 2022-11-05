@@ -30,11 +30,11 @@ Includes:
     #######################
     ## Specific to Prettier
     #######################
-    
+
     ## Ignore all files (but still allow sub-folder scanning)
     *
     !*/
-    
+
     ## Allow certain file types
     !*.cjs
     !*.css
@@ -47,11 +47,11 @@ Includes:
     !*.ts
     !*.tsx
     !*.yml
-    
+
     ########################
     ## Same as in .gitignore
     ########################
-    
+
     # (paste lines from .gitignore here)
     ```
 
