@@ -1,11 +1,13 @@
 {
   "default": true,
+
   "first-line-heading": false,
   "hr-style": false,
   "line-length": false,
   "list-marker-space": { "ol_multi": 2, "ol_single": 2 },
   "no-alt-text": false,
   "no-bare-urls": false,
+  "no-duplicate-heading": { "siblings_only": true },
   "no-inline-html": false,
   "no-trailing-spaces": false,
   "ol-prefix": { "style": "one" }
