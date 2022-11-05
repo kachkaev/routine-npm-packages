@@ -44,6 +44,7 @@ module.exports = {
       "error",
       {
         "ts-expect-error": "allow-with-description",
+        "ts-ignore": "allow-with-description",
         minimumDescriptionLength: 10,
       },
     ],
@@ -101,6 +102,7 @@ module.exports = {
     ],
     "@typescript-eslint/no-use-before-define": "error",
     // "@typescript-eslint/restrict-plus-operands": "error", // https://github.com/typescript-eslint/typescript-eslint/issues/386
+    "@typescript-eslint/prefer-ts-expect-error": "error",
     curly: "error",
     eqeqeq: "error",
     "func-style": "error",
