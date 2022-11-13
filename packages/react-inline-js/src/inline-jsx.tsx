@@ -19,9 +19,8 @@ const wrappedMinify = mem((rawCode: string): string => {
   return code;
 });
 
-export const InlineJs: React.VoidFunctionComponent<{
+export const InlineJs: React.FunctionComponent<{
   code: string;
-  children?: never;
 }> = ({ code }) => {
   if (typeof window !== "undefined") {
     throw new TypeError(
