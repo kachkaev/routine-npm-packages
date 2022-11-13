@@ -7,6 +7,42 @@ const baseRestrictedSyntax = [
   },
 ];
 
+const baseNamingConvention =
+  // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
+  [
+    {
+      selector: "class",
+      format: ["StrictPascalCase"],
+    },
+    {
+      selector: "typeLike",
+      format: ["PascalCase"],
+    },
+    {
+      selector: ["variableLike"],
+      format: ["strictCamelCase", "StrictPascalCase"],
+      filter: {
+        // _ is for lodash
+        // [^_]*[XYZ][A-Z][a-z][^_]* is for variables referring to Cartesian coordinates (e.g. myXRange / someYAxis). The regex contains [^_]* and [A-Z][a-z] to not match MYVAR / MYVar_OOPS.
+        regex: "^(_|[^_]*[XYZ][A-Z][a-z][^_]*)$",
+        match: false,
+      },
+    },
+    {
+      selector: ["memberLike"],
+      leadingUnderscore: "allow",
+      filter: {
+        // __ANT_.* is for components shadowing things like https://github.com/ant-design/ant-design/blob/ea02c93c448879c7bf8c3e7acb35095882f2e10d/components/tooltip/index.tsx#L86-L89
+        // __html is for https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+        // StrictPascalCase, -- and __ are for http://getbem.com/naming/ + https://www.npmjs.com/package/classnames
+        // UPPER_CASE is for https://www.npmjs.com/package/envalid
+        regex: "^(__ANT_.*|_|.*[XYZ][A-Z].*|__html|.*(--|__).*)$",
+        match: false,
+      },
+      format: ["strictCamelCase", "StrictPascalCase", "UPPER_CASE"],
+    },
+  ];
+
 const restrictedParentImportPaths = Array.from({ length: 10 }).map(
   (value, depth) => ({
     name: "../".repeat(depth + 1).slice(0, -1) || ".",
@@ -54,41 +90,7 @@ module.exports = {
       { accessibility: "no-public" },
     ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/naming-convention": [
-      "error",
-      // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
-      {
-        selector: "class",
-        format: ["StrictPascalCase"],
-      },
-      {
-        selector: "typeLike",
-        format: ["PascalCase"],
-      },
-      {
-        selector: ["variableLike"],
-        format: ["strictCamelCase", "StrictPascalCase"],
-        filter: {
-          // _ is for lodash
-          // [^_]*[XYZ][A-Z][a-z][^_]* is for variables referring to Cartesian coordinates (e.g. myXRange / someYAxis). The regex contains [^_]* and [A-Z][a-z] to not match MYVAR / MYVar_OOPS.
-          regex: "^(_|[^_]*[XYZ][A-Z][a-z][^_]*)$",
-          match: false,
-        },
-      },
-      {
-        selector: ["memberLike"],
-        leadingUnderscore: "allow",
-        filter: {
-          // __ANT_.* is for components shadowing things like https://github.com/ant-design/ant-design/blob/ea02c93c448879c7bf8c3e7acb35095882f2e10d/components/tooltip/index.tsx#L86-L89
-          // __html is for https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
-          // StrictPascalCase, -- and __ are for http://getbem.com/naming/ + https://www.npmjs.com/package/classnames
-          // UPPER_CASE is for https://www.npmjs.com/package/envalid
-          regex: "^(__ANT_.*|_|.*[XYZ][A-Z].*|__html|.*(--|__).*)$",
-          match: false,
-        },
-        format: ["strictCamelCase", "StrictPascalCase", "UPPER_CASE"],
-      },
-    ],
+    "@typescript-eslint/naming-convention": ["error", ...baseNamingConvention],
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-inferrable-types": "off",
@@ -204,6 +206,17 @@ module.exports = {
       files: ["**/*.config.{cjs,js,mjs}", "**/pages/**"],
       rules: {
         "import/no-default-export": "off",
+      },
+    },
+    {
+      files: ["*rc.{c,m,}js"],
+      rules: {
+        "@typescript-eslint/naming-convention": [
+          "error",
+          ...baseNamingConvention.filter(
+            ({ selector }) => !selector.includes("memberLike"),
+          ),
+        ],
       },
     },
     {
