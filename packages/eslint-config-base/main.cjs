@@ -103,7 +103,6 @@ module.exports = {
       { ignoreRestSiblings: true, caughtErrors: "all" },
     ],
     "@typescript-eslint/no-use-before-define": "error",
-    // "@typescript-eslint/restrict-plus-operands": "error", // https://github.com/typescript-eslint/typescript-eslint/issues/386
     "@typescript-eslint/prefer-ts-expect-error": "error",
     curly: "error",
     eqeqeq: "error",

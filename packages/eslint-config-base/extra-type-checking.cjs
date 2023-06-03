@@ -12,6 +12,10 @@ module.exports = {
       rules: {
         "@typescript-eslint/no-confusing-void-expression": "error",
         "@typescript-eslint/no-unnecessary-condition": "error",
+        "@typescript-eslint/restrict-plus-operands": [
+          "error",
+          { allowAny: true },
+        ],
         "@typescript-eslint/switch-exhaustiveness-check": "error",
       },
     },
