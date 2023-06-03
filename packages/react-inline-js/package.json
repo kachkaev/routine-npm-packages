@@ -34,8 +34,8 @@
     "prepare": "yarn build"
   },
   "dependencies": {
-    "mem": "^9.0.1",
-    "terser": "^4.8.0"
+    "mem": "^9.0.2",
+    "terser": "^4.8.1"
   },
   "peerDependencies": {
     "react": ">=16.14.0"
