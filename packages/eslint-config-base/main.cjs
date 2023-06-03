@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention -- needed due to third-party object shapes */
 const baseRestrictedSyntax = [
   {
     selector: "TSEnumDeclaration",
@@ -51,10 +50,12 @@ const restrictedParentImportPaths = Array.from({ length: 10 }).map(
   }),
 );
 
+/* eslint-disable @typescript-eslint/naming-convention -- needed due to third-party object shapes */
 /** @type{import("eslint").Linter.Config} */
 module.exports = {
   extends: [
     "eslint:recommended",
+    "plugin:@eslint-community/eslint-comments/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/recommended",
@@ -75,6 +76,8 @@ module.exports = {
   ],
   reportUnusedDisableDirectives: true,
   rules: {
+    "@eslint-community/eslint-comments/no-unused-disable": "error",
+    "@eslint-community/eslint-comments/require-description": "error",
     "@typescript-eslint/array-type": ["error", { default: "array-simple" }],
     "@typescript-eslint/ban-ts-comment": [
       "error",
@@ -263,3 +266,4 @@ module.exports = {
     },
   ],
 };
+/* eslint-enable @typescript-eslint/naming-convention -- needed due to third-party object shapes */

@@ -21,3 +21,4 @@ module.exports = {
     },
   ],
 };
+/* eslint-enable @typescript-eslint/naming-convention -- needed due to third-party object shapes */

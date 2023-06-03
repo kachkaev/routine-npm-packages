@@ -28,6 +28,6 @@ export const InlineJs: React.FunctionComponent<{
     );
   }
 
-  // eslint-disable-next-line react/no-danger
+  // eslint-disable-next-line react/no-danger -- by design
   return <script dangerouslySetInnerHTML={{ __html: wrappedMinify(code) }} />;
 };
