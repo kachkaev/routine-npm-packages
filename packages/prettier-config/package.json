@@ -12,12 +12,13 @@
     "email": "alexander@kachkaev.ru",
     "url": "https://en.kachkaev.ru"
   },
-  "main": "main.cjs",
+  "type": "module",
+  "main": "main.js",
   "dependencies": {
-    "prettier-plugin-packagejson": "^2.4.3",
-    "prettier-plugin-sh": "^0.12.8"
+    "prettier-plugin-packagejson": "^2.4.5",
+    "prettier-plugin-sh": "^0.13.1"
   },
   "peerDependencies": {
-    "prettier": "^2.2.1"
+    "prettier": "^3.0.0"
   }
 }
