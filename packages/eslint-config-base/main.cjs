@@ -46,7 +46,7 @@ const restrictedParentImportPaths = Array.from({ length: 10 }).map(
   (value, depth) => ({
     name: "../".repeat(depth + 1).slice(0, -1) || ".",
     message:
-      "Please don not import from parent index files as this may cause crashes due to cyclic dependencies. Use something like ../../path/to/stuff instead.",
+      "Please do not import from parent index files as this may cause crashes due to cyclic dependencies. Use something like ../../path/to/stuff instead.",
   }),
 );
 
@@ -174,7 +174,7 @@ module.exports = {
           {
             name: ".",
             message:
-              "Please don not import parent index files as this may cause crashes due to cyclic dependencies. Use something like ./sibling instead.",
+              "Please do not import parent index files as this may cause crashes due to cyclic dependencies. Use something like ./sibling instead.",
           },
         ],
       },
