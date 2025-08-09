@@ -1,7 +1,7 @@
 # [@kachkaev](https://github.com/kachkaev) → prettier config
 
-Works with [Prettier](https://www.npmjs.com/package/prettier) v2, Compatible with Yarn PnP ans well as Classic Yarn / NPM.
-Uses default options, except for setting [`{ trailingComma: "all" }`](https://prettier.io/docs/en/options.html#trailing-commas).
+Works with [Prettier](https://www.npmjs.com/package/prettier) v3, Compatible with PNPM, Yarn and NPM.
+Uses default options.
 Includes:
 
 - [prettier-plugin-packagejson](https://www.npmjs.com/package/prettier-plugin-packagejson)
@@ -12,9 +12,14 @@ Includes:
 1.  Install the package:
 
     ```sh
+    ## If you use NPM
     npm install -D @kachkaev/prettier-config
-    ## or
+    
+    ## If you use Yarn
     yarn add -D @kachkaev/prettier-config
+    
+    ## If you use PNPM
+    pnpm add -D @kachkaev/prettier-config
     ```
 
 1.  Ensure your `package.json` has `"type": "module"`.
