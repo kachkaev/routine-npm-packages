@@ -13,7 +13,7 @@
     "url": "https://en.kachkaev.ru"
   },
   "type": "module",
-  "main": "main.cjs",
+  "main": "main.js",
   "types": "main.d.ts",
   "dependencies": {
     "prettier-plugin-packagejson": "^2.5.19",
