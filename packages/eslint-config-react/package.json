@@ -1,6 +1,6 @@
 {
   "name": "@kachkaev/eslint-config-react",
-  "version": "0.6.0",
+  "version": "0.7.0-alpha.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:kachkaev/routine-npm-packages.git",
@@ -20,7 +20,7 @@
   },
   "main": "main.cjs",
   "dependencies": {
-    "@kachkaev/eslint-config-base": "^0.6.0",
+    "@kachkaev/eslint-config-base": "^0.7.0-alpha.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^5.11.0"
