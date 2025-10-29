@@ -11,17 +11,17 @@ on:
 jobs:
   lint:
     name: Linting
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           cache: yarn
-          node-version: 18
+          node-version-file: .tool-versions
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -34,17 +34,17 @@ jobs:
 
   unit-tests:
     name: Unit tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           cache: yarn
-          node-version: 18
+          node-version-file: .tool-versions
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
