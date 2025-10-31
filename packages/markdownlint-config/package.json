@@ -13,7 +13,11 @@
     "url": "https://en.kachkaev.ru"
   },
   "main": "main.json",
+  "devDependencies": {
+    "markdownlint": "^0.39.0"
+  },
   "peerDependencies": {
-    "markdownlint-cli": ">=0.30.0"
+    "markdownlint": ">=0.39.0",
+    "markdownlint-cli": ">=0.45.0"
   }
 }

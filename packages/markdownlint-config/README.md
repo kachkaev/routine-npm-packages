@@ -1,17 +1,24 @@
 # [@kachkaev](https://github.com/kachkaev) → markdownlint config
 
-Compatible with [markdownlint-cli](https://www.npmjs.com/package/markdownlint-cli) v0.30+.
+Compatible with [markdownlint-cli](https://www.npmjs.com/package/markdownlint-cli) v0.45+.
 To be used together with [`@kachkaev/prettier-config`](https://www.npmjs.com/package/@kachkaev/prettier-config).
 See `main.json` for rule details.
+
+### Hello
 
 ## Adding to project
 
 1.  Install the package:
 
     ```sh
+    ## If you use NPM
     npm install -D @kachkaev/markdownlint-config
-    ## or
+    
+    ## If you use Yarn
     yarn add -D @kachkaev/markdownlint-config
+    
+    ## If you use PNPM
+    pnpm add -D @kachkaev/markdownlint-config
     ```
 
 1.  Create `.markdownlint.json` with the following contents:
