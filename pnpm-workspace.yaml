@@ -1,0 +1,9 @@
+nodeLinker: isolated
+
+packages:
+  - packages/*
+
+overrides:
+  "@typescript-eslint/eslint-plugin": ">=4.4.1"
+  "@typescript-eslint/parser": ">=4.4.1"
+  "node-notifier": "^8.0.1"
