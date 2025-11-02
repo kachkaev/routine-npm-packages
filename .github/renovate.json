@@ -9,6 +9,7 @@
   ],
   "postUpdateOptions": ["pnpmDedupe"],
   "prConcurrentLimit": 5,
+  "prHourlyLimit": 1,
   "rangeStrategy": "bump",
   "timezone": "Etc/UTC",
   "packageRules": [
