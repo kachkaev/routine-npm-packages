@@ -1,3 +1,6 @@
+ignoredBuiltDependencies:
+  - nx ## Calls verifyOrUpdateNxCloudClient
+
 nodeLinker: isolated
 
 overrides:
