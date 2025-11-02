@@ -32,6 +32,7 @@
   "prettier": "@kachkaev/prettier-config",
   "devDependencies": {
     "@changesets/cli": "2.29.7",
+    "@changesets/config": "3.1.1",
     "@kachkaev/prettier-config": "workspace:*",
     "eslint": "8.57.1",
     "husky": "9.1.7",
