@@ -1,0 +1,5 @@
+44 error TypeError: resolvedPrettier.resolveConfig.sync is not a function
+44 error     at maybeFormatFile (/Users/ak/-/projects/kachkaev/oss/routine-npm-packages/node_modules/lerna/dist/cli.js:5776:53)
+44 error     at gitAdd (/Users/ak/-/projects/kachkaev/oss/routine-npm-packages/node_modules/lerna/dist/cli.js:5799:9)
+44 error     at /Users/ak/-/projects/kachkaev/oss/routine-npm-packages/node_modules/lerna/dist/cli.js:6622:36
+44 error     at async Promise.all (index 0)

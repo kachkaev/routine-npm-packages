@@ -32,6 +32,15 @@ jobs:
       - name: Build packages
         run: pnpm build
 
+      - name: Load Prettier cache
+        if: ${{ success() || failure() }}
+        uses: actions/cache@v4
+        with:
+          key: prettier-${{ github.run_id }}
+          path: node_modules/.cache/prettier
+          restore-keys: |
+            prettier-
+
       - name: Run all linters
         run: pnpm lint
 

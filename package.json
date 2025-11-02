@@ -7,21 +7,20 @@
   },
   "type": "module",
   "scripts": {
-    "build": "lerna run build",
+    "build": "pnpm --no-bail --recursive build",
     "fix": "npm-run-all --continue-on-error \"fix:*\"",
-    "fix:eslint": "eslint --fix .",
+    "fix:eslint": "pnpm --no-bail --recursive fix:eslint",
     "fix:markdownlint": "markdownlint --fix .",
     "fix:pnpm-dedupe": "pnpm dedupe",
-    "fix:prettier": "prettier --write .",
+    "fix:prettier": "prettier --cache --write \"**/*\"",
     "lint": "npm-run-all --continue-on-error \"lint:*\"",
-    "lint:eslint": "eslint .",
+    "lint:eslint": "pnpm --no-bail --recursive lint:eslint",
     "lint:markdownlint": "markdownlint .",
-    "lint:packages": "lerna run lint",
     "lint:pnpm-dedupe": "pnpm dedupe --check",
-    "lint:prettier": "prettier --check .",
+    "lint:prettier": "prettier --cache --check \"**/*\"",
     "prepare": "husky",
-    "release": "changeset publish",
-    "test": "lerna run test"
+    "release": "pnpm build && changeset publish",
+    "test": "pnpm --no-bail --recursive test"
   },
   "lint-staged": {
     "**": [
