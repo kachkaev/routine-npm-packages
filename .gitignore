@@ -7,6 +7,3 @@ node_modules
 .env.*.local
 .env.local
 .parcel-cache
-
-# debug
-lerna-debug.log*
