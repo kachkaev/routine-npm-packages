@@ -1,0 +1,45 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboardApproval",
+    ":disableDigestUpdates",
+    ":maintainLockFilesWeekly",
+    ":semanticCommitsDisabled"
+  ],
+  "postUpdateOptions": ["pnpmDedupe"],
+  "prConcurrentLimit": 5,
+  "rangeStrategy": "bump",
+  "timezone": "Etc/UTC",
+  "packageRules": [
+    {
+      "autoApprove": true,
+      "automerge": true,
+      "dependencyDashboardApproval": false,
+      "enabled": true,
+      "minimumReleaseAge": "2 days",
+      "matchPackageNames": ["/^pnpm$/"]
+    },
+    {
+      "autoApprove": true,
+      "automerge": true,
+      "dependencyDashboardApproval": false,
+      "enabled": true,
+      "matchUpdateTypes": ["patch"],
+      "matchCurrentValue": "!/^0\\./",
+      "matchManagers": ["npm"],
+      "minimumReleaseAge": "2 days",
+      "schedule": ["weekends"]
+    },
+    {
+      "autoApprove": true,
+      "automerge": true,
+      "dependencyDashboardApproval": false,
+      "enabled": true,
+      "matchDepTypes": ["devDependencies"],
+      "matchManagers": ["npm"],
+      "minimumReleaseAge": "2 days",
+      "schedule": ["weekends"]
+    }
+  ]
+}
