@@ -29,7 +29,7 @@
       "matchCurrentValue": "!/^0\\./",
       "matchManagers": ["npm"],
       "minimumReleaseAge": "2 days",
-      "schedule": ["weekends"]
+      "schedule": ["on weekends"]
     },
     {
       "autoApprove": true,
@@ -39,7 +39,7 @@
       "matchDepTypes": ["devDependencies"],
       "matchManagers": ["npm"],
       "minimumReleaseAge": "2 days",
-      "schedule": ["weekends"]
+      "schedule": ["on weekends"]
     }
   ]
 }
