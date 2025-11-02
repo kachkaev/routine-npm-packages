@@ -19,7 +19,8 @@
     "lint:packages": "lerna run lint",
     "lint:pnpm-dedupe": "pnpm dedupe --check",
     "lint:prettier": "prettier --check .",
-    "prepare": "husky install",
+    "prepare": "husky",
+    "release": "changeset publish",
     "test": "lerna run test"
   },
   "lint-staged": {
@@ -31,10 +32,10 @@
   },
   "prettier": "@kachkaev/prettier-config",
   "devDependencies": {
+    "@changesets/cli": "2.29.7",
     "@kachkaev/prettier-config": "workspace:*",
     "eslint": "8.57.1",
     "husky": "9.1.7",
-    "lerna": "9.0.0",
     "lint-staged": "16.2.6",
     "markdownlint-cli": "0.45.0",
     "npm-run-all2": "8.0.4",
