@@ -13,6 +13,9 @@ importers:
 
   .:
     devDependencies:
+      '@kachkaev/prettier-config':
+        specifier: workspace:*
+        version: link:packages/prettier-config
       eslint:
         specifier: 8.57.1
         version: 8.57.1

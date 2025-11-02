@@ -31,6 +31,7 @@
   },
   "prettier": "@kachkaev/prettier-config",
   "devDependencies": {
+    "@kachkaev/prettier-config": "workspace:*",
     "eslint": "8.57.1",
     "husky": "9.1.7",
     "lerna": "9.0.0",
