@@ -1,66 +1,57 @@
 # [@kachkaev](https://github.com/kachkaev) → eslint config (base)
 
-Compatible with [ESLint](https://www.npmjs.com/package/eslint) v7.
+A collection of carefully picked ESLint rules and plugins for TypeScript projects.
+
+Compatible with [ESLint](https://www.npmjs.com/package/eslint) v9+ (Flat config).
 Requires [TypeScript](https://www.npmjs.com/package/typescript) to be present as a dependency.
 
 See also [@kachkaev/eslint-config-react](https://www.npmjs.com/package/@kachkaev/eslint-config-react).
 
 ## Adding to project
 
-1.  Install the package:
+1.  Ensure your `package.json` contains `"type": "module"`.
+
+1.  Ensure your project has a `tsconfig.json` file.
+
+1.  Install these packages as dev dependencies:
 
     ```sh
-    npm install -D @kachkaev/eslint-config-base
-    ## or
-    yarn add -D @kachkaev/eslint-config-base
+    ## If you use NPM
+    npm install -D jiti eslint @kachkaev/eslint-config-base
+    
+    ## If you use PNPM
+    pnpm add -D jiti eslint @kachkaev/eslint-config-base
+    
+    ## If you use Yarn
+    yarn add -D jiti eslint @kachkaev/eslint-config-base
     ```
 
-1.  Create `.eslintrc.js` with the following contents:
+    > `jiti` enables `*.ts` files -- see [ESLint docs](https://eslint.org/docs/latest/use/configure/configuration-files#typescript-configuration-files).
+
+1.  Create `eslint.config.ts` with the following contents:
 
     ```js
-    module.exports = {
-      extends: ["@kachkaev/eslint-config-base"],
-    };
+    import { baseConfigObjects } from "@kachkaev/eslint-config-base";
+
+    export default [
+      ...baseConfigObjects,
+      // ... add your own config overrides here
+    ];
     ```
 
-    If you want extra typechecking (`tsconfig.json` needs to exist in repo dir):
+1.  Add `package.json` scripts:
 
-    ```js
-    module.exports = {
-      extends: [
-        "@kachkaev/eslint-config-base",
-        "@kachkaev/eslint-config-base/extra-type-checking",
-      ],
-    };
+    ```json
+    {
+      "...": "...",
+      "scripts": {
+        "...": "...",
+        "fix:eslint": "eslint --max-warnings=0 --fix .",
+        "...": "...",
+        "lint:eslint": "eslint --max-warnings=0 .",
+        "...": "..."
+      }
+    }
     ```
 
-1.  Create `.eslintignore`.
-    For example,
-
-    ```ini
-    #####################
-    ## Specific to ESLint
-    #####################
-
-    ## Ignore all files (but still allow sub-folder scanning)
-    *
-    !*/
-
-    ## Allow certain file types
-    !*.cjs
-    !*.cts
-    !*.js
-    !*.json
-    !*.mjs
-    !*.mts
-    !*.ts
-
-    ########################
-    ## Same as in .gitignore
-    ########################
-
-    # (paste lines from .gitignore here)
-    ```
-
-1.  Optionally, configure package scripts and a [pre-commit hook](https://prettier.io/docs/en/precommit.html#__docusaurus) to make sure that all project files are always formatted.
-    See example in [`njt` → `package.json`](https://github.com/kachkaev/njt/blob/master/package.json).
+You can now run `[npm/pnpm/yarn] run fix:eslint` to lint your code and `[npm/pnpm/yarn] run lint:eslint` to fix linting errors.

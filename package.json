@@ -18,6 +18,7 @@
     "lint:markdownlint": "markdownlint .",
     "lint:pnpm-dedupe": "pnpm dedupe --check",
     "lint:prettier": "prettier --cache --check \"**/*\"",
+    "lint:tsc": "pnpm --no-bail --recursive lint:tsc",
     "prepare": "husky",
     "release": "pnpm build && changeset publish",
     "test": "pnpm --no-bail --recursive test"

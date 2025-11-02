@@ -15,21 +15,21 @@ Includes:
     ## If you use NPM
     npm install -D @kachkaev/prettier-config
     
-    ## If you use Yarn
-    yarn add -D @kachkaev/prettier-config
-    
     ## If you use PNPM
     pnpm add -D @kachkaev/prettier-config
+    
+    ## If you use Yarn
+    yarn add -D @kachkaev/prettier-config
     ```
 
-1.  Ensure your `package.json` has `"type": "module"`.
+1.  Open `package.json` and add the following line:
 
-    > If you cannot set it, create `prettier.config.mjs` instead of `prettier.config.js` in the next step.
+    ```json
+    {
+      "...": "...",
 
-1.  Create `prettier.config.js` with the following contents:
-
-    ```js
-    export { default } from "@kachkaev/prettier-config";
+      "prettier": "@kachkaev/prettier-config"
+    }
     ```
 
 1.  Create `.prettierignore`.
