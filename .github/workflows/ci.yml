@@ -17,20 +17,23 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v5
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+
       - name: Setup node
         uses: actions/setup-node@v6
         with:
-          cache: yarn
+          cache: pnpm
           node-version-file: .tool-versions
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build packages
-        run: yarn build
+        run: pnpm build
 
       - name: Run all linters
-        run: yarn lint
+        run: pnpm lint
 
   unit-tests:
     name: Unit tests
@@ -40,14 +43,17 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v5
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+
       - name: Setup node
         uses: actions/setup-node@v6
         with:
-          cache: yarn
+          cache: pnpm
           node-version-file: .tool-versions
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Run unit tests
-        run: yarn test
+        run: pnpm test
