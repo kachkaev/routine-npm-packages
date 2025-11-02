@@ -13,6 +13,10 @@
   "timezone": "Etc/UTC",
   "packageRules": [
     {
+      "enabled": false,
+      "matchDepTypes": ["peerDependencies"]
+    },
+    {
       "autoApprove": true,
       "automerge": true,
       "dependencyDashboardApproval": false,
