@@ -15,9 +15,9 @@ import tseslint from "typescript-eslint";
  *
  * Useful for stylistic rule sets (the ones that are not likely to prevent runtime errors)
  */
-export const replaceErrorWithWarn = (
+export function replaceErrorWithWarn(
   configObject: Linter.Config,
-): Linter.Config => {
+): Linter.Config {
   return {
     ...configObject,
     rules: Object.fromEntries(
@@ -31,11 +31,40 @@ export const replaceErrorWithWarn = (
       ]),
     ),
   };
-};
+}
+
+export const ruleArgsForIdLength = [
+  "error",
+  {
+    min: 2,
+    exceptions: [
+      "a", // arguments of comparison functions
+      "b",
+      "d", // datum in visualizations
+
+      "t", // time coordinate / translation function
+
+      "x", // Cartesian coordinates
+      "y",
+      "z",
+    ],
+    properties: "never",
+  },
+] as const;
 
 export const ruleArgsForNoRestrictedImports = [
   "warn",
   {
+    paths: [
+      {
+        name: "zod/v3",
+        message: "Import from zod instead",
+      },
+      {
+        name: "zod/v4",
+        message: "Import from zod instead",
+      },
+    ],
     patterns: [
       {
         // Context: https://hash.dev/blog/file-structuring
@@ -66,8 +95,19 @@ export const ruleArgsForNoRestrictedImports = [
 export const ruleArgsForNoRestrictedSyntax = [
   "warn",
   {
+    selector:
+      "TSQualifiedName[left.name=React][right.name=/^(FunctionComponent|VoidFunctionComponent|FC|SFC|VFC)$/]",
+    message:
+      "This type is not needed, see https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/ for context. If you want to pass a component as prop, use `React.ComponentType`",
+  },
+  {
+    selector:
+      "TSUnionType[types.0.typeName.right.name=ReactNode][types.1.type=TSUndefinedKeyword]",
+    message:
+      "React.ReactNode includes `undefined`, so you can remove `| undefined` from the type",
+  },
+  {
     selector: "Literal[value=/#[0-9a-fA-F]{0,7}[A-F][0-9a-fA-F]{0,7}/]",
-
     message:
       // eslint-disable-next-line no-restricted-syntax -- the rule is barking on itself
       "Please define color HEX codes in lower case for consistency (e.g. #ABCD12 → #abcd12)",
@@ -75,7 +115,6 @@ export const ruleArgsForNoRestrictedSyntax = [
   {
     selector:
       "TemplateElement[value.raw=/#[0-9a-fA-F]{0,7}[A-F][0-9a-fA-F]{0,7}/]",
-
     message:
       // eslint-disable-next-line no-restricted-syntax -- the rule is barking on itself
       "Please define color HEX codes in lower case for consistency (e.g. #ABCD12 → #abcd12)",
@@ -92,11 +131,17 @@ export const baseConfigObjects: Linter.Config[] = [
     files: ["**/*.{ts,tsx}"],
   },
 
+  {
+    ignores: ["dist/", "node_modules/"],
+  },
+
   eslintJs.configs.recommended,
   {
     rules: {
       curly: "warn",
       eqeqeq: "error",
+      "func-style": ["error", "declaration"],
+      "id-length": [...ruleArgsForIdLength],
       "no-alert": "warn",
       "no-console": "warn",
       "no-debugger": "error",
@@ -106,14 +151,10 @@ export const baseConfigObjects: Linter.Config[] = [
       "no-param-reassign": "error",
       "no-restricted-imports": [...ruleArgsForNoRestrictedImports],
       "no-restricted-syntax": [...ruleArgsForNoRestrictedSyntax],
+      "no-undef": "off", // Handled by TypeScript
       "no-useless-rename": "warn",
       "object-shorthand": "warn",
       "prefer-const": "warn",
-      "spaced-comment": [
-        "warn",
-        "always",
-        { markers: ["/", "!"], block: { balanced: true } },
-      ],
     },
   },
 
@@ -148,27 +189,6 @@ export const baseConfigObjects: Linter.Config[] = [
 
   {
     plugins: {
-      "simple-import-sort": eslintPluginSimpleImportSort,
-    },
-    rules: {
-      "simple-import-sort/imports": [
-        "warn",
-        {
-          groups: [
-            [String.raw`^\u0000`], // Side effect imports
-            ["^node:"], // Node.js builtins
-            [String.raw`^(?!@(local|repo))@?\w`], // Imports from external packages
-            ["^@(local|repo)"], // Imports from the monorepo
-            [String.raw`^\.`], // Relative imports
-          ],
-        },
-      ],
-      "simple-import-sort/exports": "warn",
-    },
-  },
-
-  {
-    plugins: {
       "@stylistic": stylisticEslintPlugin,
     },
     rules: {
@@ -178,6 +198,14 @@ export const baseConfigObjects: Linter.Config[] = [
         {
           avoidEscape: true,
           ignoreStringLiterals: true,
+        },
+      ],
+      "@stylistic/spaced-comment": [
+        "warn",
+        "always",
+        {
+          markers: ["/", "!"],
+          block: { balanced: true },
         },
       ],
     },
@@ -195,6 +223,7 @@ export const baseConfigObjects: Linter.Config[] = [
         "warn",
         {
           "ts-expect-error": { descriptionFormat: String.raw`^ -- [\S]` },
+          "ts-ignore": "allow-with-description", // autofixed via @typescript-eslint/prefer-ts-expect-error
           minimumDescriptionLength: 10,
         },
       ],
@@ -204,7 +233,6 @@ export const baseConfigObjects: Linter.Config[] = [
         "warn",
         { ignoreRestSiblings: true, caughtErrors: "all" },
       ],
-      "@typescript-eslint/prefer-regexp-exec": "off",
       "@typescript-eslint/restrict-template-expressions": ["error", {}], // Use default options instead of strict ones
 
       // Not included in `plugin:@typescript-eslint/*` presets, we chose to enable them
@@ -224,9 +252,8 @@ export const baseConfigObjects: Linter.Config[] = [
   eslintPluginImport.flatConfigs.typescript,
   {
     rules: {
-      // Handled by TypeScript + see https://github.com/import-js/eslint-plugin-import/issues/3135
-      "import/namespace": "off",
-      "import/no-unresolved": "off",
+      "import/namespace": "off", // Handled by TypeScript + see https://github.com/import-js/eslint-plugin-import/issues/3135
+      "import/no-unresolved": "off", // Handled by TypeScript + see https://github.com/import-js/eslint-plugin-import/issues/3135
 
       "import/first": "warn",
       "import/newline-after-import": "warn",
@@ -245,6 +272,27 @@ export const baseConfigObjects: Linter.Config[] = [
   },
 
   eslintPluginRegexp.configs["flat/recommended"],
+
+  {
+    plugins: {
+      "simple-import-sort": eslintPluginSimpleImportSort,
+    },
+    rules: {
+      "simple-import-sort/imports": [
+        "warn",
+        {
+          groups: [
+            [String.raw`^\u0000`], // Side effect imports
+            ["^node:"], // Node.js builtins
+            [String.raw`^(?!@(local|repo))@?\w`], // Imports from external packages
+            ["^@(local|repo)"], // Imports from the monorepo
+            [String.raw`^\.`], // Relative imports
+          ],
+        },
+      ],
+      "simple-import-sort/exports": "warn",
+    },
+  },
 
   replaceErrorWithWarn(eslintPluginUnicorn.configs.recommended),
   {

@@ -12,6 +12,8 @@ See also [@kachkaev/eslint-config-react](https://www.npmjs.com/package/@kachkaev
 This configuration uses warnings for rules that are related to code style (the ones that are not likely to prevent runtime errors), and errors otherwise.
 Both severity levels fail CI when `eslint` is called with `--max-warnings=0`.
 
+It is assumed that all files are written in TypeScript and use ESM (not CommonJS).
+
 ## Adding to project
 
 1.  Ensure your `package.json` contains `"type": "module"`.
@@ -36,12 +38,17 @@ Both severity levels fail CI when `eslint` is called with `--max-warnings=0`.
 1.  Create `eslint.config.ts` with the following contents:
 
     ```js
-    import { baseConfigObjects } from "@kachkaev/eslint-config-base";
+    import {
+      baseConfigObjects,
+      configureLanguageOptions,
+    } from "@kachkaev/eslint-config-base";
 
     export default [
       ...baseConfigObjects,
 
       // ... add extra config objects here ...
+
+      configureLanguageOptions(import.meta.dirname),
     ];
     ```
 
