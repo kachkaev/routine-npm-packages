@@ -60,9 +60,9 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
       "...": "...",
       "scripts": {
         "...": "...",
-        "fix:eslint": "eslint --max-warnings=0 --fix .",
+        "fix:eslint": "eslint --max-warnings=0 --fix",
         "...": "...",
-        "lint:eslint": "eslint --max-warnings=0 .",
+        "lint:eslint": "eslint --max-warnings=0",
         "...": "..."
       }
     }

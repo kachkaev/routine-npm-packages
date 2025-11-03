@@ -15,9 +15,9 @@
   "type": "module",
   "main": "main.ts",
   "scripts": {
-    "fix:eslint": "eslint --max-warnings=0 --fix .",
-    "lint:eslint": "eslint --max-warnings=0 .",
-    "lint:tsc": "tsc"
+    "fix:eslint": "eslint --max-warnings=0 --fix",
+    "lint:eslint": "eslint --max-warnings=0",
+    "lint:tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
