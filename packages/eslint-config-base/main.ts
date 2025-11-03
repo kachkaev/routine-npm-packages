@@ -33,6 +33,14 @@ export function replaceErrorWithWarn(
   };
 }
 
+export function replaceErrorsWithWarns(
+  configObjects: Linter.Config[],
+): Linter.Config[] {
+  return configObjects.map((configObject) =>
+    replaceErrorWithWarn(configObject),
+  );
+}
+
 export const ruleArgsForIdLength = [
   "error",
   {
@@ -126,6 +134,18 @@ export const ruleArgsForNoRestrictedSyntax = [
   },
 ] as const;
 
+export const ruleArgsForNamingConvention = [
+  "error",
+  {
+    selector: "typeLike",
+    format: ["PascalCase"],
+  },
+  {
+    selector: "variable",
+    format: ["camelCase", "PascalCase"],
+  },
+] as const;
+
 export const baseConfigObjects: Linter.Config[] = [
   {
     files: ["**/*.{ts,tsx}"],
@@ -158,12 +178,17 @@ export const baseConfigObjects: Linter.Config[] = [
     },
   },
 
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-member-access -- pending https://github.com/eslint-community/eslint-plugin-eslint-comments/pull/246
-  eslintPluginEslintCommentsConfigs.recommended as Linter.Config,
+  replaceErrorWithWarn(
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-member-access -- pending https://github.com/eslint-community/eslint-plugin-eslint-comments/pull/246
+    eslintPluginEslintCommentsConfigs.recommended as Linter.Config,
+  ),
   {
     rules: {
       "@eslint-community/eslint-comments/no-unused-disable": "warn",
-      "@eslint-community/eslint-comments/require-description": "warn",
+      "@eslint-community/eslint-comments/require-description": [
+        "warn",
+        { ignore: ["eslint-enable"] },
+      ],
     },
   },
 
@@ -212,9 +237,7 @@ export const baseConfigObjects: Linter.Config[] = [
   },
 
   ...tseslint.configs.strictTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked.map((configObject) =>
-    replaceErrorWithWarn(configObject),
-  ),
+  ...replaceErrorsWithWarns(tseslint.configs.stylisticTypeChecked),
   {
     rules: {
       // Included in `plugin:@typescript-eslint/*` presets; listed here because of custom config
@@ -242,6 +265,7 @@ export const baseConfigObjects: Linter.Config[] = [
         { assertionStyle: "never" },
       ],
       "@typescript-eslint/explicit-module-boundary-types": "warn",
+      "@typescript-eslint/naming-convention": ruleArgsForNamingConvention,
       "@typescript-eslint/no-shadow": "error",
       "@typescript-eslint/no-unused-expressions": "warn",
       "@typescript-eslint/no-use-before-define": "warn",
