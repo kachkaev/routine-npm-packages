@@ -13,6 +13,7 @@
 
     // options that define available language features
     "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "NodeNext",
+    "types": ["node"]
   }
 }

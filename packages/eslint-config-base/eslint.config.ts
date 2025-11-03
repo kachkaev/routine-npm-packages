@@ -1,3 +1,6 @@
-import { baseConfigObjects } from "./main.ts";
+import { baseConfigObjects, configureLanguageOptions } from "./main.ts";
 
-export default [...baseConfigObjects];
+export default [
+  ...baseConfigObjects,
+  configureLanguageOptions(import.meta.dirname),
+];

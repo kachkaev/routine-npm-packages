@@ -7,6 +7,11 @@ Requires [TypeScript](https://www.npmjs.com/package/typescript) to be present as
 
 See also [@kachkaev/eslint-config-react](https://www.npmjs.com/package/@kachkaev/eslint-config-react).
 
+## Principles
+
+This configuration uses warnings for rules that are related to code style (the ones that are not likely to prevent runtime errors), and errors otherwise.
+Both severity levels fail CI when `eslint` is called with `--max-warnings=0`.
+
 ## Adding to project
 
 1.  Ensure your `package.json` contains `"type": "module"`.
@@ -35,7 +40,8 @@ See also [@kachkaev/eslint-config-react](https://www.npmjs.com/package/@kachkaev
 
     export default [
       ...baseConfigObjects,
-      // ... add your own config overrides here
+
+      // ... add extra config objects here ...
     ];
     ```
 

@@ -1,269 +1,316 @@
-const baseRestrictedSyntax = [
+import eslintJs from "@eslint/js";
+// @ts-expect-error -- pending https://github.com/eslint-community/eslint-plugin-eslint-comments/pull/246
+import eslintPluginEslintCommentsConfigs from "@eslint-community/eslint-plugin-eslint-comments/configs";
+import stylisticEslintPlugin from "@stylistic/eslint-plugin";
+import type { Linter } from "eslint";
+import eslintPluginCheckFile from "eslint-plugin-check-file";
+import eslintPluginImport from "eslint-plugin-import";
+import eslintPluginRegexp from "eslint-plugin-regexp";
+import eslintPluginSimpleImportSort from "eslint-plugin-simple-import-sort";
+import eslintPluginUnicorn from "eslint-plugin-unicorn";
+import tseslint from "typescript-eslint";
+
+/**
+ * Replaces "error" with "warn" for all rules in the config object
+ *
+ * Useful for stylistic rule sets (the ones that are not likely to prevent runtime errors)
+ */
+export const replaceErrorWithWarn = (
+  configObject: Linter.Config,
+): Linter.Config => {
+  return {
+    ...configObject,
+    rules: Object.fromEntries(
+      Object.entries(configObject.rules ?? {}).map(([rule, value]) => [
+        rule,
+        value === "error"
+          ? "warn"
+          : Array.isArray(value) && value[0] === "error"
+            ? ["warn", ...value.slice(1)]
+            : value,
+      ]),
+    ),
+  };
+};
+
+export const ruleArgsForNoRestrictedImports = [
+  "warn",
   {
-    selector: "TSEnumDeclaration",
+    patterns: [
+      {
+        // Context: https://hash.dev/blog/file-structuring
+        group: ["**/shared/@*/*/", "**./@*/*/"],
+        message:
+          "You've added a dependency on an internal resource of a shared mini-library. Please re-export your import from `shared/@namespace/mini-lib` or pull it out into a separate mini-lib.",
+      },
+      {
+        group: ["**/shared/[a-z]*/"],
+        message:
+          "You've added a dependency on an internal resource of a shared mini-library. Please re-export your import from `shared/mini-lib` or pull it out into a separate mini-lib.",
+      },
+
+      {
+        group: ["**/../@local/**"],
+        message:
+          "This import refers to another monorepo workspace but uses relative path. Please replace it with a workspace import (e.g. `@local/xyz`).",
+      },
+      {
+        group: ["**/../@repo/**"],
+        message:
+          "This import refers to another monorepo workspace but uses relative path. Please replace it with a workspace import (e.g. `@repo/xyz`).",
+      },
+    ],
+  },
+] as const;
+
+export const ruleArgsForNoRestrictedSyntax = [
+  "warn",
+  {
+    selector: "Literal[value=/#[0-9a-fA-F]{0,7}[A-F][0-9a-fA-F]{0,7}/]",
+
     message:
-      'Use TypeScript unions instead of enums (e.g type Foo = "a" | "b" | "c")', // https://github.com/typescript-eslint/typescript-eslint/issues/561
+      // eslint-disable-next-line no-restricted-syntax -- the rule is barking on itself
+      "Please define color HEX codes in lower case for consistency (e.g. #ABCD12 → #abcd12)",
+  },
+  {
+    selector:
+      "TemplateElement[value.raw=/#[0-9a-fA-F]{0,7}[A-F][0-9a-fA-F]{0,7}/]",
+
+    message:
+      // eslint-disable-next-line no-restricted-syntax -- the rule is barking on itself
+      "Please define color HEX codes in lower case for consistency (e.g. #ABCD12 → #abcd12)",
+  },
+  {
+    selector: "TSIntersectionType > TSStringKeyword",
+    message:
+      "If you want to mix a union type with `string` but retain auto-completion, please use `LiteralUnion<YourUnion, string>` from `type-fest`",
+  },
+] as const;
+
+export const baseConfigObjects: Linter.Config[] = [
+  {
+    files: ["**/*.{ts,tsx}"],
+  },
+
+  eslintJs.configs.recommended,
+  {
+    rules: {
+      curly: "warn",
+      eqeqeq: "error",
+      "no-alert": "warn",
+      "no-console": "warn",
+      "no-debugger": "error",
+      "no-empty": "warn",
+      "no-empty-pattern": "warn",
+      "no-implicit-coercion": "error",
+      "no-param-reassign": "error",
+      "no-restricted-imports": [...ruleArgsForNoRestrictedImports],
+      "no-restricted-syntax": [...ruleArgsForNoRestrictedSyntax],
+      "no-useless-rename": "warn",
+      "object-shorthand": "warn",
+      "prefer-const": "warn",
+      "spaced-comment": [
+        "warn",
+        "always",
+        { markers: ["/", "!"], block: { balanced: true } },
+      ],
+    },
+  },
+
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-member-access -- pending https://github.com/eslint-community/eslint-plugin-eslint-comments/pull/246
+  eslintPluginEslintCommentsConfigs.recommended as Linter.Config,
+  {
+    rules: {
+      "@eslint-community/eslint-comments/no-unused-disable": "warn",
+      "@eslint-community/eslint-comments/require-description": "warn",
+    },
+  },
+
+  {
+    plugins: {
+      "check-file": eslintPluginCheckFile,
+    },
+    rules: {
+      "check-file/no-index": "warn",
+      "check-file/filename-blocklist": [
+        "error",
+        {
+          "**/*util*": "",
+          "**/*util*/**": "",
+        },
+        {
+          errorMessage:
+            "Avoid `util` / `utils` in file and folder names for consistency. Rename `xyz-util` / `xyz-utils` to `xyz-helpers`",
+        },
+      ],
+    },
+  },
+
+  {
+    plugins: {
+      "simple-import-sort": eslintPluginSimpleImportSort,
+    },
+    rules: {
+      "simple-import-sort/imports": [
+        "warn",
+        {
+          groups: [
+            [String.raw`^\u0000`], // Side effect imports
+            ["^node:"], // Node.js builtins
+            [String.raw`^(?!@(local|repo))@?\w`], // Imports from external packages
+            ["^@(local|repo)"], // Imports from the monorepo
+            [String.raw`^\.`], // Relative imports
+          ],
+        },
+      ],
+      "simple-import-sort/exports": "warn",
+    },
+  },
+
+  {
+    plugins: {
+      "@stylistic": stylisticEslintPlugin,
+    },
+    rules: {
+      "@stylistic/quotes": [
+        "warn",
+        "double",
+        {
+          avoidEscape: true,
+          ignoreStringLiterals: true,
+        },
+      ],
+    },
+  },
+
+  ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.stylisticTypeChecked.map((configObject) =>
+    replaceErrorWithWarn(configObject),
+  ),
+  {
+    rules: {
+      // Included in `plugin:@typescript-eslint/*` presets; listed here because of custom config
+      "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
+      "@typescript-eslint/ban-ts-comment": [
+        "warn",
+        {
+          "ts-expect-error": { descriptionFormat: String.raw`^ -- [\S]` },
+          minimumDescriptionLength: 10,
+        },
+      ],
+      "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
+      "@typescript-eslint/no-deprecated": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { ignoreRestSiblings: true, caughtErrors: "all" },
+      ],
+      "@typescript-eslint/prefer-regexp-exec": "off",
+      "@typescript-eslint/restrict-template-expressions": ["error", {}], // Use default options instead of strict ones
+
+      // Not included in `plugin:@typescript-eslint/*` presets, we chose to enable them
+      "@typescript-eslint/consistent-type-imports": "warn",
+      "@typescript-eslint/consistent-type-assertions": [
+        "warn",
+        { assertionStyle: "never" },
+      ],
+      "@typescript-eslint/explicit-module-boundary-types": "warn",
+      "@typescript-eslint/no-shadow": "error",
+      "@typescript-eslint/no-unused-expressions": "warn",
+      "@typescript-eslint/no-use-before-define": "warn",
+    },
+  },
+
+  eslintPluginImport.flatConfigs.recommended,
+  eslintPluginImport.flatConfigs.typescript,
+  {
+    rules: {
+      // Handled by TypeScript + see https://github.com/import-js/eslint-plugin-import/issues/3135
+      "import/namespace": "off",
+      "import/no-unresolved": "off",
+
+      "import/first": "warn",
+      "import/newline-after-import": "warn",
+      "import/no-default-export": "warn",
+      "import/no-duplicates": ["warn", { "prefer-inline": true }],
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          devDependencies: false,
+          optionalDependencies: false,
+          peerDependencies: false,
+        },
+      ],
+      "import/no-useless-path-segments": ["warn", { noUselessIndex: true }],
+    },
+  },
+
+  eslintPluginRegexp.configs["flat/recommended"],
+
+  replaceErrorWithWarn(eslintPluginUnicorn.configs.recommended),
+  {
+    rules: {
+      "unicorn/better-regex": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/1852
+      "unicorn/catch-error-name": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/2149
+      "unicorn/expiring-todo-comments": "off", // Dates in TODOs can track when the TODO was created
+      "unicorn/no-nested-ternary": "off", // Conflicts with prettier
+      "unicorn/no-useless-undefined": ["warn", { checkArguments: false }],
+      "unicorn/prefer-native-coercion-functions": "off", // Blocked by https://github.com/sindresorhus/eslint-plugin-unicorn/issues/1857
+      "unicorn/prefer-set-has": "off", // Using plain arrays is marginally slower but produces serializable data that can be used in more ways
+      "unicorn/prefer-top-level-await": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/2149
+      "unicorn/prevent-abbreviations": "off", // Too opinionated (could be re-enabled with custom config)
+    },
+  },
+
+  {
+    files: [
+      "**/*.config.ts",
+      "**/*.test.{ts,tsx}",
+      "scripts/**",
+      "test/**",
+      "tests/**",
+    ],
+    rules: {
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          devDependencies: true,
+          optionalDependencies: false,
+          peerDependencies: false,
+        },
+      ],
+    },
+  },
+
+  {
+    files: [
+      "*.config.ts",
+      "**/*.d.ts",
+      "**/plugin.ts", // custom ESLint plugin (following community pattern)
+      "**/rules/*.ts", // custom ESLint rules (following community pattern)
+    ],
+    rules: {
+      "import/no-default-export": "off",
+    },
+  },
+
+  {
+    files: ["**/*.d.ts"],
+    rules: {
+      "@typescript-eslint/consistent-type-definitions": "off", // Useful to extend third-party interfaces
+      "@typescript-eslint/consistent-indexed-object-style": "off", // Useful to extend third-party interfaces
+      "@typescript-eslint/no-empty-object-type": "off", // Useful to extend third-party interfaces
+    },
   },
 ];
 
-const baseNamingConvention =
-  // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
-  [
-    {
-      selector: "class",
-      format: ["StrictPascalCase"],
-    },
-    {
-      selector: "typeLike",
-      format: ["PascalCase"],
-    },
-    {
-      selector: ["variableLike"],
-      format: ["strictCamelCase", "StrictPascalCase"],
-      filter: {
-        // _ is for lodash
-        // [^_]*[XYZ][A-Z][a-z][^_]* is for variables referring to Cartesian coordinates (e.g. myXRange / someYAxis). The regex contains [^_]* and [A-Z][a-z] to not match MYVAR / MYVar_OOPS.
-        regex: "^(_|[^_]*[XYZ][A-Z][a-z][^_]*)$",
-        match: false,
+export function configureLanguageOptions(dirname: string): Linter.Config {
+  return {
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: dirname,
       },
     },
-    {
-      selector: ["memberLike"],
-      leadingUnderscore: "allow",
-      filter: {
-        // __ANT_.* is for components shadowing things like https://github.com/ant-design/ant-design/blob/ea02c93c448879c7bf8c3e7acb35095882f2e10d/components/tooltip/index.tsx#L86-L89
-        // __html is for https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
-        // StrictPascalCase, -- and __ are for http://getbem.com/naming/ + https://www.npmjs.com/package/classnames
-        // UPPER_CASE is for https://www.npmjs.com/package/envalid
-        regex: "^(__ANT_.*|_|.*[XYZ][A-Z].*|__html|.*(--|__).*)$",
-        match: false,
-      },
-      format: ["strictCamelCase", "StrictPascalCase", "UPPER_CASE"],
-    },
-  ];
-
-const restrictedParentImportPaths = Array.from({ length: 10 }).map(
-  (value, depth) => ({
-    name: "../".repeat(depth + 1).slice(0, -1) || ".",
-    message:
-      "Please do not import from parent index files as this may cause crashes due to cyclic dependencies. Use something like ../../path/to/stuff instead.",
-  }),
-);
-
-/* eslint-disable @typescript-eslint/naming-convention -- needed due to third-party object shapes */
-/** @type{import("eslint").Linter.Config} */
-module.exports = {
-  extends: [
-    "eslint:recommended",
-    "plugin:@eslint-community/eslint-comments/recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/recommended",
-    "plugin:import/typescript",
-    "plugin:jest/recommended",
-    "plugin:json/recommended",
-    "plugin:unicorn/recommended",
-    "prettier",
-  ],
-  parser: require.resolve("@typescript-eslint/parser"),
-  plugins: [
-    "@typescript-eslint/eslint-plugin",
-    "eslint-plugin-import",
-    "eslint-plugin-jest",
-    "eslint-plugin-json",
-    "eslint-plugin-simple-import-sort",
-    "unicorn",
-  ],
-  reportUnusedDisableDirectives: true,
-  rules: {
-    "@eslint-community/eslint-comments/no-unused-disable": "error",
-    "@eslint-community/eslint-comments/require-description": "error",
-    "@typescript-eslint/array-type": ["error", { default: "array-simple" }],
-    "@typescript-eslint/ban-ts-comment": [
-      "error",
-      {
-        "ts-expect-error": "allow-with-description",
-        "ts-ignore": "allow-with-description", // autofixed via @typescript-eslint/prefer-ts-expect-error
-        minimumDescriptionLength: 10,
-      },
-    ],
-    "@typescript-eslint/consistent-type-imports": "error",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/explicit-member-accessibility": [
-      "error",
-      { accessibility: "no-public" },
-    ],
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/naming-convention": ["error", ...baseNamingConvention],
-    "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-inferrable-types": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/no-parameter-properties": "error",
-    "@typescript-eslint/no-shadow": "error",
-    "@typescript-eslint/no-unused-expressions": "error",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      { ignoreRestSiblings: true, caughtErrors: "all" },
-    ],
-    "@typescript-eslint/no-use-before-define": "error",
-    "@typescript-eslint/prefer-ts-expect-error": "error",
-    curly: "error",
-    eqeqeq: "error",
-    "func-style": "error",
-    "import/default": "off", // Covered by TSC
-    "import/export": "off", // Covered by TSC
-    "import/first": "error",
-    "import/named": "off", // https://github.com/benmosher/eslint-plugin-import/issues/1341
-    "import/namespace": "off", // Covered by TSC + drops performance significantly
-    "import/newline-after-import": "error",
-    "import/no-anonymous-default-export": "error",
-    "import/no-default-export": "error",
-    "import/no-duplicates": "error", // warning by default
-    "import/no-named-as-default-member": "off", // Too opinionated
-    "import/no-named-as-default": "off", // Too opinionated
-    "import/no-unresolved": ["error", { ignore: [".svg$"] }],
-    "import/no-useless-path-segments": ["error", { noUselessIndex: true }],
-    "import/order": "off", // See simple-import-sort/sort
-    // "import/order": ["error", { "newlines-between": "never" }], // Also see https://github.com/benmosher/eslint-plugin-import/pull/1105
-    "jest/no-deprecated-functions": "off", // Unable to detect Jest version - please ensure jest package is installed, or otherwise set version explicitly
-    "jest/no-test-callback": "off", // not compatible with testing Task.fork() etc.
-    "jest/prefer-to-be": "error",
-    "id-length": [
-      "error",
-      {
-        min: 2,
-        exceptions: [
-          "_", // lodash
-          "x", // cartesian coordinates
-          "y",
-          "z",
-
-          "t", // time coordinate / translation function
-
-          "a", // arguments of comparison functions
-          "b",
-
-          "A", // styled components
-          "P",
-        ],
-        properties: "never",
-      },
-    ],
-    "lines-between-class-members": [
-      "error",
-      "always",
-      { exceptAfterSingleLine: true },
-    ],
-    "no-alert": "error",
-    "no-console": "error",
-    "no-eval": "error",
-    "no-param-reassign": [
-      "error",
-      {
-        props: true,
-        ignorePropertyModificationsForRegex: ["^draft"],
-        ignorePropertyModificationsFor: ["req", "request", "res", "response"],
-      },
-    ],
-    "no-restricted-imports": [
-      "error",
-      {
-        paths: [
-          ...restrictedParentImportPaths,
-          {
-            name: ".",
-            message:
-              "Please do not import parent index files as this may cause crashes due to cyclic dependencies. Use something like ./sibling instead.",
-          },
-        ],
-      },
-    ],
-    "newline-before-return": "error",
-    "no-restricted-syntax": ["error", ...baseRestrictedSyntax],
-    "object-shorthand": "error",
-    "prefer-arrow-callback": "error",
-    "prefer-template": "error",
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "sort-imports": "off", // See simple-import-sort/sort
-    "spaced-comment": ["error", "always", { block: { balanced: true } }],
-    "unicorn/import-style": [
-      "error",
-      {
-        styles: {
-          lodash: { default: true },
-        },
-      },
-    ],
-    "unicorn/prevent-abbreviations": "off",
-  },
-  overrides: [
-    {
-      // Avoid "'module'|'console' is not defined" (caused by no-undef)
-      files: ["**/*.{cjs,js,mjs}"],
-      env: { node: true },
-    },
-    {
-      // Allow default exports in configs and Next.js pages
-      files: ["**/*.config.{cjs,js,mjs}", "**/pages/**"],
-      rules: {
-        "import/no-default-export": "off",
-      },
-    },
-    {
-      files: ["*rc.{c,m,}js"],
-      rules: {
-        "@typescript-eslint/naming-convention": [
-          "error",
-          ...baseNamingConvention.filter(
-            ({ selector }) => !selector.includes("memberLike"),
-          ),
-        ],
-      },
-    },
-    {
-      // Allow CommonJS modules to use "require"
-      files: ["*.cjs"],
-      env: {
-        node: true,
-      },
-      rules: {
-        "@typescript-eslint/no-var-requires": "off",
-      },
-    },
-    {
-      // Avoid replacing "///" with "// /" in the autogenerated next-env.d.ts without having to maintain this path in .eslintignore
-      files: ["next-env.d.ts"],
-      rules: {
-        "spaced-comment": "off",
-      },
-    },
-    {
-      // Disallow exports from scripts
-      files: ["**/scripts/**"],
-      rules: {
-        "no-restricted-syntax": [
-          "error",
-          ...baseRestrictedSyntax,
-          {
-            selector: "ExportNamedDeclaration,ExportDefaultDeclaration",
-            message:
-              "A script cannot have exports. Reusable logic should be stored outside /scripts/.",
-          },
-        ],
-      },
-    },
-    {
-      // Allow imports from index in `*.test.ts` files
-      files: ["**/*.test.{cjs,js,mts,ts,tsx}"],
-      rules: {
-        "no-restricted-imports": [
-          "error",
-          { paths: restrictedParentImportPaths },
-        ],
-      },
-    },
-  ],
-};
-/* eslint-enable @typescript-eslint/naming-convention -- needed due to third-party object shapes */
+  };
+}
