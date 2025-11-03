@@ -38,18 +38,19 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
 1.  Create `eslint.config.ts` with the following contents:
 
     ```js
+    import { defineConfig } from "eslint/config";
     import {
       baseConfigObjects,
       configureLanguageOptions,
     } from "@kachkaev/eslint-config-base";
 
-    export default [
+    export default defineConfig([
       ...baseConfigObjects,
 
       // ... add extra config objects here ...
 
       configureLanguageOptions(import.meta.dirname),
-    ];
+    ]);
     ```
 
 1.  Add `package.json` scripts:
