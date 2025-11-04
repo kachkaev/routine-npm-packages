@@ -19,6 +19,9 @@
     "prettier-plugin-packagejson": "^2.5.19",
     "prettier-plugin-sh": "^0.18.0"
   },
+  "devDependencies": {
+    "prettier": "3.6.2"
+  },
   "peerDependencies": {
     "prettier": "^3.0.0"
   }
