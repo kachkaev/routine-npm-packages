@@ -382,6 +382,7 @@ export function generateConfigsForLanguageOptions(
 ): Linter.Config[] {
   return [
     {
+      name: "@kachkaev/eslint-config-base -> language options",
       languageOptions: {
         parser: tseslint.parser,
         parserOptions: {
