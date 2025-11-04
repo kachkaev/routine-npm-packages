@@ -87,7 +87,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  packages/eslint-config-react:
+  packages/eslint-config-frontend:
     dependencies:
       '@eslint-react/eslint-plugin':
         specifier: ^2.2.4

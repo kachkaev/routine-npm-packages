@@ -1,10 +1,10 @@
 {
-  "name": "@kachkaev/eslint-config-react",
+  "name": "@kachkaev/eslint-config-frontend",
   "version": "0.7.0-alpha.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:kachkaev/routine-npm-packages.git",
-    "directory": "packages/eslint-config-react"
+    "directory": "packages/eslint-config-frontend"
   },
   "license": "MIT",
   "author": {
