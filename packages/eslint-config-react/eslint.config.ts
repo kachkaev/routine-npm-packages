@@ -1,17 +1,17 @@
 import { defineConfig } from "eslint/config";
 
 import {
-  baseConfigs,
-  configsForNext,
-  configsForReact,
+  generateBaseConfigs,
   generateConfigsForLanguageOptions,
+  generateConfigsForNext,
+  generateConfigsForReact,
   generateConfigsForTailwindcss,
 } from "./main.ts";
 
 export default defineConfig([
-  ...baseConfigs,
-  ...configsForNext,
-  ...configsForReact,
+  ...generateBaseConfigs(),
+  ...generateConfigsForNext(),
+  ...generateConfigsForReact(),
   ...generateConfigsForTailwindcss(undefined),
   ...generateConfigsForLanguageOptions(import.meta.dirname),
 ]);

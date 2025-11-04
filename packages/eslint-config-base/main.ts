@@ -11,31 +11,27 @@ import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import tseslint from "typescript-eslint";
 
 /**
- * Replaces "error" with "warn" for all rules in one or more config objects
+ * Replaces "error" with "warn" for all rules in one or more configs
  *
  * Useful for stylistic rule sets (the ones that are not likely to prevent runtime errors)
  */
+export function replaceErrorWithWarn(config: Linter.Config): Linter.Config;
+export function replaceErrorWithWarn(configs: Linter.Config[]): Linter.Config[];
 export function replaceErrorWithWarn(
-  configObject: Linter.Config,
-): Linter.Config;
-export function replaceErrorWithWarn(
-  configObjects: Linter.Config[],
-): Linter.Config[];
-export function replaceErrorWithWarn(
-  oneOrMoreConfigObjects: Linter.Config | Linter.Config[],
+  oneOrMoreConfigs: Linter.Config | Linter.Config[],
 ): Linter.Config | Linter.Config[] {
-  if (Array.isArray(oneOrMoreConfigObjects)) {
-    return oneOrMoreConfigObjects.map((configObject: Linter.Config) =>
+  if (Array.isArray(oneOrMoreConfigs)) {
+    return oneOrMoreConfigs.map((configObject: Linter.Config) =>
       replaceErrorWithWarn(configObject),
     );
   }
 
-  const configObject = oneOrMoreConfigObjects;
+  const config = oneOrMoreConfigs;
 
   return {
-    ...configObject,
+    ...config,
     rules: Object.fromEntries(
-      Object.entries(configObject.rules ?? {}).map(([rule, value]) => [
+      Object.entries(config.rules ?? {}).map(([rule, value]) => [
         rule,
         value === "error"
           ? "warn"
@@ -149,235 +145,237 @@ export const ruleArgsForUnicornImportStyle = [
   },
 ] as const;
 
-export const baseConfigs: Linter.Config[] = [
-  {
-    files: ["**/*.{ts,tsx}"],
-  },
-
-  {
-    ignores: ["dist/", "node_modules/"],
-  },
-
-  eslintJs.configs.recommended,
-  {
-    rules: {
-      curly: "warn",
-      eqeqeq: "error",
-      "func-style": ["error", "declaration"],
-      "id-length": ruleArgsForIdLength,
-      "no-alert": "warn",
-      "no-console": "warn",
-      "no-debugger": "error",
-      "no-empty": "warn",
-      "no-empty-pattern": "warn",
-      "no-implicit-coercion": "error",
-      "no-param-reassign": "error",
-      "no-restricted-imports": ruleArgsForNoRestrictedImports,
-      "no-restricted-syntax": ruleArgsForNoRestrictedSyntax,
-      "no-undef": "off", // Handled by TypeScript
-      "no-useless-rename": "warn",
-      "object-shorthand": "warn",
-      "prefer-const": "warn",
+export function generateBaseConfigs(): Linter.Config[] {
+  return [
+    {
+      files: ["**/*.{ts,tsx}"],
     },
-  },
 
-  replaceErrorWithWarn(
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-member-access -- pending https://github.com/eslint-community/eslint-plugin-eslint-comments/pull/246
-    eslintPluginEslintCommentsConfigs.recommended as Linter.Config,
-  ),
-  {
-    rules: {
-      "@eslint-community/eslint-comments/no-unused-disable": "warn",
-      "@eslint-community/eslint-comments/require-description": [
-        "warn",
-        { ignore: ["eslint-enable"] },
+    {
+      ignores: ["dist/", "node_modules/"],
+    },
+
+    eslintJs.configs.recommended,
+    {
+      rules: {
+        curly: "warn",
+        eqeqeq: "error",
+        "func-style": ["error", "declaration"],
+        "id-length": ruleArgsForIdLength,
+        "no-alert": "warn",
+        "no-console": "warn",
+        "no-debugger": "error",
+        "no-empty": "warn",
+        "no-empty-pattern": "warn",
+        "no-implicit-coercion": "error",
+        "no-param-reassign": "error",
+        "no-restricted-imports": ruleArgsForNoRestrictedImports,
+        "no-restricted-syntax": ruleArgsForNoRestrictedSyntax,
+        "no-undef": "off", // Handled by TypeScript
+        "no-useless-rename": "warn",
+        "object-shorthand": "warn",
+        "prefer-const": "warn",
+      },
+    },
+
+    replaceErrorWithWarn(
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-member-access -- pending https://github.com/eslint-community/eslint-plugin-eslint-comments/pull/246
+      eslintPluginEslintCommentsConfigs.recommended as Linter.Config,
+    ),
+    {
+      rules: {
+        "@eslint-community/eslint-comments/no-unused-disable": "warn",
+        "@eslint-community/eslint-comments/require-description": [
+          "warn",
+          { ignore: ["eslint-enable"] },
+        ],
+      },
+    },
+
+    {
+      plugins: {
+        "check-file": eslintPluginCheckFile,
+      },
+      rules: {
+        "check-file/no-index": "warn",
+        "check-file/filename-blocklist": [
+          "error",
+          {
+            "**/*util*": "",
+            "**/*util*/**": "",
+          },
+          {
+            errorMessage:
+              "Avoid `util` / `utils` in file and folder names for consistency. Rename `xyz-util` / `xyz-utils` to `xyz-helpers`",
+          },
+        ],
+      },
+    },
+
+    {
+      plugins: {
+        "@stylistic": stylisticEslintPlugin,
+      },
+      rules: {
+        "@stylistic/quotes": [
+          "warn",
+          "double",
+          {
+            avoidEscape: true,
+            ignoreStringLiterals: true,
+          },
+        ],
+        "@stylistic/spaced-comment": [
+          "warn",
+          "always",
+          {
+            markers: ["/", "!"],
+            block: { balanced: true },
+          },
+        ],
+      },
+    },
+
+    ...tseslint.configs.strictTypeChecked,
+    ...replaceErrorWithWarn(tseslint.configs.stylisticTypeChecked),
+    {
+      rules: {
+        // Included in `plugin:@typescript-eslint/*` presets; listed here because of custom config
+        "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
+        "@typescript-eslint/ban-ts-comment": [
+          "warn",
+          {
+            "ts-expect-error": { descriptionFormat: String.raw`^ -- [\S]` },
+            "ts-ignore": "allow-with-description", // autofixed via @typescript-eslint/prefer-ts-expect-error
+            minimumDescriptionLength: 10,
+          },
+        ],
+        "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
+        "@typescript-eslint/no-deprecated": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          { ignoreRestSiblings: true, caughtErrors: "all" },
+        ],
+        "@typescript-eslint/restrict-template-expressions": ["error", {}], // Use default options instead of strict ones
+
+        // Not included in `plugin:@typescript-eslint/*` presets, we chose to enable them
+        "@typescript-eslint/consistent-type-imports": "warn",
+        "@typescript-eslint/consistent-type-assertions": [
+          "warn",
+          { assertionStyle: "never" },
+        ],
+        "@typescript-eslint/explicit-module-boundary-types": "warn",
+        "@typescript-eslint/naming-convention": ruleArgsForNamingConvention,
+        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/no-unused-expressions": "warn",
+        "@typescript-eslint/no-use-before-define": "warn",
+      },
+    },
+
+    eslintPluginImport.flatConfigs.recommended,
+    eslintPluginImport.flatConfigs.typescript,
+    {
+      rules: {
+        "import/namespace": "off", // Handled by TypeScript + see https://github.com/import-js/eslint-plugin-import/issues/3135
+        "import/no-unresolved": "off", // Handled by TypeScript + see https://github.com/import-js/eslint-plugin-import/issues/3135
+
+        "import/first": "warn",
+        "import/newline-after-import": "warn",
+        "import/no-default-export": "warn",
+        "import/no-duplicates": ["warn", { "prefer-inline": true }],
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            devDependencies: false,
+            optionalDependencies: false,
+            peerDependencies: false,
+          },
+        ],
+        "import/no-useless-path-segments": ["warn", { noUselessIndex: true }],
+      },
+    },
+
+    eslintPluginRegexp.configs["flat/recommended"],
+
+    {
+      plugins: {
+        "simple-import-sort": eslintPluginSimpleImportSort,
+      },
+      rules: {
+        "simple-import-sort/imports": [
+          "warn",
+          {
+            groups: [
+              [String.raw`^\u0000`], // Side effect imports
+              ["^node:"], // Node.js builtins
+              [String.raw`^(?!@(local|repo))@?\w`], // Imports from external packages
+              ["^@(local|repo)"], // Imports from the monorepo
+              [String.raw`^\.`], // Relative imports
+            ],
+          },
+        ],
+        "simple-import-sort/exports": "warn",
+      },
+    },
+
+    replaceErrorWithWarn(eslintPluginUnicorn.configs.recommended),
+    {
+      rules: {
+        "unicorn/better-regex": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/1852
+        "unicorn/catch-error-name": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/2149
+        "unicorn/expiring-todo-comments": "off", // Dates in TODOs can track when the TODO was created
+        "unicorn/import-style": ruleArgsForUnicornImportStyle,
+        "unicorn/no-nested-ternary": "off", // Conflicts with prettier
+        "unicorn/no-useless-undefined": ["warn", { checkArguments: false }],
+        "unicorn/prefer-native-coercion-functions": "off", // Blocked by https://github.com/sindresorhus/eslint-plugin-unicorn/issues/1857
+        "unicorn/prefer-set-has": "off", // Using plain arrays is marginally slower but produces serializable data that can be used in more ways
+        "unicorn/prefer-top-level-await": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/2149
+        "unicorn/prevent-abbreviations": "off", // Too opinionated (could be re-enabled with custom config)
+      },
+    },
+
+    {
+      files: [
+        "**/*.config.ts",
+        "**/*.test.{ts,tsx}",
+        "scripts/**",
+        "test/**",
+        "tests/**",
       ],
+      rules: {
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            devDependencies: true,
+            optionalDependencies: false,
+            peerDependencies: false,
+          },
+        ],
+      },
     },
-  },
 
-  {
-    plugins: {
-      "check-file": eslintPluginCheckFile,
-    },
-    rules: {
-      "check-file/no-index": "warn",
-      "check-file/filename-blocklist": [
-        "error",
-        {
-          "**/*util*": "",
-          "**/*util*/**": "",
-        },
-        {
-          errorMessage:
-            "Avoid `util` / `utils` in file and folder names for consistency. Rename `xyz-util` / `xyz-utils` to `xyz-helpers`",
-        },
+    {
+      files: [
+        "*.config.ts",
+        "**/*.d.ts",
+        "**/plugin.ts", // custom ESLint plugin (following community pattern)
+        "**/rules/*.ts", // custom ESLint rules (following community pattern)
       ],
+      rules: {
+        "import/no-default-export": "off",
+      },
     },
-  },
 
-  {
-    plugins: {
-      "@stylistic": stylisticEslintPlugin,
+    {
+      files: ["**/*.d.ts"],
+      rules: {
+        "@typescript-eslint/consistent-type-definitions": "off", // Useful to extend third-party interfaces
+        "@typescript-eslint/consistent-indexed-object-style": "off", // Useful to extend third-party interfaces
+        "@typescript-eslint/no-empty-object-type": "off", // Useful to extend third-party interfaces
+      },
     },
-    rules: {
-      "@stylistic/quotes": [
-        "warn",
-        "double",
-        {
-          avoidEscape: true,
-          ignoreStringLiterals: true,
-        },
-      ],
-      "@stylistic/spaced-comment": [
-        "warn",
-        "always",
-        {
-          markers: ["/", "!"],
-          block: { balanced: true },
-        },
-      ],
-    },
-  },
-
-  ...tseslint.configs.strictTypeChecked,
-  ...replaceErrorWithWarn(tseslint.configs.stylisticTypeChecked),
-  {
-    rules: {
-      // Included in `plugin:@typescript-eslint/*` presets; listed here because of custom config
-      "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
-      "@typescript-eslint/ban-ts-comment": [
-        "warn",
-        {
-          "ts-expect-error": { descriptionFormat: String.raw`^ -- [\S]` },
-          "ts-ignore": "allow-with-description", // autofixed via @typescript-eslint/prefer-ts-expect-error
-          minimumDescriptionLength: 10,
-        },
-      ],
-      "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
-      "@typescript-eslint/no-deprecated": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        { ignoreRestSiblings: true, caughtErrors: "all" },
-      ],
-      "@typescript-eslint/restrict-template-expressions": ["error", {}], // Use default options instead of strict ones
-
-      // Not included in `plugin:@typescript-eslint/*` presets, we chose to enable them
-      "@typescript-eslint/consistent-type-imports": "warn",
-      "@typescript-eslint/consistent-type-assertions": [
-        "warn",
-        { assertionStyle: "never" },
-      ],
-      "@typescript-eslint/explicit-module-boundary-types": "warn",
-      "@typescript-eslint/naming-convention": ruleArgsForNamingConvention,
-      "@typescript-eslint/no-shadow": "error",
-      "@typescript-eslint/no-unused-expressions": "warn",
-      "@typescript-eslint/no-use-before-define": "warn",
-    },
-  },
-
-  eslintPluginImport.flatConfigs.recommended,
-  eslintPluginImport.flatConfigs.typescript,
-  {
-    rules: {
-      "import/namespace": "off", // Handled by TypeScript + see https://github.com/import-js/eslint-plugin-import/issues/3135
-      "import/no-unresolved": "off", // Handled by TypeScript + see https://github.com/import-js/eslint-plugin-import/issues/3135
-
-      "import/first": "warn",
-      "import/newline-after-import": "warn",
-      "import/no-default-export": "warn",
-      "import/no-duplicates": ["warn", { "prefer-inline": true }],
-      "import/no-extraneous-dependencies": [
-        "error",
-        {
-          devDependencies: false,
-          optionalDependencies: false,
-          peerDependencies: false,
-        },
-      ],
-      "import/no-useless-path-segments": ["warn", { noUselessIndex: true }],
-    },
-  },
-
-  eslintPluginRegexp.configs["flat/recommended"],
-
-  {
-    plugins: {
-      "simple-import-sort": eslintPluginSimpleImportSort,
-    },
-    rules: {
-      "simple-import-sort/imports": [
-        "warn",
-        {
-          groups: [
-            [String.raw`^\u0000`], // Side effect imports
-            ["^node:"], // Node.js builtins
-            [String.raw`^(?!@(local|repo))@?\w`], // Imports from external packages
-            ["^@(local|repo)"], // Imports from the monorepo
-            [String.raw`^\.`], // Relative imports
-          ],
-        },
-      ],
-      "simple-import-sort/exports": "warn",
-    },
-  },
-
-  replaceErrorWithWarn(eslintPluginUnicorn.configs.recommended),
-  {
-    rules: {
-      "unicorn/better-regex": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/1852
-      "unicorn/catch-error-name": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/2149
-      "unicorn/expiring-todo-comments": "off", // Dates in TODOs can track when the TODO was created
-      "unicorn/import-style": ruleArgsForUnicornImportStyle,
-      "unicorn/no-nested-ternary": "off", // Conflicts with prettier
-      "unicorn/no-useless-undefined": ["warn", { checkArguments: false }],
-      "unicorn/prefer-native-coercion-functions": "off", // Blocked by https://github.com/sindresorhus/eslint-plugin-unicorn/issues/1857
-      "unicorn/prefer-set-has": "off", // Using plain arrays is marginally slower but produces serializable data that can be used in more ways
-      "unicorn/prefer-top-level-await": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/2149
-      "unicorn/prevent-abbreviations": "off", // Too opinionated (could be re-enabled with custom config)
-    },
-  },
-
-  {
-    files: [
-      "**/*.config.ts",
-      "**/*.test.{ts,tsx}",
-      "scripts/**",
-      "test/**",
-      "tests/**",
-    ],
-    rules: {
-      "import/no-extraneous-dependencies": [
-        "error",
-        {
-          devDependencies: true,
-          optionalDependencies: false,
-          peerDependencies: false,
-        },
-      ],
-    },
-  },
-
-  {
-    files: [
-      "*.config.ts",
-      "**/*.d.ts",
-      "**/plugin.ts", // custom ESLint plugin (following community pattern)
-      "**/rules/*.ts", // custom ESLint rules (following community pattern)
-    ],
-    rules: {
-      "import/no-default-export": "off",
-    },
-  },
-
-  {
-    files: ["**/*.d.ts"],
-    rules: {
-      "@typescript-eslint/consistent-type-definitions": "off", // Useful to extend third-party interfaces
-      "@typescript-eslint/consistent-indexed-object-style": "off", // Useful to extend third-party interfaces
-      "@typescript-eslint/no-empty-object-type": "off", // Useful to extend third-party interfaces
-    },
-  },
-];
+  ];
+}
 
 export function generateConfigsForLanguageOptions(
   dirname: string,

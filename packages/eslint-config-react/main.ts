@@ -51,72 +51,76 @@ const ruleArgsForUnicornImportStyle = [
   },
 ] as const;
 
-export const configsForReact: Linter.Config[] = [
-  {
-    ignores: [".next/"],
-  },
-
-  {
-    rules: {
-      "no-restricted-syntax": [...ruleArgsForNoRestrictedSyntax],
-
-      "unicorn/prefer-global-this": "off", // Allow window.* alongside globalThis.* (which is more practical in frontend code)
-      "unicorn/import-style": [...ruleArgsForUnicornImportStyle],
+export function generateConfigsForReact(): Linter.Config[] {
+  return [
+    {
+      ignores: [".next/"],
     },
-  },
 
-  eslintReactEslintPlugin.configs["strict-type-checked"],
-  {
-    rules: {
-      "@eslint-react/hooks-extra/no-direct-set-state-in-use-effect": "warn",
-      "@eslint-react/no-missing-component-display-name": "warn",
+    {
+      rules: {
+        "no-restricted-syntax": [...ruleArgsForNoRestrictedSyntax],
+
+        "unicorn/prefer-global-this": "off", // Allow window.* alongside globalThis.* (which is more practical in frontend code)
+        "unicorn/import-style": [...ruleArgsForUnicornImportStyle],
+      },
     },
-  },
 
-  eslintPluginReact.configs.flat["recommended"] ?? {},
-  eslintPluginReact.configs.flat["jsx-runtime"] ?? {},
-  {
-    rules: {
-      "react/display-name": "off", // Handled by @eslint-react/no-missing-component-display-name
-      "react/jsx-key": "off", // Handled by @eslint-react/no-missing-key
-      "react/no-array-index-key": "off", // Handled by @eslint-react/no-array-index-key
-      "react/no-render-return-value": "off", // Drops performance, no practical value
-      "react/prop-types": "off", // Handled by TypeScript
-
-      "react/function-component-definition": "warn",
-      "react/jsx-boolean-value": ["warn", "always"],
-      "react/jsx-curly-brace-presence": "warn",
-      "react/jsx-fragments": "warn",
-      "react/no-unknown-property": "warn",
-      "react/self-closing-comp": "warn",
+    eslintReactEslintPlugin.configs["strict-type-checked"],
+    {
+      rules: {
+        "@eslint-react/hooks-extra/no-direct-set-state-in-use-effect": "warn",
+        "@eslint-react/no-missing-component-display-name": "warn",
+      },
     },
-    settings: { react: { version: "detect" } },
-  },
 
-  eslintPluginReactHooks.configs.flat.recommended,
+    eslintPluginReact.configs.flat["recommended"] ?? {},
+    eslintPluginReact.configs.flat["jsx-runtime"] ?? {},
+    {
+      rules: {
+        "react/display-name": "off", // Handled by @eslint-react/no-missing-component-display-name
+        "react/jsx-key": "off", // Handled by @eslint-react/no-missing-key
+        "react/no-array-index-key": "off", // Handled by @eslint-react/no-array-index-key
+        "react/no-render-return-value": "off", // Drops performance, no practical value
+        "react/prop-types": "off", // Handled by TypeScript
 
-  {
-    files: ["**/*.tsx"],
-    rules: {
-      "@typescript-eslint/explicit-module-boundary-types": "off",
+        "react/function-component-definition": "warn",
+        "react/jsx-boolean-value": ["warn", "always"],
+        "react/jsx-curly-brace-presence": "warn",
+        "react/jsx-fragments": "warn",
+        "react/no-unknown-property": "warn",
+        "react/self-closing-comp": "warn",
+      },
+      settings: { react: { version: "detect" } },
     },
-  },
-];
 
-export const configsForNext: Linter.Config[] = [
-  {
-    name: "@kachkaev/eslint-config-react -> next",
-    plugins: {
-      "@next/next": eslintPluginNext,
-    },
-    rules: {
-      ...eslintPluginNext.configs.recommended.rules,
-      ...eslintPluginNext.configs["core-web-vitals"].rules,
+    eslintPluginReactHooks.configs.flat.recommended,
 
-      "@next/next/no-img-element": "off",
+    {
+      files: ["**/*.tsx"],
+      rules: {
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+      },
     },
-  },
-];
+  ];
+}
+
+export function generateConfigsForNext(): Linter.Config[] {
+  return [
+    {
+      name: "@kachkaev/eslint-config-react -> next",
+      plugins: {
+        "@next/next": eslintPluginNext,
+      },
+      rules: {
+        ...eslintPluginNext.configs.recommended.rules,
+        ...eslintPluginNext.configs["core-web-vitals"].rules,
+
+        "@next/next/no-img-element": "off",
+      },
+    },
+  ];
+}
 
 export function generateConfigsForTailwindcss(
   entryPoint: string | undefined,

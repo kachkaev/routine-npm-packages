@@ -1,8 +1,11 @@
 import { defineConfig } from "eslint/config";
 
-import { baseConfigs, generateConfigsForLanguageOptions } from "./main.ts";
+import {
+  generateBaseConfigs,
+  generateConfigsForLanguageOptions,
+} from "./main.ts";
 
 export default defineConfig([
-  ...baseConfigs,
+  ...generateBaseConfigs(),
   ...generateConfigsForLanguageOptions(import.meta.dirname),
 ]);

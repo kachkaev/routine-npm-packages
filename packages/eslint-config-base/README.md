@@ -40,14 +40,14 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
     ```js
     import { defineConfig } from "eslint/config";
     import {
-      baseConfigs,
+      generateBaseConfigs,
       generateConfigsForLanguageOptions,
     } from "@kachkaev/eslint-config-base";
 
     export default defineConfig([
-      ...baseConfigs,
+      ...generateBaseConfigs(),
 
-      // ... add extra config objects here ...
+      // ... add extra configs here ...
 
       ...generateConfigsForLanguageOptions(import.meta.dirname),
     ]);
