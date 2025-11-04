@@ -1,4 +1,4 @@
-# [@kachkaev](https://github.com/kachkaev) → eslint config (frontend)
+# [@kachkaev](https://github.com/kachkaev) → eslint config (Next.js app)
 
 Compatible with [ESLint](https://www.npmjs.com/package/eslint) v8.
 Requires [TypeScript](https://www.npmjs.com/package/typescript) and [React](https://www.npmjs.com/package/react) to be present as a dependency.
