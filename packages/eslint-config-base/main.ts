@@ -11,13 +11,27 @@ import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import tseslint from "typescript-eslint";
 
 /**
- * Replaces "error" with "warn" for all rules in the config object
+ * Replaces "error" with "warn" for all rules in one or more config objects
  *
  * Useful for stylistic rule sets (the ones that are not likely to prevent runtime errors)
  */
 export function replaceErrorWithWarn(
   configObject: Linter.Config,
-): Linter.Config {
+): Linter.Config;
+export function replaceErrorWithWarn(
+  configObjects: Linter.Config[],
+): Linter.Config[];
+export function replaceErrorWithWarn(
+  oneOrMoreConfigObjects: Linter.Config | Linter.Config[],
+): Linter.Config | Linter.Config[] {
+  if (Array.isArray(oneOrMoreConfigObjects)) {
+    return oneOrMoreConfigObjects.map((configObject: Linter.Config) =>
+      replaceErrorWithWarn(configObject),
+    );
+  }
+
+  const configObject = oneOrMoreConfigObjects;
+
   return {
     ...configObject,
     rules: Object.fromEntries(
@@ -31,14 +45,6 @@ export function replaceErrorWithWarn(
       ]),
     ),
   };
-}
-
-export function replaceErrorsWithWarns(
-  configObjects: Linter.Config[],
-): Linter.Config[] {
-  return configObjects.map((configObject) =>
-    replaceErrorWithWarn(configObject),
-  );
 }
 
 export const ruleArgsForIdLength = [
@@ -103,18 +109,6 @@ export const ruleArgsForNoRestrictedImports = [
 export const ruleArgsForNoRestrictedSyntax = [
   "warn",
   {
-    selector:
-      "TSQualifiedName[left.name=React][right.name=/^(FunctionComponent|VoidFunctionComponent|FC|SFC|VFC)$/]",
-    message:
-      "This type is not needed, see https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/ for context. If you want to pass a component as prop, use `React.ComponentType`",
-  },
-  {
-    selector:
-      "TSUnionType[types.0.typeName.right.name=ReactNode][types.1.type=TSUndefinedKeyword]",
-    message:
-      "React.ReactNode includes `undefined`, so you can remove `| undefined` from the type",
-  },
-  {
     selector: "Literal[value=/#[0-9a-fA-F]{0,7}[A-F][0-9a-fA-F]{0,7}/]",
     message:
       // eslint-disable-next-line no-restricted-syntax -- the rule is barking on itself
@@ -146,7 +140,16 @@ export const ruleArgsForNamingConvention = [
   },
 ] as const;
 
-export const baseConfigObjects: Linter.Config[] = [
+export const ruleArgsForUnicornImportStyle = [
+  "warn",
+  {
+    styles: {
+      "date-fns": { namespace: true },
+    },
+  },
+] as const;
+
+export const baseConfigs: Linter.Config[] = [
   {
     files: ["**/*.{ts,tsx}"],
   },
@@ -161,7 +164,7 @@ export const baseConfigObjects: Linter.Config[] = [
       curly: "warn",
       eqeqeq: "error",
       "func-style": ["error", "declaration"],
-      "id-length": [...ruleArgsForIdLength],
+      "id-length": ruleArgsForIdLength,
       "no-alert": "warn",
       "no-console": "warn",
       "no-debugger": "error",
@@ -169,8 +172,8 @@ export const baseConfigObjects: Linter.Config[] = [
       "no-empty-pattern": "warn",
       "no-implicit-coercion": "error",
       "no-param-reassign": "error",
-      "no-restricted-imports": [...ruleArgsForNoRestrictedImports],
-      "no-restricted-syntax": [...ruleArgsForNoRestrictedSyntax],
+      "no-restricted-imports": ruleArgsForNoRestrictedImports,
+      "no-restricted-syntax": ruleArgsForNoRestrictedSyntax,
       "no-undef": "off", // Handled by TypeScript
       "no-useless-rename": "warn",
       "object-shorthand": "warn",
@@ -237,7 +240,7 @@ export const baseConfigObjects: Linter.Config[] = [
   },
 
   ...tseslint.configs.strictTypeChecked,
-  ...replaceErrorsWithWarns(tseslint.configs.stylisticTypeChecked),
+  ...replaceErrorWithWarn(tseslint.configs.stylisticTypeChecked),
   {
     rules: {
       // Included in `plugin:@typescript-eslint/*` presets; listed here because of custom config
@@ -324,6 +327,7 @@ export const baseConfigObjects: Linter.Config[] = [
       "unicorn/better-regex": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/1852
       "unicorn/catch-error-name": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/2149
       "unicorn/expiring-todo-comments": "off", // Dates in TODOs can track when the TODO was created
+      "unicorn/import-style": ruleArgsForUnicornImportStyle,
       "unicorn/no-nested-ternary": "off", // Conflicts with prettier
       "unicorn/no-useless-undefined": ["warn", { checkArguments: false }],
       "unicorn/prefer-native-coercion-functions": "off", // Blocked by https://github.com/sindresorhus/eslint-plugin-unicorn/issues/1857
@@ -375,14 +379,18 @@ export const baseConfigObjects: Linter.Config[] = [
   },
 ];
 
-export function configureLanguageOptions(dirname: string): Linter.Config {
-  return {
-    languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: dirname,
+export function generateConfigsForLanguageOptions(
+  dirname: string,
+): Linter.Config[] {
+  return [
+    {
+      languageOptions: {
+        parser: tseslint.parser,
+        parserOptions: {
+          projectService: true,
+          tsconfigRootDir: dirname,
+        },
       },
     },
-  };
+  ];
 }
