@@ -54,10 +54,7 @@ const ruleArgsForUnicornImportStyle = [
 export function generateConfigsForReact(): Linter.Config[] {
   return [
     {
-      ignores: [".next/"],
-    },
-
-    {
+      name: "@kachkaev/eslint-config-react -> react -> base rule overrides",
       rules: {
         "no-restricted-syntax": [...ruleArgsForNoRestrictedSyntax],
 
@@ -68,6 +65,7 @@ export function generateConfigsForReact(): Linter.Config[] {
 
     eslintReactEslintPlugin.configs["strict-type-checked"],
     {
+      name: "@kachkaev/eslint-config-react -> react -> @eslint-react plugin extras",
       rules: {
         "@eslint-react/hooks-extra/no-direct-set-state-in-use-effect": "warn",
         "@eslint-react/no-missing-component-display-name": "warn",
@@ -77,6 +75,7 @@ export function generateConfigsForReact(): Linter.Config[] {
     eslintPluginReact.configs.flat["recommended"] ?? {},
     eslintPluginReact.configs.flat["jsx-runtime"] ?? {},
     {
+      name: "@kachkaev/eslint-config-react -> react -> react plugin extras",
       rules: {
         "react/display-name": "off", // Handled by @eslint-react/no-missing-component-display-name
         "react/jsx-key": "off", // Handled by @eslint-react/no-missing-key
@@ -97,6 +96,7 @@ export function generateConfigsForReact(): Linter.Config[] {
     eslintPluginReactHooks.configs.flat.recommended,
 
     {
+      name: "@kachkaev/eslint-config-react -> react -> @typescript-eslint/explicit-module-boundary-types override",
       files: ["**/*.tsx"],
       rules: {
         "@typescript-eslint/explicit-module-boundary-types": "off",
@@ -108,7 +108,12 @@ export function generateConfigsForReact(): Linter.Config[] {
 export function generateConfigsForNext(): Linter.Config[] {
   return [
     {
-      name: "@kachkaev/eslint-config-react -> next",
+      name: "@kachkaev/eslint-config-react -> next -> ignores",
+      ignores: [".next/"],
+    },
+
+    {
+      name: "@kachkaev/eslint-config-react -> next -> plugin",
       plugins: {
         "@next/next": eslintPluginNext,
       },

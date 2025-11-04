@@ -10,8 +10,10 @@ import {
 
 export default defineConfig([
   ...generateBaseConfigs(),
+
   ...generateConfigsForNext(),
   ...generateConfigsForReact(),
   ...generateConfigsForTailwindcss(undefined),
+
   ...generateConfigsForLanguageOptions(import.meta.dirname),
 ]);
