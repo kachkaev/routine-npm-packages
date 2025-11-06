@@ -56,7 +56,7 @@ export function generateConfigsForReact(): Linter.Config[] {
   return [];
 }
 
-export function generateConfigsForNext({
+export function generateNextConfigs({
   tailwindcssEntryPoint,
   tsconfigRootDir,
 }: {

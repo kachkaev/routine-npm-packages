@@ -1,5 +1,5 @@
-import { generateConfigsForNext } from "./main.ts";
+import { generateNextConfigs } from "./main.ts";
 
-export default generateConfigsForNext({
+export default generateNextConfigs({
   tsconfigRootDir: import.meta.dirname,
 });

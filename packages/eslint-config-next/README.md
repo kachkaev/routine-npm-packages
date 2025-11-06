@@ -1,87 +1,81 @@
-# [@kachkaev](https://github.com/kachkaev) → eslint config (Next.js app)
+# [@kachkaev](https://github.com/kachkaev) → eslint config (Next.js)
 
-Compatible with [ESLint](https://www.npmjs.com/package/eslint) v8.
-Requires [TypeScript](https://www.npmjs.com/package/typescript) and [React](https://www.npmjs.com/package/react) to be present as a dependency.
+A collection of carefully picked ESLint rules and plugins for Next.js projects (with Rect and TailwindCSS).
 
-See also [@kachkaev/eslint-config-base](https://www.npmjs.com/package/@kachkaev/eslint-config-react).
+Compatible with [ESLint](https://www.npmjs.com/package/eslint) v9+ (Flat config).
+Requires [TypeScript](https://www.npmjs.com/package/typescript) to be present as a dependency.
+
+Built atop [@kachkaev/eslint-config-base](https://www.npmjs.com/package/@kachkaev/eslint-config-base).
+
+## Principles
+
+This configuration uses warnings for rules that are related to code style (the ones that are not likely to prevent runtime errors), and errors otherwise.
+This looks less noisy than using errors for all rules.
+Both severity levels fail CI when `eslint` is called with `--max-warnings=0`.
+
+It is assumed that all files are written in TypeScript and use ESM (not CommonJS).
 
 ## Adding to project
 
-1.  Install the package:
+1.  Ensure your `package.json` contains `"type": "module"`.
+
+1.  Ensure your project has a `tsconfig.json` file.
+
+1.  Install these packages as dev dependencies:
 
     ```sh
-    npm install -D @kachkaev/eslint-config-react
-    ## or
-    yarn add -D @kachkaev/eslint-config-react
+    ## If you use NPM
+    npm install -D jiti eslint @kachkaev/eslint-config-base
+    
+    ## If you use PNPM
+    pnpm add -D jiti eslint @kachkaev/eslint-config-base
+    
+    ## If you use Yarn
+    yarn add -D jiti eslint @kachkaev/eslint-config-base
     ```
 
-    If you use Next.js:
+    > `jiti` enables `*.ts` files -- see [ESLint docs](https://eslint.org/docs/latest/use/configure/configuration-files#typescript-configuration-files).
 
-    ```sh
-    npm install -D @kachkaev/eslint-config-react @next/eslint-plugin-next
-    ## or
-    yarn add -D @kachkaev/eslint-config-react @next/eslint-plugin-next
-    ```
-
-1.  Create `.eslintrc.js` with the following contents:
+1.  Create `eslint.config.ts` with the following contents:
 
     ```js
-    module.exports = {
-      extends: ["@kachkaev/eslint-config-react"],
-    };
+    import { defineConfig } from "eslint/config";
+    import { generateNextConfigs } from "@kachkaev/eslint-config-next";
+
+    export default defineConfig([
+      ...generateNextConfigs(),
+
+      // ... Place additional configs here if needed ...
+    ]);
     ```
 
-    If you use Next.js:
+    > If you work in a monorepo, you may need to specify [`tsconfigRootDir`](https://typescript-eslint.io/packages/parser/#tsconfigrootdir) for some rules to work correctly:
+    >
+    > ```diff
+    > - generateBaseConfigs();
+    > + generateBaseConfigs({ tsconfigRootDir: import.meta.dirname });
+    > ```
+    >
+    > If you use TailwindCSS, you need to specify `tailwindcssEntryPoint` to enable rules from [`eslint-plugin-better-tailwindcss`](https://www.npmjs.com/package/eslint-plugin-better-tailwindcss):
+    >
+    > ```diff
+    > - generateBaseConfigs();
+    > + generateBaseConfigs({ tailwindcssEntryPoint: 'path/to/global.css' });
+    > ```
 
-    ```js
-    module.exports = {
-      extends: [
-        "@kachkaev/eslint-config-react",
-        "plugin:@next/next/recommended",
-      ],
-    };
+1.  Add `package.json` scripts:
+
+    ```json
+    {
+      "...": "...",
+      "scripts": {
+        "...": "...",
+        "fix:eslint": "eslint --max-warnings=0 --fix",
+        "...": "...",
+        "lint:eslint": "eslint --max-warnings=0",
+        "...": "..."
+      }
+    }
     ```
 
-    If you want extra typechecking (`tsconfig.json` needs to exist in repo dir):
-
-    ```js
-    module.exports = {
-      extends: [
-        "@kachkaev/eslint-config-react",
-        "@kachkaev/eslint-config-react/extra-type-checking",
-      ],
-    };
-    ```
-
-1.  Create `.eslintignore`.
-    For example,
-
-    ```ini
-    #####################
-    ## Specific to ESLint
-    #####################
-
-    ## Ignore all files (but still allow sub-folder scanning)
-    *
-    !*/
-
-    ## Allow certain file types
-    !*.cjs
-    !*.cts
-    !*.js
-    !*.json
-    !*.jsx
-    !*.mjs
-    !*.mts
-    !*.ts
-    !*.tsx
-
-    ########################
-    ## Same as in .gitignore
-    ########################
-
-    # (paste lines from .gitignore here)
-    ```
-
-1.  Optionally, configure package scripts and a [pre-commit hook](https://prettier.io/docs/en/precommit.html#__docusaurus) to make sure that all project files are always formatted.
-    See example in [`njt` → `package.json`](https://github.com/kachkaev/njt/blob/master/package.json).
+You can now run `[npm/pnpm/yarn] run fix:eslint` to lint your code and `[npm/pnpm/yarn] run lint:eslint` to fix linting errors.

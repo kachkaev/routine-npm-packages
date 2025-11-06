@@ -5,11 +5,12 @@ A collection of carefully picked ESLint rules and plugins for TypeScript project
 Compatible with [ESLint](https://www.npmjs.com/package/eslint) v9+ (Flat config).
 Requires [TypeScript](https://www.npmjs.com/package/typescript) to be present as a dependency.
 
-See also [@kachkaev/eslint-config-react](https://www.npmjs.com/package/@kachkaev/eslint-config-react).
+See also [@kachkaev/eslint-config-next](https://www.npmjs.com/package/@kachkaev/eslint-config-next).
 
 ## Principles
 
 This configuration uses warnings for rules that are related to code style (the ones that are not likely to prevent runtime errors), and errors otherwise.
+This looks less noisy than using errors for all rules.
 Both severity levels fail CI when `eslint` is called with `--max-warnings=0`.
 
 It is assumed that all files are written in TypeScript and use ESM (not CommonJS).
@@ -39,19 +40,21 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
 
     ```js
     import { defineConfig } from "eslint/config";
-    import {
-      generateBaseConfigs,
-      generateConfigsForLanguageOptions,
-    } from "@kachkaev/eslint-config-base";
+    import { generateBaseConfigs } from "@kachkaev/eslint-config-base";
 
     export default defineConfig([
       ...generateBaseConfigs(),
 
-      // ... add extra configs here ...
-
-      ...generateConfigsForLanguageOptions(import.meta.dirname),
+      // ... Place additional configs here if needed ...
     ]);
     ```
+
+    > If you work in a monorepo, you may need to specify [`tsconfigRootDir`](https://typescript-eslint.io/packages/parser/#tsconfigrootdir) for some rules to work correctly:
+    >
+    > ```diff
+    > - generateBaseConfigs();
+    > + generateBaseConfigs({ tsconfigRootDir: import.meta.dirname });
+    > ```
 
 1.  Add `package.json` scripts:
 

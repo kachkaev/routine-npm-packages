@@ -93,7 +93,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  packages/eslint-config-next-app:
+  packages/eslint-config-next:
     dependencies:
       '@eslint-react/eslint-plugin':
         specifier: ^2.2.4
