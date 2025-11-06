@@ -145,7 +145,11 @@ export const ruleArgsForUnicornImportStyle = [
   },
 ] as const;
 
-export function generateBaseConfigs(): Linter.Config[] {
+export function generateBaseConfigs({
+  tsconfigRootDir,
+}: {
+  tsconfigRootDir?: string | undefined;
+} = {}): Linter.Config[] {
   return [
     {
       files: ["**/*.{ts,tsx}"],
@@ -374,20 +378,14 @@ export function generateBaseConfigs(): Linter.Config[] {
         "@typescript-eslint/no-empty-object-type": "off", // Useful to extend third-party interfaces
       },
     },
-  ];
-}
 
-export function generateConfigsForLanguageOptions(
-  dirname: string,
-): Linter.Config[] {
-  return [
     {
       name: "@kachkaev/eslint-config-base -> language options",
       languageOptions: {
         parser: tseslint.parser,
         parserOptions: {
           projectService: true,
-          tsconfigRootDir: dirname,
+          tsconfigRootDir,
         },
       },
     },

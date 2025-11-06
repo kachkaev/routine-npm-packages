@@ -1,11 +1,3 @@
-import { defineConfig } from "eslint/config";
+import { generateBaseConfigs } from "./main.ts";
 
-import {
-  generateBaseConfigs,
-  generateConfigsForLanguageOptions,
-} from "./main.ts";
-
-export default defineConfig([
-  ...generateBaseConfigs(),
-  ...generateConfigsForLanguageOptions(import.meta.dirname),
-]);
+export default generateBaseConfigs({ tsconfigRootDir: import.meta.dirname });

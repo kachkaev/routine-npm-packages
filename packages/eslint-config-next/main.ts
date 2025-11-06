@@ -1,5 +1,6 @@
 import eslintReactEslintPlugin from "@eslint-react/eslint-plugin";
 import {
+  generateBaseConfigs,
   ruleArgsForNoRestrictedSyntax as baseRuleArgsForNoRestrictedSyntax,
   ruleArgsForUnicornImportStyle as baseRuleArgsForUnicornImportStyle,
 } from "@kachkaev/eslint-config-base";
@@ -52,7 +53,19 @@ const ruleArgsForUnicornImportStyle = [
 ] as const;
 
 export function generateConfigsForReact(): Linter.Config[] {
+  return [];
+}
+
+export function generateConfigsForNext({
+  tailwindcssEntryPoint,
+  tsconfigRootDir,
+}: {
+  tailwindcssEntryPoint?: string | undefined;
+  tsconfigRootDir?: string | undefined;
+} = {}): Linter.Config[] {
   return [
+    ...generateBaseConfigs({ tsconfigRootDir }),
+
     {
       name: "@kachkaev/eslint-config-react -> react -> base rule overrides",
       rules: {
@@ -102,15 +115,6 @@ export function generateConfigsForReact(): Linter.Config[] {
         "@typescript-eslint/explicit-module-boundary-types": "off",
       },
     },
-  ];
-}
-
-export function generateConfigsForNext(): Linter.Config[] {
-  return [
-    {
-      name: "@kachkaev/eslint-config-react -> next -> ignores",
-      ignores: [".next/"],
-    },
 
     {
       name: "@kachkaev/eslint-config-react -> next -> plugin",
@@ -124,39 +128,37 @@ export function generateConfigsForNext(): Linter.Config[] {
         "@next/next/no-img-element": "off",
       },
     },
-  ];
-}
 
-export function generateConfigsForTailwindcss(
-  entryPoint: string | undefined,
-): Linter.Config[] {
-  return [
-    {
-      name: "@kachkaev/eslint-config-react -> tailwindcss",
-      plugins: {
-        "better-tailwindcss": eslintPluginBetterTailwindcss,
-      },
-      settings: {
-        "better-tailwindcss": {
-          attributes: [
-            "^(.+C|c)lassName$",
-            ["^(.+C|c)lassName$", [{ match: "string" }]],
-          ],
-          entryPoint,
+    tailwindcssEntryPoint
+      ? {
+          name: "@kachkaev/eslint-config-react -> tailwindcss",
+          plugins: {
+            "better-tailwindcss": eslintPluginBetterTailwindcss,
+          },
+          settings: {
+            "better-tailwindcss": {
+              attributes: [
+                "^(.+C|c)lassName$",
+                ["^(.+C|c)lassName$", [{ match: "string" }]],
+              ],
+              entryPoint: tailwindcssEntryPoint,
+            },
+          },
+          rules: {
+            "better-tailwindcss/enforce-consistent-class-order": "warn",
+            "better-tailwindcss/enforce-consistent-important-position": "warn",
+            "better-tailwindcss/enforce-consistent-variable-syntax": "warn",
+            "better-tailwindcss/enforce-shorthand-classes": "warn",
+            "better-tailwindcss/no-conflicting-classes": "warn",
+            "better-tailwindcss/no-deprecated-classes": "warn",
+            "better-tailwindcss/no-duplicate-classes": "warn",
+            "better-tailwindcss/no-restricted-classes": "error",
+            "better-tailwindcss/no-unknown-classes": "error",
+            "better-tailwindcss/no-unnecessary-whitespace": "warn",
+          },
+        }
+      : {
+          name: "@kachkaev/eslint-config-react -> tailwindcss (skipped)",
         },
-      },
-      rules: {
-        "better-tailwindcss/enforce-consistent-class-order": "warn",
-        "better-tailwindcss/enforce-consistent-important-position": "warn",
-        "better-tailwindcss/enforce-consistent-variable-syntax": "warn",
-        "better-tailwindcss/enforce-shorthand-classes": "warn",
-        "better-tailwindcss/no-conflicting-classes": "warn",
-        "better-tailwindcss/no-deprecated-classes": "warn",
-        "better-tailwindcss/no-duplicate-classes": "warn",
-        "better-tailwindcss/no-restricted-classes": "error",
-        "better-tailwindcss/no-unknown-classes": "error",
-        "better-tailwindcss/no-unnecessary-whitespace": "warn",
-      },
-    },
   ];
 }
