@@ -76,6 +76,19 @@ export function generateNextConfigs({
       },
     },
 
+    {
+      name: "@kachkaev/eslint-config-react -> next -> plugin",
+      plugins: {
+        "@next/next": eslintPluginNext,
+      },
+      rules: {
+        ...eslintPluginNext.configs.recommended.rules,
+        ...eslintPluginNext.configs["core-web-vitals"].rules,
+
+        "@next/next/no-img-element": "off",
+      },
+    },
+
     eslintReactEslintPlugin.configs["strict-type-checked"],
     {
       name: "@kachkaev/eslint-config-react -> react -> @eslint-react plugin extras",
@@ -113,19 +126,6 @@ export function generateNextConfigs({
       files: ["**/*.tsx"],
       rules: {
         "@typescript-eslint/explicit-module-boundary-types": "off",
-      },
-    },
-
-    {
-      name: "@kachkaev/eslint-config-react -> next -> plugin",
-      plugins: {
-        "@next/next": eslintPluginNext,
-      },
-      rules: {
-        ...eslintPluginNext.configs.recommended.rules,
-        ...eslintPluginNext.configs["core-web-vitals"].rules,
-
-        "@next/next/no-img-element": "off",
       },
     },
 
