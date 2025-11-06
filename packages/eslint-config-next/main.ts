@@ -67,7 +67,7 @@ export function generateNextConfigs({
     ...generateBaseConfigs({ tsconfigRootDir }),
 
     {
-      name: "@kachkaev/eslint-config-react -> react -> base rule overrides",
+      name: "@kachkaev/eslint-config-next -> react -> base rule overrides",
       rules: {
         "no-restricted-syntax": [...ruleArgsForNoRestrictedSyntax],
 
@@ -78,7 +78,7 @@ export function generateNextConfigs({
 
     eslintReactEslintPlugin.configs["strict-type-checked"],
     {
-      name: "@kachkaev/eslint-config-react -> react -> @eslint-react plugin extras",
+      name: "@kachkaev/eslint-config-next -> react -> @eslint-react plugin extras",
       rules: {
         "@eslint-react/hooks-extra/no-direct-set-state-in-use-effect": "warn",
         "@eslint-react/no-missing-component-display-name": "warn",
@@ -86,7 +86,7 @@ export function generateNextConfigs({
     },
 
     {
-      name: "@kachkaev/eslint-config-react -> next -> plugin",
+      name: "@kachkaev/eslint-config-next -> next -> plugin",
       plugins: {
         "@next/next": eslintPluginNext,
       },
@@ -101,7 +101,7 @@ export function generateNextConfigs({
     eslintPluginReact.configs.flat["recommended"] ?? {},
     eslintPluginReact.configs.flat["jsx-runtime"] ?? {},
     {
-      name: "@kachkaev/eslint-config-react -> react -> react plugin extras",
+      name: "@kachkaev/eslint-config-next -> react -> react plugin extras",
       rules: {
         "react/display-name": "off", // Handled by @eslint-react/no-missing-component-display-name
         "react/jsx-key": "off", // Handled by @eslint-react/no-missing-key
@@ -122,7 +122,7 @@ export function generateNextConfigs({
     eslintPluginReactHooks.configs.flat.recommended,
 
     {
-      name: "@kachkaev/eslint-config-react -> react -> @typescript-eslint/explicit-module-boundary-types override",
+      name: "@kachkaev/eslint-config-next -> react -> @typescript-eslint/explicit-module-boundary-types override",
       files: ["**/*.tsx"],
       rules: {
         "@typescript-eslint/explicit-module-boundary-types": "off",
@@ -131,7 +131,7 @@ export function generateNextConfigs({
 
     tailwindcssEntryPoint
       ? {
-          name: "@kachkaev/eslint-config-react -> tailwindcss",
+          name: "@kachkaev/eslint-config-next -> tailwindcss",
           plugins: {
             "better-tailwindcss": eslintPluginBetterTailwindcss,
           },
@@ -158,7 +158,7 @@ export function generateNextConfigs({
           },
         }
       : {
-          name: "@kachkaev/eslint-config-react -> tailwindcss (skipped)",
+          name: "@kachkaev/eslint-config-next -> tailwindcss (skipped)",
         },
   ];
 }

@@ -1,10 +1,10 @@
 {
-  "name": "@kachkaev/eslint-config-next-app",
-  "version": "0.7.0-alpha.0",
+  "name": "@kachkaev/eslint-config-next",
+  "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:kachkaev/routine-npm-packages.git",
-    "directory": "packages/eslint-config-next-app"
+    "directory": "packages/eslint-config-next"
   },
   "license": "MIT",
   "author": {
