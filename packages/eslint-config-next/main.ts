@@ -76,6 +76,15 @@ export function generateNextConfigs({
       },
     },
 
+    eslintReactEslintPlugin.configs["strict-type-checked"],
+    {
+      name: "@kachkaev/eslint-config-react -> react -> @eslint-react plugin extras",
+      rules: {
+        "@eslint-react/hooks-extra/no-direct-set-state-in-use-effect": "warn",
+        "@eslint-react/no-missing-component-display-name": "warn",
+      },
+    },
+
     {
       name: "@kachkaev/eslint-config-react -> next -> plugin",
       plugins: {
@@ -86,15 +95,6 @@ export function generateNextConfigs({
         ...eslintPluginNext.configs["core-web-vitals"].rules,
 
         "@next/next/no-img-element": "off",
-      },
-    },
-
-    eslintReactEslintPlugin.configs["strict-type-checked"],
-    {
-      name: "@kachkaev/eslint-config-react -> react -> @eslint-react plugin extras",
-      rules: {
-        "@eslint-react/hooks-extra/no-direct-set-state-in-use-effect": "warn",
-        "@eslint-react/no-missing-component-display-name": "warn",
       },
     },
 
