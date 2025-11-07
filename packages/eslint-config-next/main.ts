@@ -16,12 +16,6 @@ const ruleArgsForNoRestrictedSyntax = [
   ...baseRuleArgsForNoRestrictedSyntax,
   {
     selector:
-      "TSQualifiedName[left.name=React][right.name=/^(FunctionComponent|VoidFunctionComponent|FC|SFC|VFC)$/]",
-    message:
-      "This type is not needed, see https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/ for context. If you want to pass a component as prop, use `React.ComponentType`",
-  },
-  {
-    selector:
       "TSUnionType[types.0.typeName.right.name=ReactNode][types.1.type=TSUndefinedKeyword]",
     message:
       "React.ReactNode includes `undefined`, so you can remove `| undefined` from the type",
@@ -65,6 +59,11 @@ export function generateNextConfigs({
 } = {}): Linter.Config[] {
   return [
     ...generateBaseConfigs({ tsconfigRootDir }),
+
+    {
+      name: "@kachkaev/eslint-config-next -> ignores",
+      ignores: [".next/", ".velite/", ".vercel/"],
+    },
 
     {
       name: "@kachkaev/eslint-config-next -> react -> base rule overrides",
@@ -126,6 +125,16 @@ export function generateNextConfigs({
       files: ["**/*.tsx"],
       rules: {
         "@typescript-eslint/explicit-module-boundary-types": "off",
+      },
+    },
+
+    {
+      name: "@kachkaev/eslint-config-next -> next -> import/no-default-export override",
+      files: [
+        "app/**/{default,global-error,error,layout,loading,not-found,page}.tsx",
+      ],
+      rules: {
+        "import/no-default-export": "off",
       },
     },
 

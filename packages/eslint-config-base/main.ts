@@ -57,6 +57,8 @@ export const ruleArgsForIdLength = [
       "x", // Cartesian coordinates
       "y",
       "z",
+
+      "_", // es-toolkit
     ],
     properties: "never",
   },
@@ -164,7 +166,7 @@ export function generateBaseConfigs({
       rules: {
         curly: "warn",
         eqeqeq: "error",
-        "func-style": ["error", "declaration"],
+        "func-style": ["warn", "declaration", { allowTypeAnnotation: true }],
         "id-length": ruleArgsForIdLength,
         "no-alert": "warn",
         "no-console": "warn",
@@ -203,7 +205,7 @@ export function generateBaseConfigs({
       rules: {
         "check-file/no-index": "warn",
         "check-file/filename-blocklist": [
-          "error",
+          "warn",
           {
             "**/*util*": "",
             "**/*util*/**": "",
@@ -256,6 +258,7 @@ export function generateBaseConfigs({
         ],
         "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
         "@typescript-eslint/no-deprecated": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-unused-vars": [
           "warn",
           { ignoreRestSiblings: true, caughtErrors: "all" },
