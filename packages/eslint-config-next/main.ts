@@ -154,8 +154,8 @@ export function generateNextConfigs({
             },
           },
           rules: {
+            "better-tailwindcss/enforce-canonical-classes": "warn",
             "better-tailwindcss/enforce-consistent-class-order": "warn",
-            "better-tailwindcss/enforce-consistent-important-position": "warn",
             "better-tailwindcss/enforce-consistent-variable-syntax": "warn",
             "better-tailwindcss/enforce-shorthand-classes": "warn",
             "better-tailwindcss/no-conflicting-classes": "warn",
