@@ -25,16 +25,16 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
 
     ```sh
     ## If you use NPM
-    npm install -D jiti eslint @kachkaev/eslint-config-base
+    npm install -D eslint @kachkaev/eslint-config-base
     
     ## If you use PNPM
-    pnpm add -D jiti eslint @kachkaev/eslint-config-base
+    pnpm add -D eslint @kachkaev/eslint-config-base
     
     ## If you use Yarn
-    yarn add -D jiti eslint @kachkaev/eslint-config-base
+    yarn add -D eslint @kachkaev/eslint-config-base
     ```
 
-    > `jiti` enables `*.ts` files -- see [ESLint docs](https://eslint.org/docs/latest/use/configure/configuration-files#typescript-configuration-files).
+    > If you don't keep your Node.js runtime up-to-date, you might need to install `jiti` to enable `*.ts` files -- see [ESLint docs](https://eslint.org/docs/latest/use/configure/configuration-files#typescript-configuration-files) for details.
 
 1.  Create `eslint.config.ts` with the following contents:
 
