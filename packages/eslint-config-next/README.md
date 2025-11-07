@@ -56,7 +56,7 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
     > + generateBaseConfigs({ tsconfigRootDir: import.meta.dirname });
     > ```
 
-    > If you use TailwindCSS, you need to specify `tailwindcssEntryPoint` to enable rules from [`eslint-plugin-better-tailwindcss`](https://www.npmjs.com/package/eslint-plugin-better-tailwindcss):
+    > If you use TailwindCSS, you can specify `tailwindcssEntryPoint` to enable rules from [`eslint-plugin-better-tailwindcss`](https://www.npmjs.com/package/eslint-plugin-better-tailwindcss):
     >
     > ```diff
     > - generateBaseConfigs();
