@@ -33,7 +33,7 @@
     "@types/node": "24.9.2",
     "eslint": "9.39.1",
     "react": "19.2.0",
-    "tailwindcss": "4.1.16",
+    "tailwindcss": "4.1.17",
     "typescript": "5.9.3"
   },
   "peerDependencies": {
