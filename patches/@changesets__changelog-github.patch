@@ -1,47 +1,39 @@
 diff --git a/dist/changesets-changelog-github.cjs.js b/dist/changesets-changelog-github.cjs.js
-index f0ab3c46b9cd516ca5635e2e4dab079bac2908a6..0534426f351847a4b07c0741a35715593ebde3ed 100644
+index f0ab3c46b9cd516ca5635e2e4dab079bac2908a6..fbd241494579c83e91b84b75800095db1c2e56f7 100644
 --- a/dist/changesets-changelog-github.cjs.js
 +++ b/dist/changesets-changelog-github.cjs.js
-@@ -133,7 +133,9 @@ const changelogFunctions = {
-         user: null
+@@ -134,7 +134,7 @@ const changelogFunctions = {
        };
      })();
--    const users = usersFromSummary.length ? usersFromSummary.map(userFromSummary => `[@${userFromSummary}](https://github.com/${userFromSummary})`).join(", ") : links.user;
-+    // Related to https://github.com/changesets/changesets/pull/1255
-+    const filteredUsersFromSummary = usersFromSummary.filter(userFromSummary => userFromSummary !== "kachkaev");
-+    const users = filteredUsersFromSummary.length ? filteredUsersFromSummary.map(userFromSummary => `[@${userFromSummary}](https://github.com/${userFromSummary})`).join(", ") : links.user;
-     const prefix = [links.pull === null ? "" : ` ${links.pull}`, links.commit === null ? "" : ` ${links.commit}`, users === null ? "" : ` Thanks ${users}!`].join("");
+     const users = usersFromSummary.length ? usersFromSummary.map(userFromSummary => `[@${userFromSummary}](https://github.com/${userFromSummary})`).join(", ") : links.user;
+-    const prefix = [links.pull === null ? "" : ` ${links.pull}`, links.commit === null ? "" : ` ${links.commit}`, users === null ? "" : ` Thanks ${users}!`].join("");
++    const prefix = [links.pull === null ? "" : ` ${links.pull}`, links.commit === null ? "" : ` ${links.commit}` /* https://github.com/changesets/changesets/pull/1255 */].join("");
      return `\n\n-${prefix ? `${prefix} -` : ""} ${firstLine}\n${futureLines.map(l => `  ${l}`).join("\n")}`;
    }
+ };
 diff --git a/dist/changesets-changelog-github.esm.js b/dist/changesets-changelog-github.esm.js
-index cc3b130e10445e0ff561568c9ace6a1c94bdf960..23d14a53d0c69de3cfd69dc27b6bafa26b068f75 100644
+index cc3b130e10445e0ff561568c9ace6a1c94bdf960..243db8a989cc587a1818b3276c2a595bfe342dd8 100644
 --- a/dist/changesets-changelog-github.esm.js
 +++ b/dist/changesets-changelog-github.esm.js
-@@ -129,7 +129,9 @@ const changelogFunctions = {
-         user: null
+@@ -130,7 +130,7 @@ const changelogFunctions = {
        };
      })();
--    const users = usersFromSummary.length ? usersFromSummary.map(userFromSummary => `[@${userFromSummary}](https://github.com/${userFromSummary})`).join(", ") : links.user;
-+    // Related to https://github.com/changesets/changesets/pull/1255
-+    const filteredUsersFromSummary = usersFromSummary.filter(userFromSummary => userFromSummary !== "kachkaev");
-+    const users = filteredUsersFromSummary.length ? filteredUsersFromSummary.map(userFromSummary => `[@${userFromSummary}](https://github.com/${userFromSummary})`).join(", ") : links.user;
-     const prefix = [links.pull === null ? "" : ` ${links.pull}`, links.commit === null ? "" : ` ${links.commit}`, users === null ? "" : ` Thanks ${users}!`].join("");
+     const users = usersFromSummary.length ? usersFromSummary.map(userFromSummary => `[@${userFromSummary}](https://github.com/${userFromSummary})`).join(", ") : links.user;
+-    const prefix = [links.pull === null ? "" : ` ${links.pull}`, links.commit === null ? "" : ` ${links.commit}`, users === null ? "" : ` Thanks ${users}!`].join("");
++    const prefix = [links.pull === null ? "" : ` ${links.pull}`, links.commit === null ? "" : ` ${links.commit}` /* https://github.com/changesets/changesets/pull/1255 */].join("");
      return `\n\n-${prefix ? `${prefix} -` : ""} ${firstLine}\n${futureLines.map(l => `  ${l}`).join("\n")}`;
    }
+ };
 diff --git a/src/index.ts b/src/index.ts
-index 15618c47d104519811f8106d504becfdd1b2fb2e..3559ef4d746bdfdaf5fffe7360537dbffb415a09 100644
+index 15618c47d104519811f8106d504becfdd1b2fb2e..7816b1542719fcb9cce51a392103f30fd64842c0 100644
 --- a/src/index.ts
 +++ b/src/index.ts
-@@ -101,8 +101,10 @@ const changelogFunctions: ChangelogFunctions = {
-       };
-     })();
+@@ -113,7 +113,7 @@ const changelogFunctions: ChangelogFunctions = {
+     const prefix = [
+       links.pull === null ? "" : ` ${links.pull}`,
+       links.commit === null ? "" : ` ${links.commit}`,
+-      users === null ? "" : ` Thanks ${users}!`,
++      /* https://github.com/changesets/changesets/pull/1255 */
+     ].join("");
  
--    const users = usersFromSummary.length
--      ? usersFromSummary
-+    // Related to https://github.com/changesets/changesets/pull/1255
-+    const filteredUsersFromSummary = usersFromSummary.filter(userFromSummary => userFromSummary !== "kachkaev");
-+    const users = filteredUsersFromSummary.length
-+      ? filteredUsersFromSummary
-           .map(
-             (userFromSummary) =>
-               `[@${userFromSummary}](https://github.com/${userFromSummary})`
+     return `\n\n-${prefix ? `${prefix} -` : ""} ${firstLine}\n${futureLines
