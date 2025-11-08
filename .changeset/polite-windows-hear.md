@@ -1,5 +1,6 @@
 ---
 "@kachkaev/eslint-config-base": patch
+"@kachkaev/eslint-config-next": patch
 "@kachkaev/markdownlint-config": patch
 "@kachkaev/prettier-config": patch
 ---
