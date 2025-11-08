@@ -28,3 +28,20 @@ index cc3b130e10445e0ff561568c9ace6a1c94bdf960..23d14a53d0c69de3cfd69dc27b6bafa2
      const prefix = [links.pull === null ? "" : ` ${links.pull}`, links.commit === null ? "" : ` ${links.commit}`, users === null ? "" : ` Thanks ${users}!`].join("");
      return `\n\n-${prefix ? `${prefix} -` : ""} ${firstLine}\n${futureLines.map(l => `  ${l}`).join("\n")}`;
    }
+diff --git a/src/index.ts b/src/index.ts
+index 15618c47d104519811f8106d504becfdd1b2fb2e..3559ef4d746bdfdaf5fffe7360537dbffb415a09 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -101,8 +101,10 @@ const changelogFunctions: ChangelogFunctions = {
+       };
+     })();
+ 
+-    const users = usersFromSummary.length
+-      ? usersFromSummary
++    // Related to https://github.com/changesets/changesets/pull/1255
++    const filteredUsersFromSummary = usersFromSummary.filter(userFromSummary => userFromSummary !== "kachkaev");
++    const users = filteredUsersFromSummary.length
++      ? filteredUsersFromSummary
+           .map(
+             (userFromSummary) =>
+               `[@${userFromSummary}](https://github.com/${userFromSummary})`

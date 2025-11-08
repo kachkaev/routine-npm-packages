@@ -11,7 +11,7 @@ overrides:
 
 patchedDependencies:
   '@changesets/changelog-github':
-    hash: f1427dbce8fd550b9ebd5004df6199035e07a37b5671762653aa1a023555d2ab
+    hash: 170cc945ea2ef4294ed028af4ac37faac075da9667f0ea5f845ddcf5fa58692a
     path: patches/@changesets__changelog-github.patch
 
 importers:
@@ -20,7 +20,7 @@ importers:
     devDependencies:
       '@changesets/changelog-github':
         specifier: 0.5.1
-        version: 0.5.1(patch_hash=f1427dbce8fd550b9ebd5004df6199035e07a37b5671762653aa1a023555d2ab)
+        version: 0.5.1(patch_hash=170cc945ea2ef4294ed028af4ac37faac075da9667f0ea5f845ddcf5fa58692a)
       '@changesets/cli':
         specifier: 2.29.7
         version: 2.29.7(@types/node@24.9.2)
@@ -2759,7 +2759,7 @@ snapshots:
     dependencies:
       '@changesets/types': 6.1.0
 
-  '@changesets/changelog-github@0.5.1(patch_hash=f1427dbce8fd550b9ebd5004df6199035e07a37b5671762653aa1a023555d2ab)':
+  '@changesets/changelog-github@0.5.1(patch_hash=170cc945ea2ef4294ed028af4ac37faac075da9667f0ea5f845ddcf5fa58692a)':
     dependencies:
       '@changesets/get-github-info': 0.6.0
       '@changesets/types': 6.1.0
