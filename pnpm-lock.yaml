@@ -9,13 +9,18 @@ overrides:
   '@typescript-eslint/parser': '>=4.4.1'
   node-notifier: ^8.0.1
 
+patchedDependencies:
+  '@changesets/changelog-github':
+    hash: 142f17d4370c3434e6a284cd87b14ec96fc19c459d8068dad5a7c12a404104dd
+    path: patches/@changesets__changelog-github.patch
+
 importers:
 
   .:
     devDependencies:
       '@changesets/changelog-github':
         specifier: 0.5.1
-        version: 0.5.1
+        version: 0.5.1(patch_hash=142f17d4370c3434e6a284cd87b14ec96fc19c459d8068dad5a7c12a404104dd)
       '@changesets/cli':
         specifier: 2.29.7
         version: 2.29.7(@types/node@12.20.55)
@@ -2448,7 +2453,7 @@ snapshots:
     dependencies:
       '@changesets/types': 6.1.0
 
-  '@changesets/changelog-github@0.5.1':
+  '@changesets/changelog-github@0.5.1(patch_hash=142f17d4370c3434e6a284cd87b14ec96fc19c459d8068dad5a7c12a404104dd)':
     dependencies:
       '@changesets/get-github-info': 0.6.0
       '@changesets/types': 6.1.0
