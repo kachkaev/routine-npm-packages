@@ -2,4 +2,5 @@
 "@kachkaev/prettier-config": patch
 ---
 
-Update installation instructions
+commit: d00bd82
+Improve setup instructions
