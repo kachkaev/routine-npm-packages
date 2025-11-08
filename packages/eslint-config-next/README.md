@@ -1,6 +1,6 @@
 # [@kachkaev](https://github.com/kachkaev) → eslint config (Next.js)
 
-A collection of carefully picked ESLint rules and plugins for Next.js projects (with Rect and TailwindCSS).
+A collection of carefully picked ESLint rules and plugins for Next.js 16 projects (with Rect 19 and TailwindCSS 4).
 
 Compatible with [ESLint](https://www.npmjs.com/package/eslint) v9+ (Flat config).
 Requires [TypeScript](https://www.npmjs.com/package/typescript) to be present as a dependency.
@@ -61,6 +61,22 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
     > ```diff
     > - generateBaseConfigs();
     > + generateBaseConfigs({ tailwindcssEntryPoint: 'path/to/global.css' });
+    > ```
+
+    > By default, this package installs the latest version of `@next/eslint-plugin-next`.
+    > If you want the version of this plugin to match the version of Next.js you are using, you can add pinned this dependency in `package.json` and run `[npm/pnpm/yarn] dedupe`.
+    > Example:
+    >
+    > ```json
+    > {
+    >   "dependencies": {
+    >     "next": "16.x.y"
+    >   },
+    >   "devDependencies": {
+    >     "@kachkaev/eslint-config-next": "a.b.c",
+    >     "@next/eslint-plugin-next": "16.x.y"
+    >   }
+    > }
     > ```
 
 1.  Add `package.json` scripts:
