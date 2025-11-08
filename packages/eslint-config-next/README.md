@@ -36,6 +36,22 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
 
     > If you don't keep your Node.js runtime up-to-date, you might need to install `jiti` to enable `*.ts` files -- see [ESLint docs](https://eslint.org/docs/latest/use/configure/configuration-files#typescript-configuration-files) for details.
 
+    > By default, this package installs the latest version of `@next/eslint-plugin-next`.
+    > If you want the version of this plugin to match the version of Next.js you are using, you can pin this dependency in `package.json` and run `[npm/pnpm/yarn] dedupe`.
+    > Example:
+    >
+    > ```json
+    > {
+    >   "dependencies": {
+    >     "next": "x.y.z"
+    >   },
+    >   "devDependencies": {
+    >     "@kachkaev/eslint-config-next": "a.b.c",
+    >     "@next/eslint-plugin-next": "x.y.z"
+    >   }
+    > }
+    > ```
+
 1.  Create `eslint.config.ts` with the following contents:
 
     ```js
@@ -61,22 +77,6 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
     > ```diff
     > - generateBaseConfigs();
     > + generateBaseConfigs({ tailwindcssEntryPoint: 'path/to/global.css' });
-    > ```
-
-    > By default, this package installs the latest version of `@next/eslint-plugin-next`.
-    > If you want the version of this plugin to match the version of Next.js you are using, you can add pinned this dependency in `package.json` and run `[npm/pnpm/yarn] dedupe`.
-    > Example:
-    >
-    > ```json
-    > {
-    >   "dependencies": {
-    >     "next": "16.x.y"
-    >   },
-    >   "devDependencies": {
-    >     "@kachkaev/eslint-config-next": "a.b.c",
-    >     "@next/eslint-plugin-next": "16.x.y"
-    >   }
-    > }
     > ```
 
 1.  Add `package.json` scripts:
