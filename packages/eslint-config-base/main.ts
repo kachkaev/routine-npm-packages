@@ -246,7 +246,7 @@ export function generateBaseConfigs({
     ...replaceErrorWithWarn(tseslint.configs.stylisticTypeChecked),
     {
       rules: {
-        // Included in `plugin:@typescript-eslint/*` presets; listed here because of custom config
+        // Included in typescript-eslint presets; listed here because of custom config
         "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
         "@typescript-eslint/ban-ts-comment": [
           "warn",
@@ -265,7 +265,7 @@ export function generateBaseConfigs({
         ],
         "@typescript-eslint/restrict-template-expressions": ["error", {}], // Use default options instead of strict ones
 
-        // Not included in `plugin:@typescript-eslint/*`, enabled in this config
+        // Not included in typescript-eslint; enabled in this config
         "@typescript-eslint/consistent-type-imports": "warn",
         "@typescript-eslint/consistent-type-assertions": [
           "warn",
