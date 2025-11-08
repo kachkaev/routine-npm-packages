@@ -15,6 +15,7 @@
   "packageRules": [
     {
       "enabled": false,
+      "matchManagers": ["npm"],
       "matchDepTypes": ["peerDependencies"]
     },
     {
@@ -23,6 +24,7 @@
       "dependencyDashboardApproval": false,
       "enabled": true,
       "minimumReleaseAge": "2 days",
+      "matchManagers": ["npm"],
       "matchPackageNames": ["/^pnpm$/"]
     },
     {
@@ -45,6 +47,11 @@
       "matchManagers": ["npm"],
       "minimumReleaseAge": "2 days",
       "schedule": ["every weekend"]
+    },
+    {
+      "enabled": true,
+      "matchManagers": ["github-actions"],
+      "pinDigests": true
     }
   ]
 }
