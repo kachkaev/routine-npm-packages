@@ -35,6 +35,7 @@
   },
   "prettier": "@kachkaev/prettier-config",
   "devDependencies": {
+    "@changesets/changelog-github": "0.5.1",
     "@changesets/cli": "2.29.7",
     "@changesets/config": "3.1.1",
     "@kachkaev/prettier-config": "workspace:*",
