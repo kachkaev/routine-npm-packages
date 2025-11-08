@@ -1,11 +1,11 @@
-# [@kachkaev](https://github.com/kachkaev) → eslint config (base)
+# [@kachkaev](https://github.com/kachkaev) → eslint config (Next.js)
 
-A collection of carefully picked ESLint rules and plugins for TypeScript projects.
+A collection of carefully picked ESLint rules and plugins for Next.js 16 projects (with Rect 19 and TailwindCSS 4).
 
 Compatible with [ESLint](https://www.npmjs.com/package/eslint) v9+ (Flat config).
 Requires [TypeScript](https://www.npmjs.com/package/typescript) to be present as a dependency.
 
-See also [@kachkaev/eslint-config-next](https://www.npmjs.com/package/@kachkaev/eslint-config-next).
+Built atop [@kachkaev/eslint-config-base](https://www.npmjs.com/package/@kachkaev/eslint-config-base).
 
 ## Principles
 
@@ -36,14 +36,30 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
 
     > If you don't keep your Node.js runtime up-to-date, you might need to install `jiti` to enable `*.ts` files -- see [ESLint docs](https://eslint.org/docs/latest/use/configure/configuration-files#typescript-configuration-files) for details.
 
+    > By default, this package installs the latest version of `@next/eslint-plugin-next`.
+    > If you want the version of this plugin to match the version of Next.js you are using, you can pin this dependency in `package.json` and run `[npm/pnpm/yarn] dedupe`.
+    > Example:
+    >
+    > ```json
+    > {
+    >   "dependencies": {
+    >     "next": "x.y.z"
+    >   },
+    >   "devDependencies": {
+    >     "@kachkaev/eslint-config-next": "a.b.c",
+    >     "@next/eslint-plugin-next": "x.y.z"
+    >   }
+    > }
+    > ```
+
 1.  Create `eslint.config.ts` with the following contents:
 
     ```js
     import { defineConfig } from "eslint/config";
-    import { generateBaseConfigs } from "@kachkaev/eslint-config-base";
+    import { generateNextConfigs } from "@kachkaev/eslint-config-next";
 
     export default defineConfig([
-      ...generateBaseConfigs(),
+      ...generateNextConfigs(),
 
       // ... Place additional configs here if needed ...
     ]);
@@ -54,6 +70,13 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
     > ```diff
     > - generateBaseConfigs();
     > + generateBaseConfigs({ tsconfigRootDir: import.meta.dirname });
+    > ```
+
+    > If you use TailwindCSS, you can specify `tailwindcssEntryPoint` to enable rules from [`eslint-plugin-better-tailwindcss`](https://www.npmjs.com/package/eslint-plugin-better-tailwindcss):
+    >
+    > ```diff
+    > - generateBaseConfigs();
+    > + generateBaseConfigs({ tailwindcssEntryPoint: 'path/to/global.css' });
     > ```
 
 1.  Add `package.json` scripts:

@@ -7,7 +7,7 @@
     { "repo": "kachkaev/routine-npm-packages" }
   ],
   "commit": false,
-  "fixed": [],
+  "fixed": [["@kachkaev/eslint-config-*"]],
   "ignore": [],
   "linked": [],
   "updateInternalDependencies": "patch"
