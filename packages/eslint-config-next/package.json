@@ -30,7 +30,7 @@
   "devDependencies": {
     "@tsconfig/node-ts": "23.6.1",
     "@tsconfig/strictest": "2.0.7",
-    "@types/node": "24.9.2",
+    "@types/node": "24.10.0",
     "eslint": "9.39.1",
     "react": "19.2.0",
     "tailwindcss": "4.1.17",
