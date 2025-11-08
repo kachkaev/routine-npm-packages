@@ -1,5 +1,5 @@
 import eslintJs from "@eslint/js";
-// @ts-expect-error -- pending https://github.com/eslint-community/eslint-plugin-eslint-comments/pull/246
+// @ts-expect-error -- Pending https://github.com/eslint-community/eslint-plugin-eslint-comments/pull/246
 import eslintPluginEslintCommentsConfigs from "@eslint-community/eslint-plugin-eslint-comments/configs";
 import stylisticEslintPlugin from "@stylistic/eslint-plugin";
 import type { Linter } from "eslint";
@@ -48,17 +48,17 @@ export const ruleArgsForIdLength = [
   {
     min: 2,
     exceptions: [
-      "a", // arguments of comparison functions
+      "a", // Arguments of comparison functions
       "b",
-      "d", // datum in visualizations
+      "d", // Datum in visualizations
 
-      "t", // time coordinate / translation function
+      "t", // Time coordinate / translation function
 
       "x", // Cartesian coordinates
       "y",
       "z",
 
-      "_", // es-toolkit
+      "_", // Import from `es-toolkit` (or `lodash`)
     ],
     properties: "never",
   },
@@ -109,14 +109,14 @@ export const ruleArgsForNoRestrictedSyntax = [
   {
     selector: "Literal[value=/#[0-9a-fA-F]{0,7}[A-F][0-9a-fA-F]{0,7}/]",
     message:
-      // eslint-disable-next-line no-restricted-syntax -- the rule is barking on itself
+      // eslint-disable-next-line no-restricted-syntax -- The rule is triggered in its own definition
       "Please define color HEX codes in lower case for consistency (e.g. #ABCD12 → #abcd12)",
   },
   {
     selector:
       "TemplateElement[value.raw=/#[0-9a-fA-F]{0,7}[A-F][0-9a-fA-F]{0,7}/]",
     message:
-      // eslint-disable-next-line no-restricted-syntax -- the rule is barking on itself
+      // eslint-disable-next-line no-restricted-syntax -- The rule is triggered in its own definition
       "Please define color HEX codes in lower case for consistency (e.g. #ABCD12 → #abcd12)",
   },
   {
@@ -185,7 +185,7 @@ export function generateBaseConfigs({
     },
 
     replaceErrorWithWarn(
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-member-access -- pending https://github.com/eslint-community/eslint-plugin-eslint-comments/pull/246
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-member-access -- Pending https://github.com/eslint-community/eslint-plugin-eslint-comments/pull/246
       eslintPluginEslintCommentsConfigs.recommended as Linter.Config,
     ),
     {
@@ -252,7 +252,7 @@ export function generateBaseConfigs({
           "warn",
           {
             "ts-expect-error": { descriptionFormat: String.raw`^ -- [\S]` },
-            "ts-ignore": "allow-with-description", // autofixed via @typescript-eslint/prefer-ts-expect-error
+            "ts-ignore": "allow-with-description", // Autofixed via @typescript-eslint/prefer-ts-expect-error
             minimumDescriptionLength: 10,
           },
         ],
@@ -265,7 +265,7 @@ export function generateBaseConfigs({
         ],
         "@typescript-eslint/restrict-template-expressions": ["error", {}], // Use default options instead of strict ones
 
-        // Not included in `plugin:@typescript-eslint/*` presets, we chose to enable them
+        // Not included in `plugin:@typescript-eslint/*`, enabled in this config
         "@typescript-eslint/consistent-type-imports": "warn",
         "@typescript-eslint/consistent-type-assertions": [
           "warn",
@@ -365,8 +365,8 @@ export function generateBaseConfigs({
       files: [
         "*.config.ts",
         "**/*.d.ts",
-        "**/plugin.ts", // custom ESLint plugin (following community pattern)
-        "**/rules/*.ts", // custom ESLint rules (following community pattern)
+        "**/plugin.ts", // Custom ESLint plugin (following community pattern)
+        "**/rules/*.ts", // Custom ESLint rules (following community pattern)
       ],
       rules: {
         "import/no-default-export": "off",

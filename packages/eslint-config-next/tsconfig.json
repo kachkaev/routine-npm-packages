@@ -4,14 +4,14 @@
     "@tsconfig/node-ts/tsconfig.json"
   ],
   "compilerOptions": {
-    // options handled by ESLint
+    // Options handled by ESLint
     "noUnusedLocals": false,
     "noUnusedParameters": false,
 
     "noEmit": true,
     "noErrorTruncation": true,
 
-    // options that define available language features
+    // Options that define available language features
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "types": ["node"]
