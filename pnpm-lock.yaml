@@ -104,7 +104,7 @@ importers:
         specifier: ^2.3.1
         version: 2.3.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
       '@kachkaev/eslint-config-base':
-        specifier: 0.7.0-alpha.0
+        specifier: 1.0.0
         version: link:../eslint-config-base
       '@next/eslint-plugin-next':
         specifier: ^16.0.1
