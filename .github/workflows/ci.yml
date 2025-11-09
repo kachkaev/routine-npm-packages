@@ -27,7 +27,7 @@ jobs:
           node-version-file: .tool-versions
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Build packages
         run: pnpm build
@@ -62,7 +62,7 @@ jobs:
           node-version-file: .tool-versions
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Run unit tests
         run: pnpm test
