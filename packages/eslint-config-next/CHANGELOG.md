@@ -1,5 +1,14 @@
 # @kachkaev/eslint-config-next
 
+## 1.0.1
+
+### Patch Changes
+
+- [`63fbf89`](https://github.com/kachkaev/routine-npm-packages/commit/63fbf89a05dd044ba064d64ffeb50dff6e2d8260) - Add "types" field to package.json
+
+- Updated dependencies [[`63fbf89`](https://github.com/kachkaev/routine-npm-packages/commit/63fbf89a05dd044ba064d64ffeb50dff6e2d8260)]:
+  - @kachkaev/eslint-config-base@1.0.1
+
 ## 1.0.0
 
 ### Major Changes
