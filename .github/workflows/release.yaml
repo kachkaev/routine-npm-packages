@@ -43,5 +43,6 @@ jobs:
         with:
           publish: pnpm release
           title: "Version packages"
+          version: pnpm changeset version && pnpm install --lockfile-only
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
