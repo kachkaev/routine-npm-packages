@@ -102,7 +102,7 @@ importers:
         specifier: 1.0.1
         version: link:../eslint-config-base
       '@next/eslint-plugin-next':
-        specifier: ^16.0.2
+        specifier: ^16.0.3
         version: 16.0.3
       eslint-plugin-better-tailwindcss:
         specifier: ^4.0.0-beta.3
