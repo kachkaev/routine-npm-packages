@@ -25,7 +25,8 @@
       "enabled": true,
       "minimumReleaseAge": "2 days",
       "matchManagers": ["npm"],
-      "matchPackageNames": ["/^pnpm$/"]
+      "matchPackageNames": ["/^pnpm$/"],
+      "schedule": ["every weekend"]
     },
     {
       "autoApprove": true,
