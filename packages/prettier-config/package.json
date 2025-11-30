@@ -16,7 +16,7 @@
   "main": "main.js",
   "types": "main.d.ts",
   "dependencies": {
-    "prettier-plugin-packagejson": "^2.5.19",
+    "prettier-plugin-packagejson": "^2.5.20",
     "prettier-plugin-sh": "^0.18.0"
   },
   "devDependencies": {
