@@ -43,7 +43,7 @@
     "@kachkaev/prettier-config": "workspace:*",
     "@manypkg/cli": "0.25.1",
     "husky": "9.1.7",
-    "knip": "5.77.4",
+    "knip": "5.78.0",
     "lint-staged": "16.2.7",
     "markdownlint-cli": "0.47.0",
     "npm-run-all2": "8.0.4",
