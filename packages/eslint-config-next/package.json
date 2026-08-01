@@ -23,7 +23,7 @@
   "dependencies": {
     "@eslint-react/eslint-plugin": "^2.13.0",
     "@kachkaev/eslint-config-base": "1.2.0",
-    "@next/eslint-plugin-next": "^16.2.11",
+    "@next/eslint-plugin-next": "^16.2.12",
     "eslint-plugin-better-tailwindcss": "^4.5.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1"
