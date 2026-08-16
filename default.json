@@ -1,0 +1,60 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Shared Renovate preset for kachkaev’s repos, consumed as `github>kachkaev/reusable-stuff`. The top-level `minimumReleaseAge` is the floor that keeps Renovate from proposing a version pnpm would refuse to lock, so it must stay in sync with the same option in each repo’s pnpm-workspace.yaml. Rules below may raise it, never lower it.",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboardApproval",
+    ":disableDigestUpdates",
+    ":maintainLockFilesWeekly",
+    ":semanticCommitsDisabled",
+    "helpers:pinGitHubActionDigestsToSemver"
+  ],
+  "minimumReleaseAge": "8 hours",
+  "packageRules": [
+    {
+      "autoApprove": true,
+      "automerge": true,
+      "dependencyDashboardApproval": false,
+      "enabled": true,
+      "minimumReleaseAge": "2 days",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["/^pnpm$/"],
+      "schedule": ["every weekend"]
+    },
+    {
+      "autoApprove": true,
+      "automerge": true,
+      "dependencyDashboardApproval": false,
+      "enabled": true,
+      "matchUpdateTypes": ["patch"],
+      "matchCurrentValue": "!/^0\\./",
+      "matchManagers": ["npm"],
+      "minimumReleaseAge": "2 days",
+      "schedule": ["every weekend"]
+    },
+    {
+      "autoApprove": true,
+      "automerge": true,
+      "dependencyDashboardApproval": false,
+      "enabled": true,
+      "matchDepTypes": ["devDependencies"],
+      "matchManagers": ["npm"],
+      "minimumReleaseAge": "2 days",
+      "schedule": ["every weekend"]
+    },
+    {
+      "autoApprove": true,
+      "automerge": true,
+      "dependencyDashboardApproval": false,
+      "enabled": true,
+      "matchManagers": ["github-actions"],
+      "minimumReleaseAge": "2 days",
+      "schedule": ["every weekend"]
+    }
+  ],
+  "postUpdateOptions": ["pnpmDedupe"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 1,
+  "rangeStrategy": "pin",
+  "timezone": "Etc/UTC"
+}
