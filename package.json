@@ -39,7 +39,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "1.0.0",
     "@changesets/cli": "3.0.0",
-    "@changesets/config": "3.1.4",
+    "@changesets/config": "4.0.0",
     "@kachkaev/prettier-config": "workspace:*",
     "@manypkg/cli": "0.25.1",
     "husky": "9.1.7",
