@@ -1,8 +1,6 @@
 ignoredBuiltDependencies:
   - nx ## Calls verifyOrUpdateNxCloudClient
 
-ignorePatchFailures: false
-
 linkWorkspacePackages: true
 
 nodeLinker: isolated
