@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>kachkaev/reusable-stuff"],
+  "extends": ["github>kachkaev/reusable-stuff//renovate/default"],
   "rangeStrategy": "bump",
   "packageRules": [
     {
