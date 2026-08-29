@@ -3,6 +3,12 @@ ignoredBuiltDependencies:
 
 linkWorkspacePackages: true
 
+## Install packages only after they have been out for at least 8 hours, to reduce exposure to
+## malicious releases that get unpublished quickly. Must stay in sync with the `minimumReleaseAge`
+## floor in the Renovate preset (renovate-preset.json), so that Renovate never proposes a
+## version pnpm would then refuse to lock.
+minimumReleaseAge: 480
+
 nodeLinker: isolated
 
 packages:
