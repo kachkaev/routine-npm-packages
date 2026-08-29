@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Shared Renovate preset for kachkaev’s repos, consumed as `github>kachkaev/reusable-stuff//renovate/default`. The top-level `minimumReleaseAge` is the floor that keeps Renovate from proposing a version pnpm would refuse to lock, so it must stay in sync with the same option in each repo’s pnpm-workspace.yaml. Rules below may raise it, never lower it.",
+  "description": "Shared Renovate preset for kachkaev’s repos, consumed as `github>kachkaev/reusable-stuff:renovate-preset`. The top-level `minimumReleaseAge` is the floor that keeps Renovate from proposing a version pnpm would refuse to lock, so it must stay in sync with the same option in each repo’s pnpm-workspace.yaml. Rules below may raise it, never lower it.",
   "extends": [
     "config:recommended",
     ":dependencyDashboardApproval",
