@@ -49,5 +49,12 @@
     "npm-run-all2": "9.0.3",
     "prettier": "3.9.6"
   },
-  "packageManager": "pnpm@11.24.0"
+  "packageManager": "pnpm@12.3.3",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "24.16.0",
+      "onFail": "download"
+    }
+  }
 }
