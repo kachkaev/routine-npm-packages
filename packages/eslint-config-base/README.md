@@ -50,16 +50,28 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
 
 1.  Create `eslint.config.ts` with the following contents:
 
-    ```js
-    import { defineConfig } from "eslint/config";
+    ```ts
     import { generateBaseConfigs } from "@kachkaev/eslint-config-base";
 
-    export default defineConfig([
-      ...generateBaseConfigs(),
-
-      // ... Place additional configs here if needed ...
-    ]);
+    export default generateBaseConfigs();
     ```
+
+    > To add project-specific configs, wrap the result in [`defineConfig`](https://eslint.org/docs/latest/use/configure/configuration-files#configuration-file) from ESLint.
+    > The generated configs are scoped to `*.ts` and `*.tsx` files, so configs for other languages can be added alongside:
+    >
+    > ```ts
+    > import { generateBaseConfigs } from "@kachkaev/eslint-config-base";
+    > import { defineConfig } from "eslint/config";
+    >
+    > export default defineConfig([
+    >   generateBaseConfigs(),
+    >   {
+    >     rules: {
+    >       "no-console": "off",
+    >     },
+    >   },
+    > ]);
+    > ```
 
     > If you work in a monorepo, you may need to specify [`tsconfigRootDir`](https://typescript-eslint.io/packages/parser/#tsconfigrootdir) for some rules to work correctly:
     >
@@ -83,4 +95,4 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
     }
     ```
 
-You can now run `[npm/pnpm/yarn] run fix:eslint` to lint your code and `[npm/pnpm/yarn] run lint:eslint` to fix linting errors.
+You can now run `[npm/pnpm/yarn] run lint:eslint` to lint your code and `[npm/pnpm/yarn] run fix:eslint` to fix linting errors.
