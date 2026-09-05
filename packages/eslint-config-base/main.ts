@@ -335,7 +335,7 @@ export function generateBaseConfigs({
         "unicorn/prefer-native-coercion-functions": "off", // Blocked by https://github.com/sindresorhus/eslint-plugin-unicorn/issues/1857
         "unicorn/prefer-set-has": "off", // Using plain arrays is marginally slower but produces serializable data that can be used in more ways
         "unicorn/prefer-top-level-await": "off", // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/2149
-        "unicorn/prevent-abbreviations": "off", // Too opinionated (could be re-enabled with custom config)
+        "unicorn/name-replacements": "off", // Too opinionated (could be re-enabled with custom config)
       },
     },
 

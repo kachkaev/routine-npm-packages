@@ -22,23 +22,23 @@
   },
   "dependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.7.2",
-    "@eslint/js": "^9.39.5",
+    "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "eslint-plugin-check-file": "^3.3.2",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-regexp": "^3.1.1",
-    "eslint-plugin-simple-import-sort": "^13.0.0",
-    "eslint-plugin-unicorn": "^64.0.0",
-    "typescript-eslint": "^8.60.1"
+    "eslint-plugin-import": "github:kachkaev/eslint-plugin-import#ec84b52578876ae71014157fa2e6e1dfef8053ab",
+    "eslint-plugin-regexp": "^3.3.0",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
+    "eslint-plugin-unicorn": "^74.0.0",
+    "typescript-eslint": "^8.69.0"
   },
   "devDependencies": {
     "@tsconfig/node-ts": "23.6.4",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.13.3",
-    "eslint": "9.39.5",
+    "eslint": "10.10.0",
     "typescript": "6.0.3"
   },
   "peerDependencies": {
-    "eslint": ">=9.39.1"
+    "eslint": ">=10.4.0"
   }
 }

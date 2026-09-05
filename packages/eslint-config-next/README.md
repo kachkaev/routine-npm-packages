@@ -2,7 +2,7 @@
 
 A collection of carefully picked ESLint rules and plugins for Next.js 16 projects (with Rect 19 and TailwindCSS 4).
 
-Compatible with [ESLint](https://www.npmjs.com/package/eslint) v9+ (Flat config).
+Compatible with [ESLint](https://www.npmjs.com/package/eslint) v10+ (Flat config).
 Requires [TypeScript](https://www.npmjs.com/package/typescript) to be present as a dependency.
 
 Built atop [@kachkaev/eslint-config-base](https://www.npmjs.com/package/@kachkaev/eslint-config-base).
