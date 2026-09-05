@@ -2,7 +2,7 @@
 
 A collection of carefully picked ESLint rules and plugins for TypeScript projects.
 
-Compatible with [ESLint](https://www.npmjs.com/package/eslint) v9+ (Flat config).
+Compatible with [ESLint](https://www.npmjs.com/package/eslint) v10+ (Flat config).
 Requires [TypeScript](https://www.npmjs.com/package/typescript) to be present as a dependency.
 
 See also [@kachkaev/eslint-config-next](https://www.npmjs.com/package/@kachkaev/eslint-config-next).
