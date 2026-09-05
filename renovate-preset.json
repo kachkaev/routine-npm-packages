@@ -8,6 +8,20 @@
     ":semanticCommitsDisabled",
     "helpers:pinGitHubActionDigestsToSemver"
   ],
+  "customManagers": [
+    {
+      "description": "Renovate does not read `devEngines` yet (renovatebot/renovate#38067), so this JSONata manager extracts the Node.js runtime version from package.json until it does. It handles `devEngines.runtime` as either a single object or an array and only picks entries named `node`. Renovate rewrites the value by searching for it in the file, then re-runs this query to confirm the right field changed.",
+      "customType": "jsonata",
+      "fileFormat": "json",
+      "managerFilePatterns": ["/(^|/)package\\.json$/"],
+      "matchStrings": [
+        "[devEngines.runtime[name = 'node'].{ 'depName': 'node', 'currentValue': version }]"
+      ],
+      "datasourceTemplate": "node-version",
+      "versioningTemplate": "node",
+      "depTypeTemplate": "devEngines"
+    }
+  ],
   "lockFileMaintenance": {
     "description": "Refresh lock files on Monday mornings without waiting for dashboard approval. The top-level `:dependencyDashboardApproval` would otherwise park this under “Pending Approval” every week; `:maintainLockFilesWeekly` is not used because it only enables the job and takes the default schedule.",
     "enabled": true,
@@ -60,6 +74,36 @@
       "matchManagers": ["github-actions"],
       "minimumReleaseAge": "2 days",
       "schedule": ["every weekend"]
+    },
+    {
+      "description": "Node.js runtime updates found by the `devEngines` manager above. Minor and patch releases are automerged on the same weekend cadence as devDependencies. Majors wait for dashboard approval: the dev runtime is what tests run on, and keeping it on the oldest supported line is what backs the `engines` claim.",
+      "autoApprove": true,
+      "automerge": true,
+      "dependencyDashboardApproval": false,
+      "enabled": true,
+      "matchDatasources": ["node-version"],
+      "matchDepTypes": ["devEngines"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "minimumReleaseAge": "2 days",
+      "schedule": ["every weekend"]
+    },
+    {
+      "description": "`engines` declares which runtimes a package supports, so any change there is a compatibility decision and a breaking one when the floor rises. Every such update waits for dashboard approval and never automerges, whatever the update type. This overrides the patch rule above.",
+      "autoApprove": false,
+      "automerge": false,
+      "dependencyDashboardApproval": true,
+      "matchDepTypes": ["engines"],
+      "matchManagers": ["npm"]
+    },
+    {
+      "description": "The `node-version` input of `actions/setup-node` names the release line a workflow, or a published composite action, runs on. Major bumps there change the runtime for everything that uses it, so they wait for dashboard approval instead of automerging with the other GitHub Actions updates.",
+      "autoApprove": false,
+      "automerge": false,
+      "dependencyDashboardApproval": true,
+      "matchDepNames": ["node"],
+      "matchDepTypes": ["uses-with"],
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"]
     }
   ],
   "postUpdateOptions": ["pnpmDedupe"],
