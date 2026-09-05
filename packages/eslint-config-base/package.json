@@ -35,8 +35,9 @@
     "@tsconfig/node-ts": "23.6.4",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.13.3",
+    "@typescript/native": "npm:typescript@7.0.2",
     "eslint": "10.10.0",
-    "typescript": "6.0.3"
+    "typescript": "npm:@typescript/typescript6@6.0.2"
   },
   "peerDependencies": {
     "eslint": ">=10.4.0"

@@ -36,6 +36,18 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
 
     > If you don't keep your Node.js runtime up-to-date, you might need to install `jiti` to enable `*.ts` files -- see [ESLint docs](https://eslint.org/docs/latest/use/configure/configuration-files#typescript-configuration-files) for details.
 
+    > If you use TypeScript 7 (the native compiler), keep the TypeScript 6 JavaScript API installed under the `typescript` name, because [typescript-eslint](https://typescript-eslint.io) depends on it.
+    > The aliases recommended in the [TypeScript 7 announcement](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/) make `tsc` run the native compiler while ESLint keeps working:
+    >
+    > ```json
+    > {
+    >   "devDependencies": {
+    >     "@typescript/native": "npm:typescript@^7.0.2",
+    >     "typescript": "npm:@typescript/typescript6@^6.0.2"
+    >   }
+    > }
+    > ```
+
 1.  Create `eslint.config.ts` with the following contents:
 
     ```js
