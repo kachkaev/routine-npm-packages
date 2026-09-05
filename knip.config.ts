@@ -2,11 +2,6 @@ import type { KnipConfig } from "knip";
 
 export default {
   workspaces: {
-    ".": {
-      ignoreDependencies: [
-        "@changesets/config", // https://github.com/webpro-nl/knip/issues/1335
-      ],
-    },
     "packages/eslint-config-next": {
       ignoreDependencies: [
         "react", // Needed by eslint-config-react to detect React version
