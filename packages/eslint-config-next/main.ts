@@ -26,6 +26,7 @@ const ruleArgsForNoRestrictedSyntax = [
       "Type of class name prop should be `string | undefined` to avoid edge cases in component props",
   },
   {
+    // cspell:disable-next-line -- the regex contains a word fragment
     selector: String.raw`TSPropertySignature[key.name=/^(s|\w+S)tyle$/][optional=true] > TSTypeAnnotation:has(TSQualifiedName[right.name=CSSProperties]) > *:not(TSFunctionType):not(TSUnionType[types.0.type=TSTypeReference][types.1.type=TSUndefinedKeyword])`,
     message:
       "Type of style prop should be `React.CSSProperties | undefined` to avoid edge cases in component props",
