@@ -5,12 +5,22 @@
     "config:recommended",
     ":dependencyDashboardApproval",
     ":disableDigestUpdates",
-    ":maintainLockFilesWeekly",
     ":semanticCommitsDisabled",
     "helpers:pinGitHubActionDigestsToSemver"
   ],
+  "lockFileMaintenance": {
+    "description": "Refresh lock files on Monday mornings without waiting for dashboard approval. The top-level `:dependencyDashboardApproval` would otherwise park this under “Pending Approval” every week; `:maintainLockFilesWeekly` is not used because it only enables the job and takes the default schedule.",
+    "enabled": true,
+    "dependencyDashboardApproval": false,
+    "schedule": ["* 0-11 * * 1"]
+  },
   "minimumReleaseAge": "8 hours",
   "packageRules": [
+    {
+      "description": "The top-level `pin` range strategy applies to every dependency type, including ones that are ranges by design: `engines` describes which runtimes a package supports rather than a version to install, `peerDependencies` describes compatibility, and the `node-version` input of `actions/setup-node` names a release line. Pinning those produces PRs like `>=22.15.0` → `v26.8.1` and `22` → `22.23.2`, which narrow guarantees instead of updating anything. Restoring `auto` for them leaves in-range releases alone and only proposes out-of-range updates.",
+      "matchDepTypes": ["engines", "peerDependencies", "uses-with"],
+      "rangeStrategy": "auto"
+    },
     {
       "autoApprove": true,
       "automerge": true,
