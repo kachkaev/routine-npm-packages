@@ -2,6 +2,7 @@ automerged
 automerges
 automerging
 cjs
+csstree
 dedupe
 env
 jsonata
