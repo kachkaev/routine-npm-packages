@@ -10,7 +10,7 @@
   ],
   "customManagers": [
     {
-      "description": "Renovate does not read `devEngines` yet (renovatebot/renovate#38067), so this JSONata manager extracts the Node.js runtime version from package.json until it does. It handles `devEngines.runtime` as either a single object or an array and only picks entries named `node`. Renovate rewrites the value by searching for it in the file, then re-runs this query to confirm the right field changed.",
+      "description": "TODO: delete this manager once renovatebot/renovate#38067 is closed and Renovate reads `devEngines` natively. Until then this JSONata manager extracts the Node.js runtime version from package.json. It handles `devEngines.runtime` as either a single object or an array and only picks entries named `node`. Renovate rewrites the value by searching for it in the file, then re-runs this query to confirm the right field changed.",
       "customType": "jsonata",
       "fileFormat": "json",
       "managerFilePatterns": ["/(^|/)package\\.json$/"],
@@ -40,7 +40,6 @@
       "automerge": true,
       "dependencyDashboardApproval": false,
       "enabled": true,
-      "minimumReleaseAge": "2 days",
       "matchManagers": ["npm"],
       "matchPackageNames": ["/^pnpm$/"],
       "schedule": ["every weekend"]
@@ -53,7 +52,6 @@
       "matchUpdateTypes": ["patch"],
       "matchCurrentValue": "!/^0\\./",
       "matchManagers": ["npm"],
-      "minimumReleaseAge": "2 days",
       "schedule": ["every weekend"]
     },
     {
@@ -63,7 +61,6 @@
       "enabled": true,
       "matchDepTypes": ["devDependencies"],
       "matchManagers": ["npm"],
-      "minimumReleaseAge": "2 days",
       "schedule": ["every weekend"]
     },
     {
@@ -72,11 +69,10 @@
       "dependencyDashboardApproval": false,
       "enabled": true,
       "matchManagers": ["github-actions"],
-      "minimumReleaseAge": "2 days",
       "schedule": ["every weekend"]
     },
     {
-      "description": "Node.js runtime updates found by the `devEngines` manager above. Minor and patch releases are automerged on the same weekend cadence as devDependencies. Majors wait for dashboard approval: the dev runtime is what tests run on, and keeping it on the oldest supported line is what backs the `engines` claim.",
+      "description": "TODO: once renovatebot/renovate#38067 is closed and the manager above is deleted, re-check `matchDatasources` and `matchDepTypes` here against what the built-in npm manager reports for `devEngines`. Node.js runtime updates found by that manager. Minor and patch releases are automerged on the same weekend cadence as devDependencies. Majors wait for dashboard approval: the dev runtime is what tests run on, and keeping it on the oldest supported line is what backs the `engines` claim.",
       "autoApprove": true,
       "automerge": true,
       "dependencyDashboardApproval": false,
@@ -84,7 +80,6 @@
       "matchDatasources": ["node-version"],
       "matchDepTypes": ["devEngines"],
       "matchUpdateTypes": ["minor", "patch"],
-      "minimumReleaseAge": "2 days",
       "schedule": ["every weekend"]
     },
     {
