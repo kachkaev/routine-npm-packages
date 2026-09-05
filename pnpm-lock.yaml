@@ -207,7 +207,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@kachkaev/eslint-config-base':
-        specifier: 1.2.0
+        specifier: 2.0.0
         version: link:../eslint-config-base
       '@next/eslint-plugin-next':
         specifier: ^16.3.4
