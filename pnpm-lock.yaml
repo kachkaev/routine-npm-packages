@@ -200,6 +200,9 @@ importers:
       '@eslint-react/eslint-plugin':
         specifier: ^5.18.7
         version: 5.18.7(@typescript/typescript6@6.0.2)(eslint@10.10.0(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)
+      '@eslint/css':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@kachkaev/eslint-config-base':
         specifier: 1.2.0
         version: link:../eslint-config-base
@@ -208,13 +211,16 @@ importers:
         version: 16.3.4(eslint@10.10.0(jiti@2.7.0)(supports-color@7.2.0))
       eslint-plugin-better-tailwindcss:
         specifier: ^4.7.0
-        version: 4.7.0(@typescript/typescript6@6.0.2)(eslint@10.10.0(jiti@2.7.0)(supports-color@7.2.0))(tailwindcss@4.3.3)
+        version: 4.7.0(@eslint/css@2.0.0)(@typescript/typescript6@6.0.2)(eslint@10.10.0(jiti@2.7.0)(supports-color@7.2.0))(tailwindcss@4.3.3)
       eslint-plugin-react:
         specifier: github:kachkaev/eslint-plugin-react#a797c3ddbfe00a05be3640bf7f8cdabf4104208c
         version: https://codeload.github.com/kachkaev/eslint-plugin-react/tar.gz/a797c3ddbfe00a05be3640bf7f8cdabf4104208c(eslint@10.10.0(jiti@2.7.0)(supports-color@7.2.0))
       eslint-plugin-react-hooks:
         specifier: ^7.1.1
         version: 7.1.1(eslint@10.10.0(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)
+      tailwind-csstree:
+        specifier: ^0.4.0
+        version: 0.4.0(@eslint/css@2.0.0)
     devDependencies:
       '@tsconfig/node-ts':
         specifier: 23.6.4
@@ -506,6 +512,10 @@ packages:
 
   '@eslint/css-tree@4.1.0':
     resolution: {integrity: sha512-cg0ohyrAG3swyGqt8t1K/OK97DqBw/ftDvlvyY1fmEst5B40UOmsimwLENq74z2dyw5CDM+3zJIW+CV2nFNDdA==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
+
+  '@eslint/css@2.0.0':
+    resolution: {integrity: sha512-lODVRbtxOXgcSOWNvv3gE4A8oRTSUHefA0tX9zrWUD57F+5RTLGDX9I8bnHQROO8nWb0hrmke0uO23pTlNfZ0A==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
   '@eslint/js@10.0.1':
@@ -2725,6 +2735,15 @@ packages:
       '@eslint/css':
         optional: true
 
+  tailwind-csstree@0.4.0:
+    resolution: {integrity: sha512-EBQfcsJBrRhGLsV/dBc7qIeLzCkOtSb31wNlU6//DUlHO74dcbvyl5sugoI/FeuxtENH5exS+6F5nffe1deDog==}
+    engines: {node: '>=18.18'}
+    peerDependencies:
+      '@eslint/css': '>=1.0.0'
+    peerDependenciesMeta:
+      '@eslint/css':
+        optional: true
+
   tailwindcss@4.3.3:
     resolution: {integrity: sha512-gOhV3P7ufE62QDGg1zVaTgCR+EtPv92k2nIhVcVKcLmxT1sUBsQGhnZj175j+MqRt4zLF7ic+sCYjfhxMxj7YQ==}
 
@@ -3291,6 +3310,12 @@ snapshots:
     dependencies:
       mdn-data: 2.34.0
       source-map-js: 1.2.1
+
+  '@eslint/css@2.0.0':
+    dependencies:
+      '@eslint/core': 1.2.1
+      '@eslint/css-tree': 4.1.0
+      '@eslint/plugin-kit': 0.7.3
 
   '@eslint/js@10.0.1(eslint@10.10.0(jiti@2.7.0)(supports-color@7.2.0))':
     optionalDependencies:
@@ -4152,14 +4177,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-better-tailwindcss@4.7.0(@typescript/typescript6@6.0.2)(eslint@10.10.0(jiti@2.7.0)(supports-color@7.2.0))(tailwindcss@4.3.3):
+  eslint-plugin-better-tailwindcss@4.7.0(@eslint/css@2.0.0)(@typescript/typescript6@6.0.2)(eslint@10.10.0(jiti@2.7.0)(supports-color@7.2.0))(tailwindcss@4.3.3):
     dependencies:
       '@eslint/css-tree': 4.1.0
       '@valibot/to-json-schema': 1.7.1(valibot@1.4.2(@typescript/typescript6@6.0.2))
       enhanced-resolve: 5.24.5
       jiti: 2.7.0
       synckit: 0.11.13
-      tailwind-csstree: 0.3.3
+      tailwind-csstree: 0.3.3(@eslint/css@2.0.0)
       tailwindcss: 4.3.3
       tsconfig-paths-webpack-plugin: 4.2.0
       valibot: 1.4.2(@typescript/typescript6@6.0.2)
@@ -5653,7 +5678,13 @@ snapshots:
     dependencies:
       '@pkgr/core': 0.3.6
 
-  tailwind-csstree@0.3.3: {}
+  tailwind-csstree@0.3.3(@eslint/css@2.0.0):
+    optionalDependencies:
+      '@eslint/css': 2.0.0
+
+  tailwind-csstree@0.4.0(@eslint/css@2.0.0):
+    optionalDependencies:
+      '@eslint/css': 2.0.0
 
   tailwindcss@4.3.3: {}
 

@@ -1,3 +1,4 @@
+import eslintCss from "@eslint/css";
 import eslintReactEslintPlugin from "@eslint-react/eslint-plugin";
 import {
   generateBaseConfigs,
@@ -6,9 +7,11 @@ import {
 } from "@kachkaev/eslint-config-base";
 import eslintPluginNext from "@next/eslint-plugin-next";
 import type { Linter } from "eslint";
+import { defineConfig } from "eslint/config";
 import eslintPluginBetterTailwindcss from "eslint-plugin-better-tailwindcss";
 import eslintPluginReact from "eslint-plugin-react";
 import eslintPluginReactHooks from "eslint-plugin-react-hooks";
+import { tailwind4 } from "tailwind-csstree";
 
 export * from "@kachkaev/eslint-config-base";
 
@@ -50,6 +53,19 @@ export function generateConfigsForReact(): Linter.Config[] {
   return [];
 }
 
+const ruleArgsForBetterTailwindcss = {
+  "better-tailwindcss/enforce-canonical-classes": "warn",
+  "better-tailwindcss/enforce-consistent-class-order": "warn",
+  "better-tailwindcss/enforce-consistent-variable-syntax": "warn",
+  "better-tailwindcss/enforce-shorthand-classes": "warn",
+  "better-tailwindcss/no-conflicting-classes": "warn",
+  "better-tailwindcss/no-deprecated-classes": "warn",
+  "better-tailwindcss/no-duplicate-classes": "warn",
+  "better-tailwindcss/no-restricted-classes": "error",
+  "better-tailwindcss/no-unknown-classes": "error",
+  "better-tailwindcss/no-unnecessary-whitespace": "warn",
+} satisfies Linter.RulesRecord;
+
 export function generateNextConfigs({
   tailwindcssEntryPoint,
   tsconfigRootDir,
@@ -60,113 +76,134 @@ export function generateNextConfigs({
   return [
     ...generateBaseConfigs({ tsconfigRootDir }),
 
-    {
-      name: "@kachkaev/eslint-config-next -> ignores",
-      ignores: [".next/", ".velite/", ".vercel/"],
-    },
+    // `extends` scopes every block below to TS and TSX files (see @kachkaev/eslint-config-base)
+    ...defineConfig({
+      name: "@kachkaev/eslint-config-next",
+      files: ["**/*.{ts,tsx}"],
+      extends: [
+        {
+          name: "@kachkaev/eslint-config-next -> ignores",
+          ignores: [".next/", ".velite/", ".vercel/"],
+        },
 
-    {
-      name: "@kachkaev/eslint-config-next -> react -> base rule overrides",
-      rules: {
-        "no-restricted-syntax": [...ruleArgsForNoRestrictedSyntax],
+        {
+          name: "@kachkaev/eslint-config-next -> react -> base rule overrides",
+          rules: {
+            "no-restricted-syntax": [...ruleArgsForNoRestrictedSyntax],
 
-        "unicorn/prefer-global-this": "off", // Allow window.* alongside globalThis.* (which is more practical in frontend code)
-        "unicorn/import-style": [...ruleArgsForUnicornImportStyle],
-      },
-    },
+            "unicorn/prefer-global-this": "off", // Allow window.* alongside globalThis.* (which is more practical in frontend code)
+            "unicorn/import-style": [...ruleArgsForUnicornImportStyle],
+          },
+        },
 
-    eslintReactEslintPlugin.configs["strict-type-checked"],
-    {
-      name: "@kachkaev/eslint-config-next -> react -> @eslint-react plugin extras",
-      rules: {
-        "@eslint-react/no-missing-component-display-name": "warn",
-      },
-    },
+        eslintReactEslintPlugin.configs["strict-type-checked"],
+        {
+          name: "@kachkaev/eslint-config-next -> react -> @eslint-react plugin extras",
+          rules: {
+            "@eslint-react/no-missing-component-display-name": "warn",
+          },
+        },
 
-    {
-      name: "@kachkaev/eslint-config-next -> next -> plugin",
-      plugins: {
-        "@next/next": eslintPluginNext,
-      },
-      rules: {
-        ...eslintPluginNext.configs.recommended.rules,
-        ...eslintPluginNext.configs["core-web-vitals"].rules,
+        {
+          name: "@kachkaev/eslint-config-next -> next -> plugin",
+          plugins: {
+            "@next/next": eslintPluginNext,
+          },
+          rules: {
+            ...eslintPluginNext.configs.recommended.rules,
+            ...eslintPluginNext.configs["core-web-vitals"].rules,
 
-        "@next/next/no-img-element": "off",
-      },
-    },
+            "@next/next/no-img-element": "off",
+          },
+        },
 
-    eslintPluginReact.configs.flat["recommended"] ?? {},
-    eslintPluginReact.configs.flat["jsx-runtime"] ?? {},
-    {
-      name: "@kachkaev/eslint-config-next -> react -> react plugin extras",
-      rules: {
-        "react/display-name": "off", // Handled by @eslint-react/no-missing-component-display-name
-        "react/jsx-key": "off", // Handled by @eslint-react/no-missing-key
-        "react/no-array-index-key": "off", // Handled by @eslint-react/no-array-index-key
-        "react/no-render-return-value": "off", // Drops performance, no practical value
-        "react/prop-types": "off", // Handled by TypeScript
+        eslintPluginReact.configs.flat["recommended"] ?? {},
+        eslintPluginReact.configs.flat["jsx-runtime"] ?? {},
+        {
+          name: "@kachkaev/eslint-config-next -> react -> react plugin extras",
+          rules: {
+            "react/display-name": "off", // Handled by @eslint-react/no-missing-component-display-name
+            "react/jsx-key": "off", // Handled by @eslint-react/no-missing-key
+            "react/no-array-index-key": "off", // Handled by @eslint-react/no-array-index-key
+            "react/no-render-return-value": "off", // Drops performance, no practical value
+            "react/prop-types": "off", // Handled by TypeScript
 
-        "react/function-component-definition": "warn",
-        "react/jsx-boolean-value": ["warn", "always"],
-        "react/jsx-curly-brace-presence": "warn",
-        "react/jsx-fragments": "warn",
-        "react/no-unknown-property": "warn",
-        "react/self-closing-comp": "warn",
-      },
-      settings: { react: { version: "detect" } },
-    },
+            "react/function-component-definition": "warn",
+            "react/jsx-boolean-value": ["warn", "always"],
+            "react/jsx-curly-brace-presence": "warn",
+            "react/jsx-fragments": "warn",
+            "react/no-unknown-property": "warn",
+            "react/self-closing-comp": "warn",
+          },
+          settings: { react: { version: "detect" } },
+        },
 
-    eslintPluginReactHooks.configs.flat.recommended,
+        eslintPluginReactHooks.configs.flat.recommended,
 
-    {
-      name: "@kachkaev/eslint-config-next -> react -> @typescript-eslint/explicit-module-boundary-types override",
-      files: ["**/*.tsx"],
-      rules: {
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-      },
-    },
+        {
+          name: "@kachkaev/eslint-config-next -> react -> @typescript-eslint/explicit-module-boundary-types override",
+          files: ["**/*.tsx"],
+          rules: {
+            "@typescript-eslint/explicit-module-boundary-types": "off",
+          },
+        },
 
-    {
-      name: "@kachkaev/eslint-config-next -> next -> import/no-default-export override",
-      files: [
-        "app/**/{default,global-error,error,layout,loading,not-found,page}.tsx",
+        {
+          name: "@kachkaev/eslint-config-next -> next -> import/no-default-export override",
+          files: [
+            "app/**/{default,global-error,error,layout,loading,not-found,page}.tsx",
+          ],
+          rules: {
+            "import/no-default-export": "off",
+          },
+        },
+
+        tailwindcssEntryPoint
+          ? {
+              name: "@kachkaev/eslint-config-next -> tailwindcss",
+              plugins: {
+                "better-tailwindcss": eslintPluginBetterTailwindcss,
+              },
+              settings: {
+                "better-tailwindcss": {
+                  attributes: [
+                    "^(.+C|c)lassName$",
+                    ["^(.+C|c)lassName$", [{ match: "string" }]],
+                  ],
+                  entryPoint: tailwindcssEntryPoint,
+                },
+              },
+              rules: ruleArgsForBetterTailwindcss,
+            }
+          : {
+              name: "@kachkaev/eslint-config-next -> tailwindcss (skipped)",
+            },
       ],
-      rules: {
-        "import/no-default-export": "off",
-      },
-    },
+    }),
 
+    // Classes in `@apply` directives (https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/parsers/css.md)
     tailwindcssEntryPoint
       ? {
-          name: "@kachkaev/eslint-config-next -> tailwindcss",
+          name: "@kachkaev/eslint-config-next -> tailwindcss -> css",
+          files: ["**/*.css"],
+          language: "css/css",
+          languageOptions: {
+            customSyntax: tailwind4,
+            tolerant: true,
+          },
           plugins: {
+            css: eslintCss,
             "better-tailwindcss": eslintPluginBetterTailwindcss,
           },
           settings: {
             "better-tailwindcss": {
-              attributes: [
-                "^(.+C|c)lassName$",
-                ["^(.+C|c)lassName$", [{ match: "string" }]],
-              ],
               entryPoint: tailwindcssEntryPoint,
             },
           },
-          rules: {
-            "better-tailwindcss/enforce-canonical-classes": "warn",
-            "better-tailwindcss/enforce-consistent-class-order": "warn",
-            "better-tailwindcss/enforce-consistent-variable-syntax": "warn",
-            "better-tailwindcss/enforce-shorthand-classes": "warn",
-            "better-tailwindcss/no-conflicting-classes": "warn",
-            "better-tailwindcss/no-deprecated-classes": "warn",
-            "better-tailwindcss/no-duplicate-classes": "warn",
-            "better-tailwindcss/no-restricted-classes": "error",
-            "better-tailwindcss/no-unknown-classes": "error",
-            "better-tailwindcss/no-unnecessary-whitespace": "warn",
-          },
+          rules: ruleArgsForBetterTailwindcss,
         }
       : {
-          name: "@kachkaev/eslint-config-next -> tailwindcss (skipped)",
+          name: "@kachkaev/eslint-config-next -> tailwindcss -> css (skipped)",
         },
   ];
 }
