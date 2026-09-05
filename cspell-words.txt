@@ -9,6 +9,7 @@ kachkaev
 knip
 manypkg
 njt
+opengraph
 renovatebot
 tsc
 utf
