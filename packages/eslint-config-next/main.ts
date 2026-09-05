@@ -151,7 +151,13 @@ export function generateNextConfigs({
         {
           name: "@kachkaev/eslint-config-next -> next -> import/no-default-export override",
           files: [
-            "app/**/{default,global-error,error,layout,loading,not-found,page}.tsx",
+            // https://nextjs.org/docs/app/api-reference/file-conventions
+            "app/**/{default,error,forbidden,global-error,global-not-found,layout,loading,not-found,page,template,unauthorized}.tsx",
+            // https://nextjs.org/docs/app/api-reference/file-conventions/metadata
+            "app/**/{apple-icon,icon,opengraph-image,twitter-image}{,[0-9],[0-9][0-9]}.{ts,tsx}",
+            "app/**/{manifest,robots,sitemap}.ts",
+            // https://nextjs.org/docs/app/api-reference/file-conventions/mdx-components
+            "**/mdx-components.tsx",
           ],
           rules: {
             "import/no-default-export": "off",
