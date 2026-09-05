@@ -79,7 +79,6 @@ export function generateNextConfigs({
     {
       name: "@kachkaev/eslint-config-next -> react -> @eslint-react plugin extras",
       rules: {
-        "@eslint-react/hooks-extra/no-direct-set-state-in-use-effect": "warn",
         "@eslint-react/no-missing-component-display-name": "warn",
       },
     },
