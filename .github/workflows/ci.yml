@@ -25,6 +25,72 @@ jobs:
       - name: Build packages
         run: pnpm build
 
+      - name: Run pnpm lint:eslint
+        if: ${{ success() || failure() }}
+        run: |
+          if ! pnpm lint:eslint; then
+            echo ''
+            echo ''
+            echo 'ℹ️ ℹ️ ℹ️'
+            echo 'Please fix the above errors locally for the check to pass.'
+            echo 'If you do not see them, try merging target branch into yours.'
+            echo 'Try running `pnpm fix:eslint` locally to apply autofixes.'
+            echo 'ℹ️ ℹ️ ℹ️'
+            exit 1
+          fi
+
+      - name: Run pnpm lint:knip
+        if: ${{ success() || failure() }}
+        run: |
+          if ! pnpm lint:knip; then
+            echo ''
+            echo ''
+            echo 'ℹ️ ℹ️ ℹ️'
+            echo 'Please fix the above errors locally for the check to pass.'
+            echo 'If you do not see them, try merging target branch into yours.'
+            echo 'Try running `pnpm fix:knip` locally to apply autofixes.'
+            echo 'ℹ️ ℹ️ ℹ️'
+            exit 1
+          fi
+
+      - name: Run pnpm lint:manypkg
+        if: ${{ success() || failure() }}
+        run: |
+          if ! pnpm lint:manypkg; then
+            echo ''
+            echo ''
+            echo 'ℹ️ ℹ️ ℹ️'
+            echo 'Try running `pnpm fix:manypkg` locally to apply autofixes.'
+            echo 'ℹ️ ℹ️ ℹ️'
+            exit 1
+          fi
+
+      - name: Run pnpm lint:markdownlint
+        if: ${{ success() || failure() }}
+        run: |
+          if ! pnpm lint:markdownlint; then
+            echo ''
+            echo ''
+            echo 'ℹ️ ℹ️ ℹ️'
+            echo 'Try running `pnpm fix:markdownlint` locally to apply autofixes.'
+            echo 'ℹ️ ℹ️ ℹ️'
+            exit 1
+          fi
+
+      - name: Run pnpm lint:pnpm-dedupe
+        if: ${{ success() || failure() }}
+        run: |
+          if ! pnpm lint:pnpm-dedupe; then
+            echo ''
+            echo ''
+            echo 'ℹ️ ℹ️ ℹ️'
+            echo 'Some dependencies can be deduplicated, which will make pnpm-lock.yaml'
+            echo 'lighter and potentially save us from unexplainable bugs.'
+            echo 'Please run `pnpm fix:pnpm-dedupe` locally and commit pnpm-lock.yaml.'
+            echo 'ℹ️ ℹ️ ℹ️'
+            exit 1
+          fi
+
       - name: Load Prettier cache
         if: ${{ success() || failure() }}
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -34,8 +100,30 @@ jobs:
           restore-keys: |
             prettier-
 
-      - name: Run all linters
-        run: pnpm lint
+      - name: Run pnpm lint:prettier
+        if: ${{ success() || failure() }}
+        run: |
+          if ! pnpm lint:prettier; then
+            echo ''
+            echo ''
+            echo 'ℹ️ ℹ️ ℹ️'
+            echo 'Try running `pnpm fix:prettier` locally to apply autofixes.'
+            echo 'ℹ️ ℹ️ ℹ️'
+            exit 1
+          fi
+
+      - name: Run pnpm lint:tsc
+        if: ${{ success() || failure() }}
+        run: |
+          if ! pnpm lint:tsc; then
+            echo ''
+            echo ''
+            echo 'ℹ️ ℹ️ ℹ️'
+            echo 'Please fix the above errors locally for the check to pass.'
+            echo 'If you do not see them, try merging target branch into yours.'
+            echo 'ℹ️ ℹ️ ℹ️'
+            exit 1
+          fi
 
   test:
     name: Test
