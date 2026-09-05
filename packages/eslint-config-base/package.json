@@ -34,7 +34,7 @@
   "devDependencies": {
     "@tsconfig/node-ts": "23.6.4",
     "@tsconfig/strictest": "2.0.8",
-    "@types/node": "24.13.2",
+    "@types/node": "24.13.3",
     "eslint": "9.39.5",
     "typescript": "6.0.3"
   },
