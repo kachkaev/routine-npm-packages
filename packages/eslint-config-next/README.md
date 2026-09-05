@@ -1,6 +1,6 @@
 # [@kachkaev](https://github.com/kachkaev) → eslint config (Next.js)
 
-A collection of carefully picked ESLint rules and plugins for Next.js 16 projects (with Rect 19 and TailwindCSS 4).
+A collection of carefully picked ESLint rules and plugins for Next.js 16 projects (with React 19 and TailwindCSS 4).
 
 Compatible with [ESLint](https://www.npmjs.com/package/eslint) v10+ (Flat config).
 Requires [TypeScript](https://www.npmjs.com/package/typescript) to be present as a dependency.
@@ -25,13 +25,13 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
 
     ```sh
     ## If you use NPM
-    npm install -D eslint @kachkaev/eslint-config-base
+    npm install -D eslint @kachkaev/eslint-config-next
     
     ## If you use PNPM
-    pnpm add -D eslint @kachkaev/eslint-config-base
+    pnpm add -D eslint @kachkaev/eslint-config-next
     
     ## If you use Yarn
-    yarn add -D eslint @kachkaev/eslint-config-base
+    yarn add -D eslint @kachkaev/eslint-config-next
     ```
 
     > If you don't keep your Node.js runtime up-to-date, you might need to install `jiti` to enable `*.ts` files -- see [ESLint docs](https://eslint.org/docs/latest/use/configure/configuration-files#typescript-configuration-files) for details.
@@ -66,30 +66,42 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
 
 1.  Create `eslint.config.ts` with the following contents:
 
-    ```js
-    import { defineConfig } from "eslint/config";
+    ```ts
     import { generateNextConfigs } from "@kachkaev/eslint-config-next";
 
-    export default defineConfig([
-      ...generateNextConfigs(),
-
-      // ... Place additional configs here if needed ...
-    ]);
+    export default generateNextConfigs();
     ```
+
+    > To add project-specific configs, wrap the result in [`defineConfig`](https://eslint.org/docs/latest/use/configure/configuration-files#configuration-file) from ESLint.
+    > The generated configs are scoped to `*.ts` and `*.tsx` files, so configs for other languages can be added alongside:
+    >
+    > ```ts
+    > import { generateNextConfigs } from "@kachkaev/eslint-config-next";
+    > import { defineConfig } from "eslint/config";
+    >
+    > export default defineConfig([
+    >   generateNextConfigs(),
+    >   {
+    >     rules: {
+    >       "no-console": "off",
+    >     },
+    >   },
+    > ]);
+    > ```
 
     > If you work in a monorepo, you may need to specify [`tsconfigRootDir`](https://typescript-eslint.io/packages/parser/#tsconfigrootdir) for some rules to work correctly:
     >
     > ```diff
-    > - generateBaseConfigs();
-    > + generateBaseConfigs({ tsconfigRootDir: import.meta.dirname });
+    > - generateNextConfigs();
+    > + generateNextConfigs({ tsconfigRootDir: import.meta.dirname });
     > ```
 
     > If you use TailwindCSS, you can specify `tailwindcssEntryPoint` to enable rules from [`eslint-plugin-better-tailwindcss`](https://www.npmjs.com/package/eslint-plugin-better-tailwindcss).
     > Class names are checked both in TSX attributes and in `@apply` directives inside `*.css` files (via [`@eslint/css`](https://www.npmjs.com/package/@eslint/css) and [`tailwind-csstree`](https://www.npmjs.com/package/tailwind-csstree)):
     >
     > ```diff
-    > - generateBaseConfigs();
-    > + generateBaseConfigs({ tailwindcssEntryPoint: 'path/to/global.css' });
+    > - generateNextConfigs();
+    > + generateNextConfigs({ tailwindcssEntryPoint: "path/to/global.css" });
     > ```
 
 1.  Add `package.json` scripts:
@@ -107,4 +119,4 @@ It is assumed that all files are written in TypeScript and use ESM (not CommonJS
     }
     ```
 
-You can now run `[npm/pnpm/yarn] run fix:eslint` to lint your code and `[npm/pnpm/yarn] run lint:eslint` to fix linting errors.
+You can now run `[npm/pnpm/yarn] run lint:eslint` to lint your code and `[npm/pnpm/yarn] run fix:eslint` to fix linting errors.
