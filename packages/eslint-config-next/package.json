@@ -21,7 +21,7 @@
     "lint:tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@eslint-react/eslint-plugin": "^5.18.7",
+    "@eslint-react/eslint-plugin": "^5.18.8",
     "@eslint/css": "^2.0.0",
     "@kachkaev/eslint-config-base": "2.0.0",
     "@next/eslint-plugin-next": "^16.3.4",
