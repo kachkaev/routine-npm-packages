@@ -23,9 +23,10 @@
     }
   ],
   "lockFileMaintenance": {
-    "description": "Refresh lock files on Monday mornings without waiting for dashboard approval. The top-level `:dependencyDashboardApproval` would otherwise park this under “Pending Approval” every week; `:maintainLockFilesWeekly` is not used because it only enables the job and takes the default schedule.",
+    "description": "Refresh lock files on Monday mornings without waiting for dashboard approval. The top-level `:dependencyDashboardApproval` would otherwise park this under “Pending Approval” every week; `:maintainLockFilesWeekly` is not used because it only enables the job and takes the default schedule. `minimumReleaseAgeBehaviour` is overridden because a lock file maintenance branch carries one synthetic upgrade per package file with no `releaseTimestamp` — Renovate delegates the resolution to the package manager and never looks up individual releases. Under the default `timestamp-required`, the inherited top-level `minimumReleaseAge` therefore makes `renovate/stability-days` pending forever, so the weekly PR can never be merged. `timestamp-optional` lets a timestamp-less upgrade count as stable; the 8 hour floor is still enforced here, because pnpm applies its own `minimumReleaseAge` from pnpm-workspace.yaml while regenerating the lock file.",
     "enabled": true,
     "dependencyDashboardApproval": false,
+    "minimumReleaseAgeBehaviour": "timestamp-optional",
     "schedule": ["* 0-11 * * 1"]
   },
   "minimumReleaseAge": "8 hours",

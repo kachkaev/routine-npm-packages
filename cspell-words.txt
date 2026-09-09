@@ -1,6 +1,7 @@
 automerged
 automerges
 automerging
+behaviour
 cjs
 csstree
 dedupe
